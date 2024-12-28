@@ -168,3 +168,36 @@ b {
     font-family: "main";
     font-size: 20px;
 }
+
+@media screen and (max-width: 768px) {
+    
+    body {
+        font-size: 14px; 
+    }
+
+    h1, h2, .glavnoe, .languages, .os, .another_skill, .libaries {
+        font-size: 20px; 
+    }
+
+    .telegram, .github, .leetcode {
+        width: 100%; 
+        font-size: 18px; 
+    }
+
+    .links {
+        flex-direction: column;
+    }
+
+    img {
+        width: 100%;
+        height: auto 
+    }
+
+    .credit {
+        font-size: 16px; 
+    
+    hr {
+        height: 2px; 
+    }
+}
+

@@ -29,7 +29,6 @@ function getdate () {
     let day = date.getDate()
     
     let full_date = day +' '+  perevod(month) +' ' + year + ' года' 
-    console.log(full_date)
     
     if (hours < 10) {
         hours = '0' + hours;
@@ -62,3 +61,31 @@ function getdate () {
     all_c.appendChild(date_c);
 
 }
+
+
+function update_time () {
+    let element = document.getElementsByClassName('credit')[0];
+    setInterval(() => {
+        let date = new Date();
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        if (hours < 10) {
+            hours = '0' + hours;
+        }
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+        if (seconds < 10) {
+            seconds = '0' + seconds;
+        }
+
+        let text = 'Сейчас время -' + ' ' + hours + ':' + minutes + ':' + seconds;
+        element.innerText = text;
+        
+    }, 1000); 
+}
+
+
+

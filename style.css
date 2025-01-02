@@ -191,3 +191,17 @@ b {
     font-size: 40px;
     font-family: 'main';
 }
+
+.animate {
+    margin-left: -200px;
+    animation: fadeIn 3s forwards;
+    }
+
+@keyframes fadeIn {
+    from {
+        margin-left: -100px;
+        }
+    to {
+        margin-left: 0px;
+        }
+    }

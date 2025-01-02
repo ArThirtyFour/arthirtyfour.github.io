@@ -4,7 +4,6 @@ function nabor(text, callback, time_pause, display_time) {
     let element = document.getElementById('animka');
     let random_color = colors[Math.floor(Math.random() * colors.length)];
     element.style.color = random_color;
-    console.log(random_color);
     if (random_color == 'red') {
         element.style.textShadow = "2px 2px 4px rgba(207, 0, 0, 0.5)";
     }

@@ -4,8 +4,6 @@ async function quote () {
         let json = await res.json();
         let quote = json.content
         let author = json.author
-        console.log(quote)
-        console.log(author)
         let quote_h = document.getElementById('quote')
 
         let el = document.createElement('p')

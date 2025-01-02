@@ -1,5 +1,5 @@
 async function quote () {
-    let res =  await fetch('http://api.quotable.io/random')
+    let res =  await fetch('https://api.quotable.io/random')
     if (res.ok) { 
         let json = await res.json();
         let quote = json.content

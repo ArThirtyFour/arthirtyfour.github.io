@@ -1,0 +1,115 @@
+:root {
+    --font: "JetBrains Mono", serif;
+  }
+
+
+body {
+    position: fixed; 
+    width: 100%;
+    height: 100%;
+    background: url('assests/bg.gif') no-repeat center center; 
+    background-size: cover; 
+    opacity: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.art {
+    text-align: center;
+    border: 2px solid white;
+    width: 300px;
+    background: rgba(92, 7, 92, 0.441);
+    padding: 20px;
+    margin: 70px;
+    border-radius: 30px;
+}
+
+.image-container {
+    width: 220px; 
+    height: 220px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 auto; 
+    border-radius: 50%; 
+    overflow: hidden; 
+}
+
+.main {
+    border: 5px solid white;
+    width: 500px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(157, 90, 221, 0.571);
+    padding: 20px; 
+    border-radius: 30px; 
+}
+
+
+img {
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: cover; 
+    box-shadow: 0 0px 20px rgb(255, 255, 255); 
+}
+
+
+#animka {
+    text-align: center;
+    font-family: var(--font);
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+}
+
+h1 {
+    text-align: center;
+    font-family: var(--font);
+    -webkit-text-stroke: 1px rgb(255, 255, 255);
+    font-size:40px;
+    color:rgb(255, 255, 255)
+}
+
+button {
+    font-family:  var(--font);
+    background-image: linear-gradient(184deg, rgb(195, 100, 222) 0%, rgba(39, 39, 39, 0.393) 100%);
+    border:2px solid white;
+    background-size: 200% auto;
+    border-radius:20px;
+    transition:2s ;
+    box-shadow: 0 0 20px rgba(85, 17, 85, 0.286);
+    
+}
+
+button:hover {
+    background-position: right center;
+}
+
+@media screen and (max-width: 800px) {
+    .art {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    .main {
+        width: 90%;
+        margin: 0 10%;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    
+    .image-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}

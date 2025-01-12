@@ -122,6 +122,7 @@ button:hover {
     button {
         font-size: 16px;
         padding: 10px 20px;
+        color:white;
     }
     
     .image-container {

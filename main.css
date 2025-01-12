@@ -1,9 +1,12 @@
 :root {
-    --font: "JetBrains Mono", serif;
+    --font: "Play", serif;
+    --main-color : rgba(93, 3, 3, 0.529);
+    --font-btn : "Tektur", serif;
+    --anim_font : "Exo 2", serif;
   }
 
 
-body {
+  body {
     position: fixed; 
     width: 100%;
     height: 100%;
@@ -15,11 +18,27 @@ body {
     align-items: center; 
 }
 
+body {
+    position: fixed; 
+    width: 100%;
+    height: 100%;
+    background: url('assests/bg.gif') no-repeat center center; 
+    background-size: cover; 
+    opacity: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 0 0 400px rgba(0,0,0) inset;
+}
+
+
+
+
 .art {
     text-align: center;
     border: 2px solid white;
     width: 300px;
-    background: rgba(92, 7, 92, 0.441);
+    background: var(--main-color);
     padding: 20px;
     margin: 70px;
     border-radius: 30px;
@@ -40,7 +59,7 @@ body {
     border: 5px solid white;
     width: 500px;
     backdrop-filter: blur(5px);
-    background-color: rgba(157, 90, 221, 0.571);
+    background-color: var(--main-color);
     padding: 20px; 
     border-radius: 30px; 
 }
@@ -56,7 +75,7 @@ img {
 
 #animka {
     text-align: center;
-    font-family: var(--font);
+    font-family: var(--anim_font);
     -webkit-text-stroke: 1px rgb(255, 255, 255);
 }
 
@@ -65,23 +84,25 @@ h1 {
     font-family: var(--font);
     -webkit-text-stroke: 1px rgb(255, 255, 255);
     font-size:40px;
+    font-weight: 400;
     color:rgb(255, 255, 255)
 }
 
 button {
-    font-family:  var(--font);
-    background-image: linear-gradient(184deg, rgb(195, 100, 222) 0%, rgba(39, 39, 39, 0.393) 100%);
+    font-family:  var( --font-btn);
+    background-image: linear-gradient(299deg, rgba(115,0,0,1) 0%, rgba(195,35,35,1) 48%, rgba(106,0,0,1) 100%);
     border:2px solid white;
     background-size: 200% auto;
     border-radius:20px;
-    transition:2s ;
-    box-shadow: 0 0 20px rgba(85, 17, 85, 0.286);
+    font-size: 15px;
+    box-shadow: 0 0 10px rgba(164, 164, 164, 0.834);
     
 }
 
 button:hover {
-    background-position: right center;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 1);
 }
+    
 
 @media screen and (max-width: 800px) {
     .art {
@@ -106,10 +127,14 @@ button:hover {
     .image-container {
         width: 150px;
         height: 150px;
+        
     }
 
     .image-container img {
         max-width: 100%;
         max-height: 100%;
+    }
+    body {
+        background-color: black;
     }
 }

@@ -5,7 +5,6 @@
     --anim_font : "Exo 2", serif;
   }
 
-
 body {
     position: fixed; 
     width: 100%;
@@ -16,18 +15,32 @@ body {
     display: flex;
     justify-content: center; 
     align-items: center; 
-    box-shadow: 0 0 400px rgba(0,0,0) inset;
+    margin: 0; /* Убрать внешние отступы */
+    padding: 0; /* Убрать внутренние отступы */
+    background-color: transparent; /* Установить фон прозрачным (или выберите нужный цвет) */
 }
 
-
+.btn_with_photo {
+    font-family:  var(--font-btn);
+    background-image: linear-gradient(299deg, rgba(115,0,0,1) 0%, rgba(195,35,35,1) 48%, rgba(106,0,0,1) 100%);
+    border:2px solid white;
+    background-size: 200% auto;
+    border-radius:20px;
+    font-size: 15px;
+    box-shadow: 0 0 10px rgba(164, 164, 164, 0.834);
+    color:white;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 10px;
+    margin: 2px;
+}
 
 .art {
     text-align: center;
     border: 2px solid white;
-    width: 300px;
-    background: var(--main-color);
+    width: 400px;
     padding: 20px;
-    margin: 70px;
+    margin: 20px;
     border-radius: 30px;
 }
 
@@ -49,14 +62,19 @@ body {
     background-color: var(--main-color);
     padding: 20px; 
     border-radius: 30px; 
+    margin: 10px;
+    height: 90%;
 }
 
+
+.image-container {
+    box-shadow: 0 0px 20px rgb(255, 255, 255); 
+}
 
 img {
     max-width: 100%; 
     max-height: 100%; 
-    object-fit: cover; 
-    box-shadow: 0 0px 20px rgb(255, 255, 255); 
+    object-fit: cover;  
 }
 
 
@@ -75,18 +93,8 @@ h1 {
     color:rgb(255, 255, 255)
 }
 
-button {
-    font-family:  var( --font-btn);
-    background-image: linear-gradient(299deg, rgba(115,0,0,1) 0%, rgba(195,35,35,1) 48%, rgba(106,0,0,1) 100%);
-    border:2px solid white;
-    background-size: 200% auto;
-    border-radius:20px;
-    font-size: 15px;
-    box-shadow: 0 0 10px rgba(164, 164, 164, 0.834);
-    
-}
 
-button:hover {
+.btn_with_photo:hover {
     box-shadow: 0 0 30px rgba(255, 0, 0, 1);
 }
     
@@ -112,14 +120,14 @@ button:hover {
 
     .main {
         width: 90%;
-        margin: 0 10%;
+        height: 90%;
     }
 
     h1 {
         font-size: 28px;
     }
 
-    button {
+    .btn_with_photo {
         font-size: 16px;
         padding: 10px 20px;
         color:white;

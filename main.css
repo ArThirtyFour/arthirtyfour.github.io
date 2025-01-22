@@ -14,7 +14,7 @@ body {
     opacity: 1; 
     display: flex;
     justify-content: center; 
-    align-items: center; 
+    align-items: center;            
     margin: 0; /* Убрать внешние отступы */
     padding: 0; /* Убрать внутренние отступы */
     background-color: transparent; /* Установить фон прозрачным (или выберите нужный цвет) */
@@ -38,6 +38,7 @@ body {
 .art {
     text-align: center;
     border: 2px solid white;
+    background:var(--main-color) ;
     width: 400px;
     padding: 20px;
     margin: 20px;
@@ -127,12 +128,7 @@ h1 {
         font-size: 28px;
     }
 
-    .btn_with_photo {
-        font-size: 16px;
-        padding: 10px 20px;
-        color:white;
-    }
-    
+
     .image-container {
         width: 150px;
         height: 150px;

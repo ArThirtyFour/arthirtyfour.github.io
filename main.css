@@ -15,9 +15,9 @@ body {
     display: flex;
     justify-content: center; 
     align-items: center;            
-    margin: 0; /* Убрать внешние отступы */
-    padding: 0; /* Убрать внутренние отступы */
-    background-color: transparent; /* Установить фон прозрачным (или выберите нужный цвет) */
+    margin: 0; 
+    padding: 0; 
+    background-color: transparent; 
 }
 
 .btn_with_photo {
@@ -40,6 +40,7 @@ body {
     border: 2px solid white;
     background:var(--main-color) ;
     width: 400px;
+    height: 180px;
     padding: 20px;
     margin: 20px;
     border-radius: 30px;
@@ -115,7 +116,8 @@ h1 {
     }
 
     .art {
-        width: 80%;
+        width: 200px;
+        height: 55%;
         margin: 20px auto;
     }
 
@@ -140,5 +142,7 @@ h1 {
         max-height: 100%;
     }
 
-    
+    .btn_with_photo {
+        font-size: 12px;
+    }
 }

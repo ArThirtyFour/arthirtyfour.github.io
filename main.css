@@ -32,7 +32,7 @@ body {
     display: inline-block;
     white-space: nowrap;
     padding: 10px;
-    margin: 2px;
+    margin: 7px;
 }
 
 .art {
@@ -117,8 +117,8 @@ h1 {
 
     .art {
         width: 200px;
-        height: 55%;
-        margin: 20px auto;
+        height: 50%;
+        margin: 1px auto;
     }
 
     .main {
@@ -143,6 +143,9 @@ h1 {
     }
 
     .btn_with_photo {
-        font-size: 12px;
+            font-size: 13px;
+            padding: 7px;
+            margin:2px;
+        }
     }
-}
+

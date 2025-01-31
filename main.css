@@ -1,28 +1,39 @@
 :root {
     --font: "Play", serif;
-    --main-color : rgba(93, 3, 3, 0.529);
+    --main-color : rgba(159, 74, 199, 0.529);
     --font-btn : "Tektur", serif;
     --anim_font : "Exo 2", serif;
+    --color-btn : linear-gradient(230deg, rgb(59, 3, 96) 0%, rgb(175, 132, 15) 48%, rgb(85, 6, 195) 100%);
   }
 
 body {
     position: fixed; 
     width: 100%;
     height: 100%;
-    background: url('assests/bg.gif') no-repeat;
-    background-size: cover; 
+    background: black; /* Сначала задаем черный фон */
     opacity: 1; 
     display: flex;
     justify-content: center; 
-    align-items: center;            
+    align-items: center; 
     margin: 0; 
     padding: 0; 
-    background-color: transparent; 
+    z-index: -1; 
 }
+
+body::before {
+    content: '';
+    background: url('assests/bg.gif') no-repeat; 
+    background-size: cover; 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -2; 
+}
+
 
 .btn_with_photo {
     font-family:  var(--font-btn);
-    background-image: linear-gradient(299deg, rgba(115,0,0,1) 0%, rgba(195,35,35,1) 48%, rgba(106,0,0,1) 100%);
+    background-image: var(--color-btn);
     border:2px solid white;
     background-size: 200% auto;
     border-radius:20px;
@@ -97,26 +108,23 @@ h1 {
 
 
 .btn_with_photo:hover {
-    box-shadow: 0 0 30px rgba(255, 0, 0, 1);
+    box-shadow: 0 0 30px rgb(255, 255, 255);
 }
-    
+
+
 
 @media screen and (max-width: 720px) {
-    
+
     body {
-        position: fixed; 
-        width: 100%;
-        background-size: cover; 
-        opacity: 1; 
-        display: flex;
-        justify-content: center; 
-        align-items: center; 
-        height: 100%;
+        background: rgb(75, 1, 128);
     }
 
+    body::before {
+        content: none;
+    }
     .art {
         width: 200px;
-        height: 50%;
+        height: 60%;
         margin: 1px auto;
     }
 
@@ -129,11 +137,9 @@ h1 {
         font-size: 28px;
     }
 
-
     .image-container {
         width: 150px;
         height: 150px;
-        
     }
 
     .image-container img {
@@ -142,9 +148,8 @@ h1 {
     }
 
     .btn_with_photo {
-            font-size: 13px;
-            padding: 7px;
-            margin:2px;
-        }
+        font-size: 16px;
+        padding: 15px;
+        margin: 10px;
     }
-
+}

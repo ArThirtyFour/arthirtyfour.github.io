@@ -28,7 +28,7 @@ function nabor(text, callback, time_pause, display_time) {
 }
 
 function random_vibor() {
-    let spisok = ['Python + JS Dev', 'Full stack enjoyer', "Windows + Arch", 'Напишу сюда.. например', 'Я рыгнул'];
+    let spisok = ['Python + JS Dev', 'Full stack enjoyer', 'Windows + Arch user','Напишу сюда.. например', 'Я рыгнул'];
     let i = 0;
     let time_pause = 100;
     let display_time = 1500;

@@ -3,7 +3,7 @@
     --main-color : rgba(159, 74, 199, 0.529);
     --font-btn : "Tektur", serif;
     --anim_font : "Exo 2", serif;
-    --color-btn : linear-gradient(230deg, rgb(59, 3, 96) 0%, rgb(175, 132, 15) 48%, rgb(85, 6, 195) 100%);
+    --color-btn : radial-gradient(circle, rgba(183,0,255) 0%, rgb(104, 0, 149) 75%); 
   }
 
 body {

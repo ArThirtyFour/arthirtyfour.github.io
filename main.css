@@ -4,6 +4,7 @@
     --font-btn : "Tektur", serif;
     --anim_font : "Exo 2", serif;
     --color-btn : radial-gradient(circle, rgba(183,0,255) 0%, rgb(104, 0, 149) 75%); 
+    --color-text : rgb(255, 255, 255);
   }
 
 body {
@@ -93,6 +94,7 @@ img {
 
 #animka {
     text-align: center;
+    color:var(--color-text);
     font-family: var(--anim_font);
     -webkit-text-stroke: 1px rgb(255, 255, 255);
 }
@@ -153,12 +155,8 @@ h1 {
         padding: 15px;
         margin: 10px;
     }
-    #animka {
-        text-align: center;
-        font-family: var(--anim_font);
-        -webkit-text-stroke: 1px rgb(255, 255, 255);
-    }
 }
+
 @media screen and (max-width: 650px) {
     .btn_with_photo {
         font-size: 11px;

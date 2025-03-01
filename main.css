@@ -161,6 +161,34 @@ h1 {
         margin: 10px;
     }
 }
+@media screen and (max-width: 700px) {
+    .btn_with_photo {
+        font-size: 14px;
+        padding: 8px;
+        margin: 8px;
+    }
+    
+    .art {
+        width: 200px;
+        height: 60%;
+        margin: 1px auto;
+    }
+
+
+    h1 {
+        font-size: 24px;
+    }
+    .main img[src*="glitch.me"] {
+        display: block;
+        margin: 5px auto;
+    }
+    
+
+    .image-container {
+        width: 130px;
+        height: 130px;
+    }
+}
 
 @media screen and (max-width: 650px) {
     .btn_with_photo {

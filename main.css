@@ -1,5 +1,5 @@
 :root {
-    --font: "Play", serif;
+    --font: "Outfit", serif;
     --main-color : rgba(159, 74, 199, 0.529);
     --font-btn : "Tektur", serif;
     --anim_font : "Exo 2", serif;
@@ -23,7 +23,7 @@ body {
 
 body::before {
     content: '';
-    background: url('assests/bg.gif') no-repeat; 
+    background: url('https://media.tenor.com/x15S5rhHVscAAAAC/anime-purple.gif') no-repeat; 
     background-size: cover; 
     position: absolute;
     width: 100%;

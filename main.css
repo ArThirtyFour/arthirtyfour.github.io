@@ -60,8 +60,8 @@ body::before {
 }
 
 .image-container {
-    width: 220px; 
-    height: 220px; 
+    width: 270px; 
+    height: 270px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 

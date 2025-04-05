@@ -1,9 +1,9 @@
 :root {
     --font: "Outfit", serif;
-    --main-color : rgba(159, 74, 199, 0.529);
+    --main-color : rgba(81, 1, 87, 0.529);
     --font-btn : "Tektur", serif;
     --anim_font : "Exo 2", serif;
-    --color-btn : radial-gradient(circle, rgba(183,0,255) 0%, rgb(104, 0, 149) 75%); 
+    --color-btn : radial-gradient(circle, rgb(94, 0, 131) 0%, rgb(57, 0, 82) 75%); 
     --color-text : rgb(255, 255, 255);
   }
 
@@ -23,7 +23,7 @@ body {
 
 body::before {
     content: '';
-    background: url('https://media.tenor.com/x15S5rhHVscAAAAC/anime-purple.gif') no-repeat; 
+    background: url('https://c.tenor.com/fCML5OJ7Mh0AAAAC/tenor.gif') no-repeat; 
     background-size: cover; 
     position: absolute;
     width: 100%;

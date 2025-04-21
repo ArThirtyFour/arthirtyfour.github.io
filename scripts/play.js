@@ -1,6 +1,6 @@
 const fon = new Audio("bg.mp3");
 
-// Unlock audio on first user interaction
+
 document.addEventListener('click', () => {
     fon.play().then(() => {
         fon.pause();

@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Анимация печати текста --- 
     const subtitleElement = document.getElementById('subtitle-text');
     if (subtitleElement) {
         const phrases = ['Python + JS Dev', 'Full stack enjoyer', 'Windows + Arch user', 'Напишу сюда.. например', 'Я рыгнул'];
         let phraseIndex = 0;
-        const time_pause = 100; // Скорость печати/стирания
-        const display_time = 1500; // Время показа фразы
+        const time_pause = 100; 
+        const display_time = 1500;
 
         function typeAndErase(text, callback) {
             let charIndex = 0;
@@ -27,16 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(type, display_time);
                     }
                 } else {
-                    // Стирание
+
                     if (charIndex > 0) {
                         charIndex--;
                         currentHtml = text.substring(0, charIndex) + '|';
                         subtitleElement.innerHTML = currentHtml;
                         setTimeout(type, time_pause);
                     } else {
-                        // Завершили стирание
-                        subtitleElement.innerHTML = '&nbsp;|'; // Показываем курсор перед новой фразой
-                        callback(); // Вызываем колбэк для перехода к следующей фразе
+                     
+                        subtitleElement.innerHTML = '&nbsp;|'; 
+                        callback();
                     }
                 }
             }
@@ -47,17 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
             typeAndErase(phrases[phraseIndex], () => {
                 phraseIndex++;
                 if (phraseIndex >= phrases.length) {
-                    phraseIndex = 0; // Возвращаемся к началу списка
+                    phraseIndex = 0; 
                 }
-                setTimeout(nextPhrase, time_pause); // Небольшая пауза перед следующей фразой
+                setTimeout(nextPhrase, time_pause);
             });
         }
 
-        // Начинаем анимацию после небольшой задержки (синхронизируем с CSS)
+
         setTimeout(nextPhrase, 800); 
     }
 
-    // --- Анимация частиц на Canvas --- 
     const canvas = document.getElementById('particle-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
@@ -68,22 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.height = window.innerHeight;
         }
 
-        // Класс частицы
+
         class Particle {
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.size = Math.random() * 2 + 1; // Размер частицы
-                this.speedX = Math.random() * 1 - 0.5; // Скорость по X
-                this.speedY = Math.random() * 1 - 0.5; // Скорость по Y
-                this.color = `rgba(173, 216, 230, ${Math.random() * 0.5 + 0.2})`; // Светло-голубой с разной прозрачностью
+                this.size = Math.random() * 2 + 1; 
+                this.speedX = Math.random() * 1 - 0.5; 
+                this.speedY = Math.random() * 1 - 0.5; 
+                this.color = `rgba(173, 216, 230, ${Math.random() * 0.5 + 0.2})`;
             }
 
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Возвращаем частицу на экран, если она вышла за пределы
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
@@ -98,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initParticles() {
             particles = [];
-            const numberOfParticles = Math.floor(canvas.width / 30); // Количество частиц зависит от ширины экрана
+            const numberOfParticles = Math.floor(canvas.width / 30); 
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
             }
@@ -113,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animateParticles);
         }
 
-        // Инициализация и запуск
+
         window.addEventListener('resize', () => {
             resizeCanvas();
             initParticles();
@@ -124,24 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animateParticles();
     }
     
-    // --- Плавное появление элементов (если нужно) ---
-    // CSS анимации уже добавлены в style.css, 
-    // этот блок можно использовать для более сложной логики, 
-    // например, появления при прокрутке (Intersection Observer)
-    // Пример: 
-    /*
-    const observerOptions = {
-        threshold: 0.1
-    };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible'); // Добавить класс для анимации
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
 
     document.querySelectorAll('.card').forEach(card => {
         observer.observe(card);

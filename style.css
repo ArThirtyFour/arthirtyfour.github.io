@@ -1,0 +1,368 @@
+body {
+    background-color: #1a122a;
+    color: #e0e0e0;
+    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+:root {
+    --icon-gradient: linear-gradient(45deg, #87CEEB, #4682B4);
+    --button-gradient: linear-gradient(45deg, #6a3093, #a044ff);
+    --button-gradient-hover: linear-gradient(45deg, #7e40a9, #b05cff);
+    --accent-purple-light: rgba(198, 162, 230, 0.5); 
+    --accent-purple-dark: rgba(126, 87, 194, 0.4);
+}
+
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    margin-bottom: 25px;
+    border: 5px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 25px var(--accent-purple-dark);
+}
+
+h1 {
+    font-size: 3.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-family: 'Outfit', sans-serif;
+    margin: 0 5px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #d1c4e9, #b39ddb, #9575cd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    color: #b0aac0;
+    margin-bottom: 25px;
+    font-family: 'Exo 2', sans-serif;
+    min-height: 1.5em;
+    max-width: 90%;
+    word-wrap: break-word;
+}
+
+.subtitle i {
+    margin: 0 5px;
+}
+
+.social-links {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 750px;
+    padding: 20px;
+    border: 1px solid rgba(198, 162, 230, 0.2);
+    border-radius: 20px;
+    background-color: rgba(42, 30, 63, 0.4);
+}
+
+.social-links a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px; 
+    font-size: 1em;
+    transition: background 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Tektur', sans-serif;
+    flex-shrink: 0;
+    background: var(--button-gradient);
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-size: 150% auto;
+}
+
+.social-links a:hover {
+    transform: scale(1.05);
+    background: var(--button-gradient-hover);
+    box-shadow: 0 4px 10px var(--accent-purple-dark);
+    background-position: right center; 
+}
+
+.social-links img {
+    width: 20px; 
+    height: 20px;
+    margin-right: 8px; 
+    vertical-align: middle;
+}
+
+.social-links .telegram img { --mask-url: url('https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF'); }
+.social-links .discord img { --mask-url: url('https://img.icons8.com/?size=100&id=30888&format=png&color=FFFFFF'); }
+.social-links .github img { --mask-url: url('https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF'); }
+.social-links .blog img { --mask-url: url('https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF'); }
+.social-links .leetcode img { --mask-url: url('https://img.icons8.com/?size=100&id=PZknXs9seWCp&format=png&color=FFFFFF'); }
+.social-links .steam img { --mask-url: url('https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF'); }
+.social-links .details img { --mask-url: url('https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF'); }
+
+.projects {
+    padding: 20px 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.projects h2 {
+    text-align: center;
+    color: #d1c4e9;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+    font-family: 'Outfit', sans-serif;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    opacity: 0;
+    animation: fadeInGrid 1s ease-out 0.5s forwards;
+}
+
+@keyframes fadeInGrid {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    background-color: #2a1e3f;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid rgba(198, 162, 230, 0.1);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--accent-purple-dark);
+    border-color: var(--accent-purple-light);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 15px;
+    background-color: #3e2d5a;
+    border-radius: 5px;
+    object-fit: contain;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #eadeff;
+    font-family: 'Outfit', sans-serif;
+}
+
+.card-subtitle {
+    color: #b0aac0;
+    font-size: 0.9em;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.card p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #d1c4e9;
+    margin-bottom: 20px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tags span {
+    background-color: rgba(126, 87, 194, 0.2);
+    color: #d1c4e9;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    border: 1px solid rgba(198, 162, 230, 0.3);
+    font-family: 'Tektur', sans-serif;
+}
+
+header, .projects h2 {
+    opacity: 0;
+    animation: fadeInElement 0.8s ease-out forwards;
+}
+
+h1 {
+    animation-delay: 0.1s;
+}
+
+.subtitle {
+    animation-delay: 0.2s;
+}
+
+.social-links {
+    animation-delay: 0.3s;
+}
+
+.projects h2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInElement {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .avatar {
+        width: 220px;
+        height: 220px;
+    }
+    h1 {
+        font-size: 2.8em;
+    }
+    .button-group {
+        max-width: 650px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 30px 15px 15px;
+    }
+    h1 {
+        font-size: 2.4em;
+    }
+    .subtitle {
+        font-size: 1.1em;
+        min-height: 1.3em;
+        margin-bottom: 20px;
+    }
+    .avatar {
+        width: 180px;
+        height: 180px;
+        margin-bottom: 20px;
+    }
+    .social-links {
+        margin-bottom: 15px;
+    }
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    .button-group {
+        max-width: 90%;
+        gap: 10px;
+        padding: 15px;
+    }
+    .social-links a {
+        padding: 10px 16px;
+        font-size: 0.95em;
+        border-radius: 18px;
+    }
+    .social-links img {
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 20px 15px 10px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .subtitle {
+        font-size: 1em;
+        min-height: 1.2em;
+        margin-bottom: 15px;
+    }
+    .avatar {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 15px;
+    }
+    .button-group {
+        gap: 8px;
+        padding: 12px;
+        border-radius: 15px;
+    }
+    .social-links a {
+        padding: 9px 12px;
+        font-size: 0.85em;
+        flex-basis: calc(50% - 6px);
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .social-links img {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+    }
+    .projects {
+        padding: 15px 15px 15px;
+    }
+    .projects h2 {
+        font-size: 1.4em;
+        margin-bottom: 20px;
+    }
+    .card {
+        padding: 20px;
+    }
+    .card h3 {
+        font-size: 1.3em;
+    }
+    .card p {
+        font-size: 0.95em;
+    }
+    .tags span {
+        font-size: 0.8em;
+        padding: 4px 10px;
+    }
+} 

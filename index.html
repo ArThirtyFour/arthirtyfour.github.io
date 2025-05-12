@@ -1,58 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR34 | Маня-Сайт</title>
-    <link rel="stylesheet" href="main.css">
+    <title>AR34 | Mаня-Сайт</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="https://img.icons8.com/?size=100&id=bGv5vHhwLQi3&format=png&color=000000">
-    <script src="scripts/main.js"></script>
-    <script src="scripts/play.js"></script>
 </head>
 <body>
-    <a class="btn_with_photo" id="da" onclick="play()">
-        <img src="https://img.icons8.com/?size=100&id=87746&format=png&color=FFFFFF">
-        Открыть
-    </a>
-    <div class="main">
-        <img class="image-container" src="https://avatars.githubusercontent.com/u/149522975?v=4">
-        <h1>Welcome in My Site</h1>
-        <p id="animka"></p>
-        <script>random_vibor();</script>
-        <div class="art">
-            <a class="btn_with_photo" href="https://t.me/ArThirtyFour">
-                <img src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF">
-                Telegram
-            </a>
-            <a class="btn_with_photo" href="https://t.me/perexodnik_ar34">
-                <img src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF">
-                My blog
-            </a>
-            <a class="btn_with_photo" href="https://discord.com/users/737349861963202700/">
-                <img src="https://img.icons8.com/?size=100&id=30888&format=png&color=FFFFFF">
-                Discord
-            </a>
-            <a class="btn_with_photo" href="https://github.com/ArThirtyFour">
-                <img src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF">
-                Github
-            </a>
-            <a class="btn_with_photo" href="https://leetcode.com/u/ArThirtyFour">
-                <img src="https://img.icons8.com/?size=100&id=PZknXs9seWCp&format=png&color=FFFFFF">
-                Leetcode
-            </a>
-            <a class="btn_with_photo" href="https://steamcommunity.com/profiles/76561199780032103/">
-                <img src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF">
-                Steam
-            </a>
-            <a class="btn_with_photo" href="https://t.me/bio_ar34/16">
-                <img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF">
-                Подробнее тут
-            </a>
-            <img src="https://profile-counter.glitch.me/ArStats/count.svg">
+    <canvas id="particle-canvas"></canvas>
+    <header>
+        <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar">
+        <h1>Ку , я <span class="gradient-text">AR34!</span></h1>
+        <p class="subtitle" id="subtitle-text"> 
+        </p>
+        <div class="social-links">
+            <div class="button-group">
+                 <a href="https://t.me/ArThirtyFour" target="_blank" class="btn telegram"><img src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF" alt="Telegram"> Telegram</a>
+                 <a href="https://discord.com/users/737349861963202700/" target="_blank" class="btn discord"><img src="https://img.icons8.com/?size=100&id=30888&format=png&color=FFFFFF" alt="Discord"> Discord</a>
+                 <a href="https://github.com/ArThirtyFour" target="_blank" class="btn github"><img src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF" alt="Github"> Github</a>
+                 <a href="https://t.me/perexodnik_ar34" target="_blank" class="btn blog"><img src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog"> My blog</a>
+                 <a href="https://leetcode.com/u/ArThirtyFour" target="_blank" class="btn leetcode"><img src="https://img.icons8.com/?size=100&id=PZknXs9seWCp&format=png&color=FFFFFF" alt="Leetcode"> Leetcode</a>
+                 <a href="https://steamcommunity.com/profiles/76561199780032103/" target="_blank" class="btn steam"><img src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam"> Steam</a>
+                 <a href="https://t.me/bio_ar34/16" target="_blank" class="btn details"><img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> Подробнее тут</a>
+            </div>
         </div>
-    </div>
+    </header>
+
+    <section class="projects">
+        <h2>> Active Projects <</h2>
+        <div class="projects-grid">
+            <article class="card project-card" onclick="window.open('https://github.com/FoxUserbot/FoxUserbot', '_blank')">
+                <div class="card-header">
+                    <img src="https://raw.githubusercontent.com/FoxUserbot/FoxUserbot/refs/heads/main/logo.png" alt="FoxUserbot Icon" class="card-icon project-icon">
+                    <h3>FoxUserbot</h3>
+                </div>
+                 <p class="card-subtitle">Telegram Userbot</p>
+                 <p>FoxUSERBOT | Telegram Userbot built with Kurigram (Pyrogram). Easy installation.</p>
+                 <div class="tags">
+                     <span>Python</span>
+                     <span>Userbot</span>
+                     <span>Telegram</span>
+                     <span>Pyrogram</span>
+                     <span>Kurigram</span>
+                 </div>
+            </article>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 

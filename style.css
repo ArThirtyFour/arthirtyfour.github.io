@@ -365,4 +365,214 @@ h1 {
         font-size: 0.8em;
         padding: 4px 10px;
     }
+}
+
+.tech-stack {
+    padding: 20px 20px 20px;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.tech-stack h2 {
+    color: #d1c4e9;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+    font-family: 'Outfit', sans-serif;
+}
+
+.stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Adjust gap as needed */
+    /* Optional: add padding/border/background if needed */
+}
+
+.tech-item {
+    background-color: rgba(126, 87, 194, 0.2);
+    color: #d1c4e9;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em; /* Slightly larger font size for stack items */
+    border: 1px solid rgba(198, 162, 230, 0.3);
+    font-family: 'Tektur', sans-serif;
+    white-space: nowrap; /* Prevent items from breaking onto multiple lines */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.tech-item:hover {
+    background-color: rgba(126, 87, 194, 0.4); /* Darker background on hover */
+    border-color: rgba(198, 162, 230, 0.5); /* Lighter border on hover */
+}
+
+/* Optional: Add responsiveness for smaller screens if needed */
+/* @media (max-width: XXXpx) { ... } */
+
+.github-stats {
+    padding: 20px 20px 20px;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.github-stats h2 {
+    color: #d1c4e9;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+    font-family: 'Outfit', sans-serif;
+}
+
+.github-graph-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid rgba(198, 162, 230, 0.2);
+    border-radius: 20px;
+    background-color: rgba(42, 30, 63, 0.4); /* Similar background to button group */
+    max-width: 700px; /* Adjust max-width as needed to control size */
+    margin: 0 auto; /* Center the container */
+    overflow-x: auto; /* Add scroll if graph is too wide on small screens */
+}
+
+.github-graph-container img {
+    display: block; /* Remove extra space below the image */
+    max-width: 100%; /* Make image responsive within its container */
+    height: auto;
+    border-radius: 10px; /* Optional: add slight border radius to the image */
+}
+
+header, .projects h2 {
+    opacity: 0;
+    animation: fadeInElement 0.8s ease-out forwards;
+}
+
+h1 {
+    animation-delay: 0.1s;
+}
+
+.subtitle {
+    animation-delay: 0.2s;
+}
+
+.social-links {
+    animation-delay: 0.3s;
+}
+
+.projects h2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInElement {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+    .avatar {
+        width: 220px;
+        height: 220px;
+    }
+    h1 {
+        font-size: 2.8em;
+    }
+    .button-group {
+        max-width: 650px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 30px 15px 15px;
+    }
+    h1 {
+        font-size: 2.4em;
+    }
+    .subtitle {
+        font-size: 1.1em;
+        min-height: 1.3em;
+        margin-bottom: 20px;
+    }
+    .avatar {
+        width: 180px;
+        height: 180px;
+        margin-bottom: 20px;
+    }
+    .social-links {
+        margin-bottom: 15px;
+    }
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    .button-group {
+        max-width: 90%;
+        gap: 10px;
+        padding: 15px;
+    }
+    .social-links a {
+        padding: 10px 16px;
+        font-size: 0.95em;
+        border-radius: 18px;
+    }
+    .social-links img {
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 20px 15px 10px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    .subtitle {
+        font-size: 1em;
+        min-height: 1.2em;
+        margin-bottom: 15px;
+    }
+    .avatar {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 15px;
+    }
+    .button-group {
+        gap: 8px;
+        padding: 12px;
+        border-radius: 15px;
+    }
+    .social-links a {
+        padding: 9px 12px;
+        font-size: 0.85em;
+        flex-basis: calc(50% - 6px);
+        justify-content: center;
+        border-radius: 15px;
+    }
+    .social-links img {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+    }
+    .projects {
+        padding: 15px 15px 15px;
+    }
+    .projects h2 {
+        font-size: 1.4em;
+        margin-bottom: 20px;
+    }
+    .card {
+        padding: 20px;
+    }
+    .card h3 {
+        font-size: 1.3em;
+    }
+    .card p {
+        font-size: 0.95em;
+    }
+    .tags span {
+        font-size: 0.8em;
+        padding: 4px 10px;
+    }
 } 

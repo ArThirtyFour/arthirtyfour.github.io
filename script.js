@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         charIndex++;
                         setTimeout(type, time_pause);
                     } else {
-                        // Завершили печать, ждем перед стиранием
-                        subtitleElement.innerHTML = text; // Убираем курсор
+                        subtitleElement.innerHTML = text;
                         isErasing = true;
                         setTimeout(type, display_time);
                     }

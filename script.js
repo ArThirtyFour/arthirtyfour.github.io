@@ -70,9 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.size = Math.random() * 2 + 1; 
-                this.speedX = Math.random() * 1 - 0.5; 
-                this.speedY = Math.random() * 1 - 0.5; 
+                if (window.innerWidth <= 480) {
+                    this.size = Math.random() * 3 + 1;
+                } else {
+                    this.size = Math.random() * 4 + 1;
+                }
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
                 this.color = `rgba(173, 216, 230, ${Math.random() * 0.5 + 0.2})`;
             }
 
@@ -94,7 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function initParticles() {
             particles = [];
-            const numberOfParticles = Math.floor(canvas.width / 30); 
+            let numberOfParticles;
+            
+            if (window.innerWidth <= 480) {
+                numberOfParticles = Math.floor(canvas.width / 15);
+            } else if (window.innerWidth <= 768) {
+                numberOfParticles = Math.floor(canvas.width / 18);
+            } else {
+                numberOfParticles = Math.floor(canvas.width / 20);
+            }
+            
             for (let i = 0; i < numberOfParticles; i++) {
                 particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
             }

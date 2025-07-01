@@ -2,10 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const subtitleElement = document.getElementById('subtitle-text');
     if (subtitleElement) {
-        const phrases = ['Python + JS Dev', 'Full stack enjoyer', 'Windows + Arch user', 'Напишу сюда.. например', 'Я рыгнул'];
+
+        const userLanguage = navigator.language || navigator.userLanguage;
+        const isRussian = userLanguage.startsWith('ru');
+
+        const phrases = isRussian ? 
+            ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул'] : 
+            ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Just writing here.. for example', 'SUKA BLYAT'];
         let phraseIndex = 0;
         const time_pause = 100; 
         const display_time = 1500;
+
+        if (isRussian) {
+            document.querySelector('h1').innerHTML = 'Ку, я <span class="gradient-text">AR34!</span>';
+            document.querySelector('.btn.details').innerHTML = '<img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> Подробнее тут';
+        } else {
+            document.querySelector('h1').innerHTML = 'Hi, I\'m <span class="gradient-text">AR34!</span>';
+            document.querySelector('.btn.details').innerHTML = '<img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> More details here';
+        }
 
         function typeAndErase(text, callback) {
             let charIndex = 0;

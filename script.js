@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const userLanguage = navigator.language || navigator.userLanguage;
         const isRussian = userLanguage.startsWith('ru');
-
         const phrases = isRussian ? 
             ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул'] : 
             ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Just writing here.. for example', 'SUKA BLYAT'];
@@ -19,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.querySelector('h1').innerHTML = 'Hi, I\'m <span class="gradient-text">AR34!</span>';
             document.querySelector('.btn.details').innerHTML = '<img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> More details here';
+        }
+
+        const russianMessage = document.getElementById('russian-only-message');
+        if (russianMessage && isRussian) {
+            russianMessage.style.display = 'block';
         }
 
         function typeAndErase(text, callback) {

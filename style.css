@@ -601,4 +601,13 @@ h1 {
         font-size: 0.8em;
         padding: 4px 10px;
     }
+}
+
+#russian-only-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #b0aac0;
+    font-size: 1.1em;
+    font-family: 'Exo 2', sans-serif;
+    display: none;
 } 

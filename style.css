@@ -29,10 +29,10 @@ body::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 150px; /* Высота эффекта дыма */
-    background: linear-gradient(to top, rgba(26, 18, 42, 0.8), transparent); /* Градиент от темного к прозрачному */
-    z-index: 0; /* Чтобы дым был под основным контентом */
-    pointer-events: none; /* Чтобы не мешал взаимодействию с элементами */
+    height: 150px;
+    background: linear-gradient(to top, rgba(26, 18, 42, 0.8), transparent); 
+    z-index: 0; 
+    pointer-events: none; 
 }
 
 :root {
@@ -41,6 +41,44 @@ body::after {
     --button-gradient-hover: linear-gradient(45deg, #7e40a9, #b05cff);
     --accent-purple-light: rgba(198, 162, 230, 0.5); 
     --accent-purple-dark: rgba(126, 87, 194, 0.4);
+    --bg-deep-1: #1a122a;
+    --bg-deep-2: #2a1e3f;
+    --blob-1: rgba(160, 68, 255, 0.18);
+    --blob-2: rgba(126, 87, 194, 0.22);
+    --blob-3: rgba(92, 52, 150, 0.18);
+    --blob-4: rgba(48, 24, 96, 0.22);
+}
+
+@property --x1 { syntax: '<percentage>'; inherits: false; initial-value: 20%; }
+@property --y1 { syntax: '<percentage>'; inherits: false; initial-value: 30%; }
+@property --x2 { syntax: '<percentage>'; inherits: false; initial-value: 80%; }
+@property --y2 { syntax: '<percentage>'; inherits: false; initial-value: 25%; }
+@property --x3 { syntax: '<percentage>'; inherits: false; initial-value: 30%; }
+@property --y3 { syntax: '<percentage>'; inherits: false; initial-value: 75%; }
+@property --x4 { syntax: '<percentage>'; inherits: false; initial-value: 75%; }
+@property --y4 { syntax: '<percentage>'; inherits: false; initial-value: 70%; }
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: -10% -10% -10% -10%;
+    z-index: -2; 
+    pointer-events: none;
+    background:
+        radial-gradient(35vmax 35vmax at var(--x1) var(--y1), var(--blob-1), transparent 60%),
+        radial-gradient(40vmax 40vmax at var(--x2) var(--y2), var(--blob-2), transparent 60%),
+        radial-gradient(32vmax 32vmax at var(--x3) var(--y3), var(--blob-3), transparent 60%),
+        radial-gradient(38vmax 38vmax at var(--x4) var(--y4), var(--blob-4), transparent 60%);
+    filter: blur(10px) saturate(115%);
+    animation: blobShift 22s ease-in-out infinite alternate;
+}
+
+@keyframes blobShift {
+    0%   { --x1: 18%; --y1: 28%; --x2: 82%; --y2: 22%; --x3: 28%; --y3: 78%; --x4: 72%; --y4: 72%; }
+    25%  { --x1: 28%; --y1: 22%; --x2: 78%; --y2: 30%; --x3: 36%; --y3: 70%; --x4: 68%; --y4: 80%; }
+    50%  { --x1: 22%; --y1: 36%; --x2: 70%; --y2: 20%; --x3: 26%; --y3: 66%; --x4: 80%; --y4: 64%; }
+    75%  { --x1: 30%; --y1: 26%; --x2: 72%; --y2: 34%; --x3: 34%; --y3: 72%; --x4: 76%; --y4: 74%; }
+    100% { --x1: 18%; --y1: 28%; --x2: 82%; --y2: 22%; --x3: 28%; --y3: 78%; --x4: 72%; --y4: 72%; }
 }
 
 #particle-canvas {
@@ -295,6 +333,9 @@ h1 {
     .button-group {
         max-width: 650px;
     }
+    .tech-stack {
+        max-width: 650px; /* match button-group at this breakpoint */
+    }
 }
 
 @media (max-width: 768px) {
@@ -324,6 +365,9 @@ h1 {
         max-width: 90%;
         gap: 10px;
         padding: 15px;
+    }
+    .tech-stack {
+        max-width: 90%; /* follow button-group on tablets */
     }
     .social-links a {
         padding: 10px 16px;
@@ -395,7 +439,7 @@ h1 {
 
 .tech-stack {
     padding: 20px 20px 20px;
-    max-width: 1200px;
+    max-width: 750px; /* match .button-group width */
     margin: 40px auto;
     text-align: center;
 }
@@ -411,8 +455,11 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px; /* Adjust gap as needed */
-    /* Optional: add padding/border/background if needed */
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid rgba(198, 162, 230, 0.2);
+    border-radius: 20px;
+    background-color: rgba(42, 30, 63, 0.4);
 }
 
 .tech-item {
@@ -420,20 +467,17 @@ h1 {
     color: #d1c4e9;
     padding: 5px 12px;
     border-radius: 15px;
-    font-size: 0.9em; /* Slightly larger font size for stack items */
+    font-size: 0.9em;
     border: 1px solid rgba(198, 162, 230, 0.3);
     font-family: 'Tektur', sans-serif;
-    white-space: nowrap; /* Prevent items from breaking onto multiple lines */
+    white-space: nowrap;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .tech-item:hover {
-    background-color: rgba(126, 87, 194, 0.4); /* Darker background on hover */
-    border-color: rgba(198, 162, 230, 0.5); /* Lighter border on hover */
+    background-color: rgba(126, 87, 194, 0.4);
+    border-color: rgba(198, 162, 230, 0.5);
 }
-
-/* Optional: Add responsiveness for smaller screens if needed */
-/* @media (max-width: XXXpx) { ... } */
 
 .github-stats {
     padding: 20px 20px 20px;

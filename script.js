@@ -95,7 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
-                this.color = `rgba(173, 216, 230, ${Math.random() * 0.5 + 0.2})`;
+                const palette = [
+                    [209, 196, 233], // #d1c4e9
+                    [179, 157, 219], // #b39ddb
+                    [149, 117, 205], // #9575cd
+                    [126, 87, 194]   // #7e57c2
+                ];
+                const [r, g, b] = palette[Math.floor(Math.random() * palette.length)];
+                const alpha = Math.random() * 0.35 + 0.15; 
+                this.color = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                this.baseRGB = { r, g, b };
             }
 
             update() {
@@ -111,6 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.save();
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.strokeStyle = `rgba(${this.baseRGB.r}, ${this.baseRGB.g}, ${this.baseRGB.b}, 0.25)`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size + 0.6, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
             }
         }
 
@@ -133,11 +150,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+           
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
+
+            drawConnections();
             requestAnimationFrame(animateParticles);
+        }
+
+        function drawConnections() {
+            const maxDist = window.innerWidth <= 480 ? 80 : (window.innerWidth <= 768 ? 110 : 140);
+            const maxDistSq = maxDist * maxDist;
+            const base = { r: 149, g: 117, b: 205 }; 
+
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq < maxDistSq) {
+                        const t = 1 - distSq / maxDistSq; 
+                        const alpha = 0.25 * t; 
+                        ctx.strokeStyle = `rgba(${base.r}, ${base.g}, ${base.b}, ${alpha})`;
+                        ctx.lineWidth = Math.max(0.4, 1.2 * t);
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            ctx.restore();
         }
 
 

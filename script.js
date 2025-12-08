@@ -1,58 +1,154 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const translations = {
+        ru: {
+            title: 'AR34 | Mаня-Сайт',
+            greeting: 'Ку , я <span class="gradient-text">AR34!</span>',
+            moreDetails: 'Подробнее тут',
+            loadingTrack: 'Загрузка трека...',
+            myStack: '> Мой Тех. Стек <',
+            githubContributions: '> GitHub Contributions <',
+            activeProjects: '> Активные Проекты <',
+            foxUserbotSubtitle: 'Telegram Userbot',
+            foxUserbotDesc: 'FoxUSERBOT | Юзербот на тг построен на Kurigram (Pyrogram). Простая установка.',
+            kangelPluginsSubtitle: 'Exteragram плагины',
+            kangelPluginsDesc: 'Разработка плагинов для exteraGram (Python)',
+            vpnServiceSubtitle: 'VPN Сервис',
+            vpnServiceDesc: 'Бесплатный VPN-сервис с поддержкой обхода белых списков.',
+            footerQuote: '"Ведь я и есть тот самый интернет-ангел....\n        Которого вы проебали"',
+            phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул']
+        },
+        en: {
+            title: 'AR34 | My Site',
+            greeting: 'Hi, I\'m <span class="gradient-text">AR34!</span>',
+            moreDetails: 'More details here',
+            loadingTrack: 'Loading track...',
+            myStack: '> My Stack <',
+            githubContributions: '> GitHub Contributions <',
+            activeProjects: '> Active Projects <',
+            foxUserbotSubtitle: 'Telegram Userbot',
+            foxUserbotDesc: 'FoxUSERBOT | Telegram Userbot built with Kurigram (Pyrogram). Easy installation.',
+            kangelPluginsSubtitle: 'Exteragram Plugins',
+            kangelPluginsDesc: 'Development of a prototype plugins system for Exteragram (Python)',
+            vpnServiceSubtitle: 'VPN Service',
+            vpnServiceDesc: 'Free VPN service with support for VLESS and SS protocols. More actually in Russia',
+            footerQuote: '"After all, I am that very internet angel....\n        That you messed up"',
+            phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Just writing here.. for example', 'SUKA BLYAT']
+        }
+    };
+
+  
+    let currentLang = localStorage.getItem('language') || (navigator.language.startsWith('ru') ? 'ru' : 'en');
 
     const subtitleElement = document.getElementById('subtitle-text');
+    let phrases = translations[currentLang].phrases;
+    let phraseIndex = 0;
+    const time_pause = 100; 
+    const display_time = 1500;
+    let isAnimating = false; 
+    function applyLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('language', lang);
+        
+        const t = translations[lang];
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                if (el.tagName === 'TITLE') {
+                    document.title = t[key];
+                } else if (el.tagName === 'H1' || (el.tagName === 'P' && key === 'footerQuote')) {
+                    el.innerHTML = t[key].replace(/\n/g, '<br>');
+                } else if (el.tagName === 'SPAN' && el.parentElement && el.parentElement.classList.contains('btn')) {
+                    const btn = el.parentElement;
+                    const icon = btn.querySelector('img');
+                    if (icon) {
+                        btn.innerHTML = icon.outerHTML + ' ' + t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                } else {
+                    el.textContent = t[key];
+                }
+            }
+        });
+        
+        const detailsBtn = document.querySelector('.btn.details');
+        if (detailsBtn && t.moreDetails) {
+            const icon = detailsBtn.querySelector('img');
+            if (icon) {
+                detailsBtn.innerHTML = icon.outerHTML + ' ' + t.moreDetails;
+            }
+        }
+
+        const langText = document.getElementById('lang-text');
+        if (langText) {
+            langText.textContent = lang.toUpperCase();
+        }
+
+        const footerMessage = document.getElementById('footer-message');
+        if (footerMessage) {
+            footerMessage.style.display = lang === 'ru' ? 'block' : 'none';
+        }
+
+        phrases = t.phrases;
+        phraseIndex = 0;
+    }
+
+    const langSwitcher = document.getElementById('lang-switcher');
+    if (langSwitcher) {
+        langSwitcher.addEventListener('click', () => {
+            isAnimating = false;
+            
+            const newLang = currentLang === 'ru' ? 'en' : 'ru';
+            applyLanguage(newLang);
+            
+            if (subtitleElement) {
+                subtitleElement.innerHTML = '&nbsp;|';
+                phraseIndex = 0;
+                setTimeout(() => {
+                    isAnimating = true;
+                    nextPhrase();
+                }, 100);
+            }
+        });
+    }
+
+    applyLanguage(currentLang);
+
     if (subtitleElement) {
-
-        const userLanguage = navigator.language || navigator.userLanguage;
-        const isRussian = userLanguage.startsWith('ru');
-        const phrases = isRussian ? 
-            ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул'] : 
-            ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Just writing here.. for example', 'SUKA BLYAT'];
-        let phraseIndex = 0;
-        const time_pause = 100; 
-        const display_time = 1500;
-
-        if (isRussian) {
-            document.querySelector('h1').innerHTML = 'Ку, я <span class="gradient-text">AR34!</span>';
-            document.querySelector('.btn.details').innerHTML = '<img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> Подробнее тут';
-        } else {
-            document.querySelector('h1').innerHTML = 'Hi, I\'m <span class="gradient-text">AR34!</span>';
-            document.querySelector('.btn.details').innerHTML = '<img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> More details here';
-        }
-
-        const russianMessage = document.getElementById('russian-only-message');
-        if (russianMessage && isRussian) {
-            russianMessage.style.display = 'block';
-        }
-
         function typeAndErase(text, callback) {
             let charIndex = 0;
             let currentHtml = '';
             let isErasing = false;
+            let currentTimer = null;
 
             function type() {
+                if (!isAnimating) {
+                    return;
+                }
+                
                 if (!isErasing) {
                     if (charIndex < text.length) {
                         currentHtml = text.substring(0, charIndex + 1) + '|';
                         subtitleElement.innerHTML = currentHtml;
                         charIndex++;
-                        setTimeout(type, time_pause);
+                        currentTimer = setTimeout(type, time_pause);
                     } else {
                         subtitleElement.innerHTML = text;
                         isErasing = true;
-                        setTimeout(type, display_time);
+                        currentTimer = setTimeout(type, display_time);
                     }
                 } else {
-
                     if (charIndex > 0) {
                         charIndex--;
                         currentHtml = text.substring(0, charIndex) + '|';
                         subtitleElement.innerHTML = currentHtml;
-                        setTimeout(type, time_pause);
+                        currentTimer = setTimeout(type, time_pause);
                     } else {
-                     
-                        subtitleElement.innerHTML = '&nbsp;|'; 
-                        callback();
+                        subtitleElement.innerHTML = '&nbsp;|';
+                        if (isAnimating) {
+                            callback();
+                        }
                     }
                 }
             }
@@ -60,17 +156,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function nextPhrase() {
+            if (!isAnimating) {
+                return;
+            }
+            
             typeAndErase(phrases[phraseIndex], () => {
+                if (!isAnimating) {
+                    return;
+                }
+                
                 phraseIndex++;
                 if (phraseIndex >= phrases.length) {
                     phraseIndex = 0; 
                 }
-                setTimeout(nextPhrase, time_pause);
+                setTimeout(() => {
+                    if (isAnimating) {
+                        nextPhrase();
+                    }
+                }, time_pause);
             });
         }
 
 
-        setTimeout(nextPhrase, 800); 
+        isAnimating = true;
+        setTimeout(nextPhrase, 800);
     }
 
     const canvas = document.getElementById('particle-canvas');

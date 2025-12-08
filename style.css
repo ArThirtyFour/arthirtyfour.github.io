@@ -3,7 +3,7 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     color: #e0e0e0;
-    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Comfortaa', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     position: relative;
@@ -113,7 +113,7 @@ h1 {
     font-size: 3.2em;
     margin-bottom: 10px;
     font-weight: bold;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     margin: 0 5px;
 }
 
@@ -168,7 +168,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Tektur', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     flex-shrink: 0;
     background: var(--button-gradient);
     border: none;
@@ -210,7 +210,7 @@ h1 {
     color: #d1c4e9;
     margin-bottom: 30px;
     font-size: 1.6em;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .projects-grid {
@@ -263,7 +263,7 @@ h1 {
     margin: 0;
     font-size: 1.4em;
     color: #eadeff;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .card-subtitle {
@@ -271,7 +271,7 @@ h1 {
     font-size: 0.9em;
     margin-top: -5px;
     margin-bottom: 15px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .card p {
@@ -294,7 +294,7 @@ h1 {
     border-radius: 15px;
     font-size: 0.85em;
     border: 1px solid rgba(198, 162, 230, 0.3);
-    font-family: 'Tektur', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 header, .projects h2 {
@@ -449,7 +449,7 @@ h1 {
     color: #d1c4e9;
     margin-bottom: 30px;
     font-size: 1.6em;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .stack-grid {
@@ -470,7 +470,7 @@ h1 {
     border-radius: 15px;
     font-size: 0.9em;
     border: 1px solid rgba(198, 162, 230, 0.3);
-    font-family: 'Tektur', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     white-space: nowrap;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -491,7 +491,7 @@ h1 {
     color: #d1c4e9;
     margin-bottom: 30px;
     font-size: 1.6em;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .github-graph-container {
@@ -668,7 +668,7 @@ h1 {
     color: #d1c4e9;
     margin-bottom: 30px;
     font-size: 1.6em;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .now-playing-card {
@@ -733,7 +733,7 @@ h1 {
     font-weight: bold;
     color: #eadeff;
     margin-bottom: 10px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     word-wrap: break-word;
     animation: slideInUp 0.5s ease-out 0.1s both;
     line-height: 1.3;
@@ -750,7 +750,7 @@ h1 {
     display: inline-block;
     font-size: 0.75em;
     color: #b0aac0;
-    font-family: 'Tektur', sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -852,4 +852,121 @@ h1 {
         font-size: 0.6em;
         margin-bottom: 3px;
     }
-} 
+}
+
+/* Language Switcher */
+.language-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--button-gradient);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-size: 150% auto;
+    text-decoration: none;
+}
+
+.lang-btn:hover {
+    transform: scale(1.05);
+    background: var(--button-gradient-hover);
+    box-shadow: 0 4px 10px var(--accent-purple-dark);
+    background-position: right center;
+}
+
+#lang-icon {
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+#lang-text {
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .language-switcher {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .lang-btn {
+        padding: 8px 14px;
+        font-size: 0.9em;
+    }
+    
+    #lang-icon {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-switcher {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .lang-btn {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
+    
+    #lang-icon {
+        font-size: 1em;
+    }
+}
+
+/* Footer */
+#footer-message {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 40px auto 0;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+}
+
+#footer-message p {
+    color: #b0aac0;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1.1em;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-line;
+}
+
+@media (max-width: 768px) {
+    #footer-message {
+        padding: 30px 15px;
+        margin: 30px auto 0;
+    }
+    
+    #footer-message p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    #footer-message {
+        padding: 20px 10px;
+        margin: 20px auto 0;
+    }
+    
+    #footer-message p {
+        font-size: 0.9em;
+    }
+}

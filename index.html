@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR34 | Mаня-Сайт</title>
+    <title data-i18n="title">AR34 | Mаня-Сайт</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="nowplaying.js"></script>
     <link rel="icon" href="https://img.icons8.com/?size=100&id=bGv5vHhwLQi3&format=png&color=000000">
 </head>
 <body>
     <canvas id="particle-canvas"></canvas>
+    <div class="language-switcher">
+        <button id="lang-switcher" class="lang-btn" title="Switch language">
+            <span id="lang-icon">🌐</span>
+            <span id="lang-text">RU</span>
+        </button>
+    </div>
     <header>
         <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar">
-        <h1>Ку , я <span class="gradient-text">AR34!</span></h1>
+        <h1 data-i18n="greeting">Ку , я <span class="gradient-text">AR34!</span></h1>
         <p class="subtitle" id="subtitle-text"> 
         </p>
         <div class="social-links">
@@ -27,17 +33,17 @@
                  <a href="https://t.me/perexodnik_ar34" target="_blank" class="btn blog"><img src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog"> My blog</a>
                  <a href="https://leetcode.com/u/ArThirtyFour" target="_blank" class="btn leetcode"><img src="https://img.icons8.com/?size=100&id=PZknXs9seWCp&format=png&color=FFFFFF" alt="Leetcode"> Leetcode (Abandoned)</a>
                  <a href="https://steamcommunity.com/profiles/76561199780032103/" target="_blank" class="btn steam"><img src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam"> Steam</a>
-                 <a href="https://t.me/bio_ar34/16" target="_blank" class="btn details"><img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> Подробнее тут</a>
+                 <a href="https://t.me/bio_ar34/16" target="_blank" class="btn details"><img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> <span data-i18n="moreDetails">Подробнее тут</span></a>
             </div>
         </div>
     </header>
     <section class="now-playing">
         <div class="now-playing-card" id="now-playing-card">
-            <div class="np-loading">Loading track...</div>
+            <div class="np-loading" data-i18n="loadingTrack">Loading track...</div>
         </div>
     </section>
     <section class="tech-stack">
-        <h2>> My Stack <</h2>
+        <h2 data-i18n="myStack">> My Stack <</h2>
         <div class="stack-grid">
             <span class="tech-item">Python</span>
             <span class="tech-item">JS</span>
@@ -62,52 +68,65 @@
     </section>
 
     <section class="github-stats">
-        <h2>> GitHub Contributions <</h2>
+        <h2 data-i18n="githubContributions">> GitHub Contributions <</h2>
         <div class="github-graph-container">
             <img src="https://github-readme-activity-graph.vercel.app/graph?username=ArThirtyFour&hide_border=true&area=true&theme=dark&bg_color=2A1E3F&color=D1C4E9&title_color=EADEFF&text_color=B0AAC0" alt="GitHub Activity Graph">
         </div>
     </section>
 
     <section class="projects">
-        <h2>> Active Projects <</h2>
+        <h2 data-i18n="activeProjects">> Active Projects <</h2>
         <div class="projects-grid">
             <article class="card project-card" onclick="window.open('https://github.com/FoxUserbot/FoxUserbot', '_blank')">
                 <div class="card-header">
                     <img src="https://raw.githubusercontent.com/FoxUserbot/FoxUserbot/refs/heads/main/photos/logo.png" alt="FoxUserbot Icon" class="card-icon project-icon">
                     <h3>FoxUserbot</h3>
                 </div>
-                 <p class="card-subtitle">Telegram Userbot</p>
-                 <p>FoxUSERBOT | Telegram Userbot built with Kurigram (Pyrogram). Easy installation.</p>
+                 <p class="card-subtitle" data-i18n="foxUserbotSubtitle">Telegram Userbot</p>
+                 <p data-i18n="foxUserbotDesc">FoxUSERBOT | Telegram Userbot built with Kurigram (Pyrogram). Easy installation.</p>
                  <div class="tags">
                      <span>Python</span>
                      <span>Userbot</span>
                      <span>Telegram</span>
-                     <span>Pyrogram</span>
                      <span>Kurigram</span>
                  </div>
             </article>
 
             <article class="card project-card" onclick="window.open('https://t.me/kangelplugins', '_blank')">
                 <div class="card-header">
-                    <img src="plugins.jpg" alt="KangelPlugins Icon" class="card-icon project-icon">
+                    <img src="https://avatars.githubusercontent.com/u/239184096?s=400&u=01a56877825d4437dacae9431e7b23381dc45372&v=4" alt="KangelPlugins Icon" class="card-icon project-icon">
                     <h3>KangelPlugins</h3>
                 </div>
-                 <p class="card-subtitle">Exteragram Plugins </p>
-                 <p>Development of a prototype plugins system for Exteragram (Python)</p>
+                 <p class="card-subtitle" data-i18n="kangelPluginsSubtitle">Exteragram Plugins </p>
+                 <p data-i18n="kangelPluginsDesc">Development of a prototype plugins system for Exteragram (Python)</p>
                  <div class="tags">
-                     <span>Exteragram</span>
+                     <span>exteraGram</span>
                      <span>Plugins</span>
                      <span>Python</span>
                      <span>Telegram</span>
-                     <span>Userbot</span>
+                 </div>
+            </article>
+
+            <article class="card project-card" onclick="window.open('https://etoneya.a9fm.site/', '_blank')">
+                <div class="card-header">
+                    <img src="https://img.icons8.com/color/100/000000/vpn.png" alt="VPN Icon" class="card-icon project-icon">
+                    <h3>Это не Я</h3>
+                </div>
+                 <p class="card-subtitle" data-i18n="vpnServiceSubtitle">VPN Service</p>
+                 <p data-i18n="vpnServiceDesc">Бесплатный VPN-сервис с поддержкой VLESS и SS протоколов. Сила трёх букв. Ключи к свободе.</p>
+                 <div class="tags">
+                     <span>VPN</span>
+                     <span>VLESS</span>
+                     <span>SS</span>
+                     <span>No WhiteList</span>
                  </div>
             </article>
 
         </div>
     </section>
 
-    <footer id="russian-only-message">
-        <p>"Ведь я и есть тот самый интернет-ангел.... 
+    <footer id="footer-message">
+        <p data-i18n="footerQuote">"Ведь я и есть тот самый интернет-ангел.... 
         Которого вы проебали"</p>
     </footer>
 

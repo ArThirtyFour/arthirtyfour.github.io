@@ -13,9 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
             kangelPluginsSubtitle: 'Exteragram плагины',
             kangelPluginsDesc: 'Разработка плагинов для exteraGram (Python)',
             vpnServiceSubtitle: 'VPN Сервис',
+            selfHostedProject: "> Мои селф-хост сервисы <",
+            matrixHosted: "Матрикс сервер",
+            searXNGHosted: "Удобный поисковик на базе SearXNG",
             vpnServiceDesc: 'Бесплатный VPN-сервис с поддержкой обхода белых списков.',
             footerQuote: '"Ведь я и есть тот самый интернет-ангел....\n        Которого вы проебали"',
-            phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул']
+            phrases: ['Python + JS Dev', 'Full stack enjoyer','Селф-хостед дурачок', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул']
         },
         en: {
             title: 'AR34 | My Site',
@@ -30,9 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
             kangelPluginsSubtitle: 'Exteragram Plugins',
             kangelPluginsDesc: 'Development of a prototype plugins system for Exteragram (Python)',
             vpnServiceSubtitle: 'VPN Service',
+            selfHostedProject: "> My self-hosted services <",
+            matrixHosted: "Matrix Server",
+            searXNGHosted: "Searxng instance",
             vpnServiceDesc: 'Free VPN service with support for VLESS and SS protocols. More actually in Russia',
             footerQuote: '"After all, I am that very internet angel....\n        That you messed up"',
-            phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Arch user', 'Just writing here.. for example', 'SUKA BLYAT']
+            phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Self-hosted fool XD','Arch user', 'Just writing here.. for example', 'SUKA BLYAT']
         }
     };
 

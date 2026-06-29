@@ -1,4 +1,100 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // MD3 morphing shapes
+    const container = document.createElement('div');
+    container.id = 'bg-shapes';
+    document.body.prepend(container);
+
+    const NS = 'http://www.w3.org/2000/svg';
+
+    function genPath(type, cx, cy) {
+        const n = 120, step = Math.PI * 2 / n;
+        let d = '';
+        for (let i = 0; i < n; i++) {
+            const a = i * step;
+            let r;
+            if (type === 'flower') {
+                r = 44 + 4 * Math.cos(10 * a);
+            } else if (type === 'blob') {
+                const S = 40, R = 16;
+                let oct = a % (Math.PI / 2);
+                if (oct > Math.PI / 4) oct = Math.PI / 2 - oct;
+                const bound = Math.atan2(S - R, S);
+                if (oct <= bound) {
+                    r = S / Math.cos(oct);
+                } else {
+                    const b = (S - R) * (Math.cos(oct) + Math.sin(oct));
+                    const c = (S - R) * (S - R) - R * R;
+                    r = b + Math.sqrt(b * b - c);
+                }
+            } else if (type === 'squircle') {
+                const R = 42;
+                const n = 4;
+                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), n) + Math.pow(Math.abs(Math.sin(a)), n), 1 / n);
+            } else if (type === 'peanut') {
+                const W = 48, H = 34, cx2 = W - H;
+                let quad = a % Math.PI;
+                if (quad > Math.PI / 2) quad = Math.PI - quad;
+                const bound = Math.atan2(H, cx2);
+                if (quad >= bound) {
+                    r = H / Math.sin(quad);
+                } else {
+                    const b = cx2 * Math.cos(quad);
+                    const c = cx2 * cx2 - H * H;
+                    r = b + Math.sqrt(b * b - c);
+                }
+            }
+            const x = cx + r * Math.cos(a);
+            const y = cy + r * Math.sin(a);
+            d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2) + ' ';
+        }
+        return d + 'Z';
+    }
+
+    const pFlower = genPath('flower', 60, 60);
+    const pBlob = genPath('blob', 60, 60);
+    const pSquircle = genPath('squircle', 60, 60);
+    const pPeanut = genPath('peanut', 60, 60);
+    const animValues = [pFlower, pFlower, pBlob, pBlob, pSquircle, pSquircle, pPeanut, pPeanut, pFlower].join('; ');
+    const keyTimes = '0; 0.12; 0.25; 0.37; 0.50; 0.62; 0.75; 0.87; 1';
+    const hold = '0 0 1 1', morph = '0.2 0 0 1';
+    const keySplines = [hold, morph, hold, morph, hold, morph, hold, morph].join('; ');
+    const colors = ['rgba(126,87,194,0.08)', 'rgba(160,68,255,0.06)', 'rgba(179,157,219,0.07)', 'rgba(92,52,150,0.09)'];
+
+    for (let i = 0; i < 8; i++) {
+        const wrap = document.createElement('div');
+        wrap.className = 'bg-md3-shape';
+        wrap.style.left = Math.random() * 85 + '%';
+        wrap.style.top = Math.random() * 85 + '%';
+        wrap.style.animationDelay = (Math.random() * -6) + 's';
+
+        const svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('viewBox', '0 0 120 120');
+        svg.classList.add('svg-canvas');
+
+        const g = document.createElementNS(NS, 'g');
+        g.classList.add('expressive-snap');
+        g.style.animationDelay = (Math.random() * -6) + 's';
+
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('fill', colors[i % colors.length]);
+        path.setAttribute('d', pFlower);
+
+        const anim = document.createElementNS(NS, 'animate');
+        anim.setAttribute('attributeName', 'd');
+        anim.setAttribute('dur', '6s');
+        anim.setAttribute('repeatCount', 'indefinite');
+        anim.setAttribute('calcMode', 'spline');
+        anim.setAttribute('values', animValues);
+        anim.setAttribute('keyTimes', keyTimes);
+        anim.setAttribute('keySplines', keySplines);
+
+        path.appendChild(anim);
+        g.appendChild(path);
+        svg.appendChild(g);
+        wrap.appendChild(svg);
+        container.appendChild(wrap);
+    }
+
     const translations = {
         ru: {
             title: 'AR34 | Mаня-Сайт',
@@ -188,132 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(nextPhrase, 800);
     }
 
-    const canvas = document.getElementById('particle-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                if (window.innerWidth <= 480) {
-                    this.size = Math.random() * 3 + 1;
-                } else {
-                    this.size = Math.random() * 4 + 1;
-                }
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
-                const palette = [
-                    [209, 196, 233], // #d1c4e9
-                    [179, 157, 219], // #b39ddb
-                    [149, 117, 205], // #9575cd
-                    [126, 87, 194]   // #7e57c2
-                ];
-                const [r, g, b] = palette[Math.floor(Math.random() * palette.length)];
-                const alpha = Math.random() * 0.35 + 0.15; 
-                this.color = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-                this.baseRGB = { r, g, b };
-            }
-
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.save();
-                ctx.globalCompositeOperation = 'lighter';
-                ctx.strokeStyle = `rgba(${this.baseRGB.r}, ${this.baseRGB.g}, ${this.baseRGB.b}, 0.25)`;
-                ctx.lineWidth = 0.8;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size + 0.6, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            let numberOfParticles;
-            
-            if (window.innerWidth <= 480) {
-                numberOfParticles = Math.floor(canvas.width / 15);
-            } else if (window.innerWidth <= 768) {
-                numberOfParticles = Math.floor(canvas.width / 18);
-            } else {
-                numberOfParticles = Math.floor(canvas.width / 20);
-            }
-            
-            for (let i = 0; i < numberOfParticles; i++) {
-                particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-           
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            drawConnections();
-            requestAnimationFrame(animateParticles);
-        }
-
-        function drawConnections() {
-            const maxDist = window.innerWidth <= 480 ? 80 : (window.innerWidth <= 768 ? 110 : 140);
-            const maxDistSq = maxDist * maxDist;
-            const base = { r: 149, g: 117, b: 205 }; 
-
-            ctx.save();
-            ctx.globalCompositeOperation = 'lighter';
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distSq = dx * dx + dy * dy;
-                    if (distSq < maxDistSq) {
-                        const t = 1 - distSq / maxDistSq; 
-                        const alpha = 0.25 * t; 
-                        ctx.strokeStyle = `rgba(${base.r}, ${base.g}, ${base.b}, ${alpha})`;
-                        ctx.lineWidth = Math.max(0.4, 1.2 * t);
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            ctx.restore();
-        }
-
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
-        });
-
-        resizeCanvas();
-        initParticles();
-        animateParticles();
-    }
-    
 
 
     const observer = new IntersectionObserver((entries) => {

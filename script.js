@@ -100,12 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'AR34 | Mаня-Сайт',
             greeting: 'Ку , я <span class="gradient-text">AR34!</span>',
             moreDetails: 'Подробнее тут',
+            blogLabel: 'Мой блог',
             loadingTrack: 'Загрузка трека...',
             myStack: '> Мой Тех. Стек <',
             githubContributions: '> GitHub Contributions <',
             activeProjects: '> Активные Проекты <',
-            foxUserbotSubtitle: 'Telegram Userbot',
-            foxUserbotDesc: 'FoxUSERBOT | Юзербот на тг построен на Kurigram (Pyrogram). Простая установка.',
+            exteraSubtitle: 'Matrix клиент',
+            exteraDesc: 'FluffyChat fork на стероидах. E2EE, голосовые звонки, Material You, кастомные эмодзи и многое другое.',
             kangelPluginsSubtitle: 'Exteragram плагины',
             kangelPluginsDesc: 'Разработка плагинов для exteraGram (Python)',
             vpnServiceSubtitle: 'VPN Сервис',
@@ -120,12 +121,13 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'AR34 | My Site',
             greeting: 'Hi, I\'m <span class="gradient-text">AR34!</span>',
             moreDetails: 'More details here',
+            blogLabel: 'My blog',
             loadingTrack: 'Loading track...',
             myStack: '> My Stack <',
             githubContributions: '> GitHub Contributions <',
             activeProjects: '> Active Projects <',
-            foxUserbotSubtitle: 'Telegram Userbot',
-            foxUserbotDesc: 'FoxUSERBOT | Telegram Userbot built with Kurigram (Pyrogram). Easy installation.',
+            exteraSubtitle: 'Matrix Client',
+            exteraDesc: 'FluffyChat fork on steroids. E2EE, voice calls, Material You, custom emotes and much more.',
             kangelPluginsSubtitle: 'Exteragram Plugins',
             kangelPluginsDesc: 'Development of a prototype plugins system for Exteragram (Python)',
             vpnServiceSubtitle: 'VPN Service',
@@ -160,27 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.title = t[key];
                 } else if (el.tagName === 'H1' || (el.tagName === 'P' && key === 'footerQuote')) {
                     el.innerHTML = t[key].replace(/\n/g, '<br>');
-                } else if (el.tagName === 'SPAN' && el.parentElement && el.parentElement.classList.contains('btn')) {
-                    const btn = el.parentElement;
-                    const icon = btn.querySelector('img');
-                    if (icon) {
-                        btn.innerHTML = icon.outerHTML + ' ' + t[key];
-                    } else {
-                        el.textContent = t[key];
-                    }
                 } else {
                     el.textContent = t[key];
                 }
             }
         });
-        
-        const detailsBtn = document.querySelector('.btn.details');
-        if (detailsBtn && t.moreDetails) {
-            const icon = detailsBtn.querySelector('img');
-            if (icon) {
-                detailsBtn.innerHTML = icon.outerHTML + ' ' + t.moreDetails;
-            }
-        }
 
         const langText = document.getElementById('lang-text');
         if (langText) {

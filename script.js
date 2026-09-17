@@ -11,24 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < n; i++) {
             const a = i * step;
             let r;
-            if (type === 'flower') {
-                r = 44 + 4 * Math.cos(10 * a);
-            } else if (type === 'blob') {
-                const S = 40, R = 16;
-                let oct = a % (Math.PI / 2);
-                if (oct > Math.PI / 4) oct = Math.PI / 2 - oct;
-                const bound = Math.atan2(S - R, S);
-                if (oct <= bound) {
-                    r = S / Math.cos(oct);
-                } else {
-                    const b = (S - R) * (Math.cos(oct) + Math.sin(oct));
-                    const c = (S - R) * (S - R) - R * R;
-                    r = b + Math.sqrt(b * b - c);
-                }
+            if (type === 'flower8') {
+                r = 44 + 6 * Math.cos(8 * a);
+            } else if (type === 'flower12') {
+                r = 44 + 5 * Math.cos(12 * a);
+            } else if (type === 'clover4') {
+                r = 43 + 7 * Math.cos(4 * a);
             } else if (type === 'squircle') {
-                const R = 42;
-                const n = 4;
-                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), n) + Math.pow(Math.abs(Math.sin(a)), n), 1 / n);
+                const R = 44, m = 4;
+                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), m) + Math.pow(Math.abs(Math.sin(a)), m), 1 / m);
+            } else if (type === 'star4') {
+                const R = 42, m = 1.6;
+                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), m) + Math.pow(Math.abs(Math.sin(a)), m), 1 / m);
             } else if (type === 'peanut') {
                 const W = 48, H = 34, cx2 = W - H;
                 let quad = a % Math.PI;
@@ -49,22 +43,44 @@ document.addEventListener('DOMContentLoaded', () => {
         return d + 'Z';
     }
 
-    const pFlower = genPath('flower', 60, 60);
-    const pBlob = genPath('blob', 60, 60);
+    const pFlower8 = genPath('flower8', 60, 60);
+    const pClover4 = genPath('clover4', 60, 60);
     const pSquircle = genPath('squircle', 60, 60);
+    const pFlower12 = genPath('flower12', 60, 60);
+    const pStar4 = genPath('star4', 60, 60);
     const pPeanut = genPath('peanut', 60, 60);
-    const animValues = [pFlower, pFlower, pBlob, pBlob, pSquircle, pSquircle, pPeanut, pPeanut, pFlower].join('; ');
-    const keyTimes = '0; 0.12; 0.25; 0.37; 0.50; 0.62; 0.75; 0.87; 1';
-    const hold = '0 0 1 1', morph = '0.2 0 0 1';
-    const keySplines = [hold, morph, hold, morph, hold, morph, hold, morph].join('; ');
-    const colors = ['rgba(126,87,194,0.08)', 'rgba(160,68,255,0.06)', 'rgba(179,157,219,0.07)', 'rgba(92,52,150,0.09)'];
 
-    for (let i = 0; i < 8; i++) {
+    const animValues = [pFlower8, pClover4, pSquircle, pFlower12, pStar4, pPeanut, pFlower8].join('; ');
+    const keyTimes = '0; 0.16; 0.33; 0.50; 0.66; 0.83; 1';
+    const smoothSpline = '0.2 0 0 1';
+    const keySplines = [smoothSpline, smoothSpline, smoothSpline, smoothSpline, smoothSpline, smoothSpline].join('; ');
+
+    const colors = [
+        'rgba(208, 188, 255, 0.05)',
+        'rgba(204, 194, 220, 0.04)',
+        'rgba(239, 184, 200, 0.04)',
+        'rgba(126, 87, 194, 0.06)',
+        'rgba(79, 55, 139, 0.07)'
+    ];
+
+    const shapeConfigs = [
+        { size: 260, x: '5%', y: '8%', delay: 0 },
+        { size: 180, x: '82%', y: '12%', delay: -4 },
+        { size: 220, x: '75%', y: '45%', delay: -9 },
+        { size: 280, x: '3%', y: '58%', delay: -14 },
+        { size: 190, x: '85%', y: '80%', delay: -18 },
+        { size: 240, x: '45%', y: '88%', delay: -7 },
+        { size: 170, x: '48%', y: '2%', delay: -12 }
+    ];
+
+    shapeConfigs.forEach((cfg, i) => {
         const wrap = document.createElement('div');
         wrap.className = 'bg-md3-shape';
-        wrap.style.left = Math.random() * 85 + '%';
-        wrap.style.top = Math.random() * 85 + '%';
-        wrap.style.animationDelay = (Math.random() * -6) + 's';
+        wrap.style.width = cfg.size + 'px';
+        wrap.style.height = cfg.size + 'px';
+        wrap.style.left = cfg.x;
+        wrap.style.top = cfg.y;
+        wrap.style.animationDelay = (cfg.delay * 1.5) + 's';
 
         const svg = document.createElementNS(NS, 'svg');
         svg.setAttribute('viewBox', '0 0 120 120');
@@ -72,15 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const g = document.createElementNS(NS, 'g');
         g.classList.add('expressive-snap');
-        g.style.animationDelay = (Math.random() * -6) + 's';
+        g.style.animationDuration = (35 + i * 8) + 's';
+        g.style.animationDelay = (cfg.delay * 2) + 's';
 
         const path = document.createElementNS(NS, 'path');
         path.setAttribute('fill', colors[i % colors.length]);
-        path.setAttribute('d', pFlower);
+        path.setAttribute('d', pFlower8);
 
         const anim = document.createElementNS(NS, 'animate');
         anim.setAttribute('attributeName', 'd');
-        anim.setAttribute('dur', '6s');
+        anim.setAttribute('dur', (18 + (i % 3) * 4) + 's');
         anim.setAttribute('repeatCount', 'indefinite');
         anim.setAttribute('calcMode', 'spline');
         anim.setAttribute('values', animValues);
@@ -92,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         svg.appendChild(g);
         wrap.appendChild(svg);
         container.appendChild(wrap);
-    }
+    });
 
     const translations = {
         ru: {

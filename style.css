@@ -218,7 +218,7 @@ h1 {
     background-color: var(--md-sys-color-surface-container);
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: var(--md-shape-xl);
-    padding: 28px 30px;
+    padding: 24px;
     cursor: pointer;
     overflow: hidden;
     display: flex;
@@ -241,13 +241,13 @@ h1 {
 .card-header {
     display: flex;
     align-items: center;
-    gap: 18px;
-    margin-bottom: 16px;
+    gap: 16px;
+    margin-bottom: 14px;
 }
 
 .card-icon {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: var(--md-shape-md);
     background-color: var(--md-sys-color-surface-container-highest);
     object-fit: contain;
@@ -257,7 +257,7 @@ h1 {
 
 .m3-card h3 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--md-sys-color-on-surface);
     letter-spacing: 0.15px;
@@ -265,18 +265,33 @@ h1 {
 
 .card-subtitle {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     letter-spacing: 0.25px;
-    margin: 3px 0 0;
+    margin: 2px 0 0;
 }
 
 .card-desc {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--md-sys-color-on-surface-variant);
-    margin: 0 0 20px;
+    margin: 0 0 16px;
     font-family: 'Exo 2', sans-serif;
     flex-grow: 1;
+}
+
+.m3-card md-chip-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.m3-card md-assist-chip {
+    --md-assist-chip-container-height: 28px;
+    --md-assist-chip-label-text-size: 0.75rem;
 }
 
 .projects, .tech-stack, .github-stats, .now-playing {

@@ -720,48 +720,171 @@ md-chip-set {
 
 @media (max-width: 768px) {
     header {
-        padding: 40px 16px 16px;
+        padding: 44px 16px 16px;
     }
     .avatar {
         width: 180px;
         height: 180px;
+        margin-bottom: 20px;
     }
     h1 {
-        font-size: 2.1rem;
+        font-size: 2.2rem;
+    }
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+    .projects, .tech-stack, .github-stats, .now-playing {
+        padding: 16px;
+        margin: 24px auto;
     }
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
     }
     .button-group {
-        max-width: 95%;
-        gap: 10px;
+        max-width: 100%;
+        gap: 8px;
         padding: 12px;
     }
-    .np-album-art {
-        width: 90px;
-        height: 90px;
+    .m3-card {
+        padding: 22px 20px;
+    }
+    .now-playing {
+        max-width: 100%;
+    }
+    .now-playing-card {
+        padding: 24px 20px;
+    }
+    .m3-player-main {
+        gap: 20px;
+    }
+    .m3-player-art-wrap {
+        width: 120px;
+        height: 120px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 580px) {
+    .language-switcher {
+        top: 10px;
+        right: 10px;
+    }
     header {
-        padding: 32px 12px 12px;
+        padding: 36px 12px 12px;
     }
     .avatar {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
+        margin-bottom: 16px;
     }
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.85rem;
+    }
+    .subtitle {
+        font-size: 0.88rem;
+        margin-bottom: 16px;
     }
     .button-group {
-        gap: 8px;
         padding: 10px;
+        gap: 8px;
+        border-radius: var(--md-shape-lg);
+    }
+    .m3-btn {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 130px;
+        justify-content: center;
+    }
+    .projects, .tech-stack, .github-stats, .now-playing {
+        padding: 12px;
+        margin: 20px auto;
+    }
+    .projects h2, .tech-stack h2, .github-stats h2 {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
     }
     .m3-card {
-        padding: 18px;
+        padding: 20px 16px;
+        border-radius: var(--md-shape-lg);
     }
-    .now-playing {
-        padding: 12px;
+    .card-header {
+        gap: 14px;
+        margin-bottom: 12px;
+    }
+    .card-icon {
+        width: 42px;
+        height: 42px;
+        padding: 6px;
+    }
+    .m3-card h3 {
+        font-size: 1.1rem;
+    }
+    .card-desc {
+        font-size: 0.88rem;
+        margin-bottom: 14px;
+    }
+    .tech-chip-container {
+        padding: 16px 12px;
+        border-radius: var(--md-shape-lg);
+    }
+    .github-graph-container {
+        padding: 16px 12px;
+        border-radius: var(--md-shape-lg);
+    }
+    .now-playing-card {
+        padding: 20px 16px;
+        border-radius: var(--md-shape-lg);
+    }
+    .m3-player-main {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .m3-player-art-wrap {
+        width: 130px;
+        height: 130px;
+        margin: 0 auto;
+    }
+    .m3-player-content {
+        width: 100%;
+        gap: 12px;
+    }
+    .m3-player-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+    .m3-track-meta {
+        width: 100%;
+        text-align: center;
+    }
+    .m3-track-title {
+        font-size: 1.15rem;
+        white-space: normal;
+        word-break: break-word;
+        text-align: center;
+    }
+    .m3-track-artist {
+        text-align: center;
+        font-size: 0.92rem;
+    }
+    .m3-track-album {
+        text-align: center;
+    }
+    .m3-lastfm-link {
+        margin: 4px auto 0;
+    }
+    .m3-player-controls {
+        gap: 16px;
+    }
+    #footer-message {
+        padding: 24px 16px 36px;
+    }
+}
+
+@media (max-width: 380px) {
+    .m3-btn {
+        flex: 1 1 100%;
+        width: 100%;
     }
 }

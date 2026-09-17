@@ -146,14 +146,26 @@ async function nowPlaying() {
         });
         const data = await response.json();
         
-        if (!data.recenttracks || !data.recenttracks.track || data.recenttracks.track.length === 0) {
+        let rawTracks = data?.recenttracks?.track;
+        if (!rawTracks) {
             if (recentTracksList.length === 0) {
                 card.innerHTML = '<div class="np-loading">No scrobble data found</div>';
             }
             return;
         }
 
-        recentTracksList = data.recenttracks.track;
+        if (!Array.isArray(rawTracks)) {
+            rawTracks = [rawTracks];
+        }
+
+        if (rawTracks.length === 0) {
+            if (recentTracksList.length === 0) {
+                card.innerHTML = '<div class="np-loading">No scrobble data found</div>';
+            }
+            return;
+        }
+
+        recentTracksList = rawTracks;
         if (currentTrackIndex >= recentTracksList.length) {
             currentTrackIndex = 0;
         }

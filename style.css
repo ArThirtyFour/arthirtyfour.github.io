@@ -1,24 +1,19 @@
-/* ===== Official Material Design 3 Tokens & Palette ===== */
 :root {
-    /* Primary (Purple / Lavender M3 Tone) */
     --md-sys-color-primary: #D0BCFF;
     --md-sys-color-on-primary: #381E72;
     --md-sys-color-primary-container: #4F378B;
     --md-sys-color-on-primary-container: #EADDFF;
 
-    /* Secondary */
     --md-sys-color-secondary: #CCC2DC;
     --md-sys-color-on-secondary: #332D41;
     --md-sys-color-secondary-container: #4A4458;
     --md-sys-color-on-secondary-container: #E8DEF8;
 
-    /* Tertiary */
     --md-sys-color-tertiary: #EFB8C8;
     --md-sys-color-on-tertiary: #492532;
     --md-sys-color-tertiary-container: #633B48;
     --md-sys-color-on-tertiary-container: #FFD8E4;
 
-    /* Surface & Background */
     --md-sys-color-background: #141218;
     --md-sys-color-on-background: #E6E0E9;
     --md-sys-color-surface: #141218;
@@ -31,23 +26,19 @@
     --md-sys-color-surface-container-high: #2B2930;
     --md-sys-color-surface-container-highest: #36343B;
 
-    /* Outline & Borders */
     --md-sys-color-outline: #938F99;
     --md-sys-color-outline-variant: #49454F;
     --md-sys-color-shadow: #000000;
     --md-sys-color-scrim: #000000;
 
-    /* Inverse */
     --md-sys-color-inverse-surface: #E6E0E9;
     --md-sys-color-inverse-on-surface: #313033;
     --md-sys-color-inverse-primary: #6750A4;
 
-    /* MD3 Elevation Shadows */
     --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
     --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
     --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
 
-    /* MD3 Shapes */
     --md-shape-xs: 4px;
     --md-shape-sm: 8px;
     --md-shape-md: 12px;
@@ -55,16 +46,13 @@
     --md-shape-xl: 28px;
     --md-shape-full: 9999px;
 
-    /* MD3 Web component font overrides */
     --md-ref-typeface-plain: 'Roboto', 'Exo 2', sans-serif;
     --md-ref-typeface-brand: 'Comfortaa', 'Roboto', sans-serif;
 
-    /* Ripple styling tokens */
     --md-ripple-hover-color: var(--md-sys-color-primary);
     --md-ripple-pressed-color: var(--md-sys-color-primary);
 }
 
-/* ===== Reset & Base ===== */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -80,7 +68,6 @@ body {
     line-height: 1.5;
 }
 
-/* Material Symbols configuration */
 .material-symbols-outlined {
     font-variation-settings:
         'FILL' 0,
@@ -90,7 +77,6 @@ body {
     vertical-align: middle;
 }
 
-/* ===== Background Expressive Shapes ===== */
 #bg-shapes {
     position: fixed;
     inset: 0;
@@ -133,7 +119,6 @@ body {
     100% { transform: rotate(540deg); animation-timing-function: linear; }
 }
 
-/* ===== Language Switcher ===== */
 .language-switcher {
     position: fixed;
     top: 16px;
@@ -145,7 +130,6 @@ body {
     --md-filled-tonal-button-container-shape: var(--md-shape-full);
 }
 
-/* ===== Header ===== */
 header {
     text-align: center;
     padding: 56px 24px 24px;
@@ -202,7 +186,6 @@ h1 {
     font-family: 'Exo 2', sans-serif;
 }
 
-/* ===== MD3 Social Buttons Group ===== */
 .social-links {
     width: 100%;
     display: flex;
@@ -230,26 +213,25 @@ h1 {
     vertical-align: middle;
 }
 
-/* ===== Material 3 Cards ===== */
 .m3-card {
     position: relative;
     background-color: var(--md-sys-color-surface-container);
     border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-shape-lg);
-    padding: 24px;
+    border-radius: var(--md-shape-xl);
+    padding: 28px 30px;
     cursor: pointer;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), background-color 0.25s, box-shadow 0.25s;
     --md-elevation-level: 1;
 }
 
 .m3-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     background-color: var(--md-sys-color-surface-container-high);
-    --md-elevation-level: 2;
+    --md-elevation-level: 3;
 }
 
 .m3-card:active {
@@ -259,74 +241,72 @@ h1 {
 .card-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 18px;
+    margin-bottom: 16px;
 }
 
 .card-icon {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: var(--md-shape-md);
     background-color: var(--md-sys-color-surface-container-highest);
     object-fit: contain;
-    padding: 6px;
+    padding: 8px;
     flex-shrink: 0;
 }
 
 .m3-card h3 {
     margin: 0;
-    font-size: 1.15rem;
-    font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--md-sys-color-on-surface);
     letter-spacing: 0.15px;
 }
 
 .card-subtitle {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.875rem;
+    font-size: 0.92rem;
     letter-spacing: 0.25px;
-    margin: 2px 0 0;
+    margin: 3px 0 0;
 }
 
 .card-desc {
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--md-sys-color-on-surface-variant);
-    margin: 0 0 16px;
+    margin: 0 0 20px;
     font-family: 'Exo 2', sans-serif;
     flex-grow: 1;
 }
 
-/* ===== Sections Layout ===== */
 .projects, .tech-stack, .github-stats, .now-playing {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 32px auto;
+    padding: 24px;
+    max-width: 1280px;
+    margin: 36px auto;
 }
 
 .projects h2, .tech-stack h2, .github-stats h2 {
     text-align: center;
     color: var(--md-sys-color-primary);
-    margin-bottom: 24px;
-    font-size: 1.35rem;
-    font-weight: 500;
+    margin-bottom: 28px;
+    font-size: 1.45rem;
+    font-weight: 600;
     letter-spacing: 0.15px;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 24px;
 }
 
-/* ===== Tech Stack Section ===== */
 .tech-stack {
-    max-width: 800px;
+    max-width: 880px;
     text-align: center;
 }
 
 .tech-chip-container {
-    padding: 20px;
+    padding: 24px 30px;
     background-color: var(--md-sys-color-surface-container);
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: var(--md-shape-xl);
@@ -338,22 +318,22 @@ h1 {
 md-chip-set {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
 }
 
-/* ===== GitHub Stats ===== */
 .github-stats {
     text-align: center;
+    max-width: 880px;
 }
 
 .github-graph-container {
     position: relative;
-    padding: 20px;
+    padding: 24px 28px;
     border-radius: var(--md-shape-xl);
     background-color: var(--md-sys-color-surface-container);
     border: 1px solid var(--md-sys-color-outline-variant);
-    max-width: 800px;
+    max-width: 880px;
     margin: 0 auto;
     --md-elevation-level: 1;
 }
@@ -404,102 +384,306 @@ md-chip-set {
     transform-origin: center;
 }
 
-/* ===== Now Playing Card ===== */
 .now-playing {
-    max-width: 600px;
-    margin: 24px auto;
+    max-width: 780px;
+    margin: 32px auto;
 }
 
 .now-playing-card {
-    padding: 16px 20px;
+    position: relative;
+    padding: 28px 32px;
     cursor: default;
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-shape-xl);
+    overflow: hidden;
+    --md-elevation-level: 2;
 }
 
 .now-playing-card:hover {
     transform: none;
 }
 
-.np-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.m3-player-wrapper {
     width: 100%;
 }
 
-.np-album-art {
-    width: 110px;
-    height: 110px;
-    border-radius: var(--md-shape-md);
-    box-shadow: var(--md-elevation-1);
-    object-fit: cover;
-    animation: albumRotate 0.6s ease-out;
+.m3-player-main {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.m3-player-art-wrap {
+    position: relative;
+    width: 145px;
+    height: 145px;
     flex-shrink: 0;
 }
 
-@keyframes albumRotate {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
+.m3-player-art {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--md-shape-lg);
+    object-fit: cover;
+    z-index: 2;
+    border: 2px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-elevation-2);
 }
 
-.np-info {
-    text-align: left;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.m3-art-glow {
+    position: absolute;
+    inset: -8px;
+    border-radius: var(--md-shape-xl);
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) saturate(1.8) brightness(0.7);
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.5s;
 }
 
-.np-badge {
+.is-playing .m3-art-glow {
+    opacity: 0.85;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.65; }
+    50% { transform: scale(1.08); opacity: 0.95; }
+}
+
+.m3-player-status-badge {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 0.75rem;
-    color: var(--md-sys-color-primary);
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--md-shape-full);
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: var(--md-elevation-1);
+}
+
+.live-badge {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: 1px solid var(--md-sys-color-primary);
+}
+
+.idle-badge {
+    background-color: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+    border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.status-mini-icon {
+    font-size: 14px;
+}
+
+.m3-equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+    width: 14px;
+}
+
+.eq-bar {
+    width: 2.5px;
+    background-color: var(--md-sys-color-primary);
+    border-radius: 1px;
+    animation: eqBounce 1.2s ease-in-out infinite;
+}
+
+.eq-1 { height: 40%; animation-delay: 0.1s; }
+.eq-2 { height: 80%; animation-delay: 0.3s; }
+.eq-3 { height: 60%; animation-delay: 0.15s; }
+.eq-4 { height: 100%; animation-delay: 0.4s; }
+
+@keyframes eqBounce {
+    0%, 100% { height: 25%; }
+    50% { height: 100%; }
+}
+
+.m3-player-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.m3-player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.m3-track-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.m3-track-title {
+    display: block;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 4px;
-    animation: slideInUp 0.4s ease-out both;
-}
-
-.np-track-name {
-    font-size: 1.15rem;
-    font-weight: 500;
     color: var(--md-sys-color-on-surface);
-    margin-bottom: 6px;
-    word-wrap: break-word;
+    text-decoration: none;
     line-height: 1.3;
-    animation: slideInUp 0.4s ease-out 0.08s both;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s;
 }
 
-.np-artist {
-    font-size: 0.875rem;
-    color: var(--md-sys-color-on-surface-variant);
+.m3-track-title:hover {
+    color: var(--md-sys-color-primary);
+}
+
+.m3-track-artist {
+    font-size: 1rem;
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-family: 'Exo 2', sans-serif;
-    animation: slideInUp 0.4s ease-out 0.16s both;
 }
 
-@keyframes slideInUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.np-loading {
+.m3-track-album {
+    font-size: 0.82rem;
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.9rem;
-    letter-spacing: 0.25px;
-    animation: pulse 1.6s ease-in-out infinite;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 3px;
+}
+
+.m3-lastfm-link {
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--md-shape-full);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.m3-lastfm-link:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-primary);
+}
+
+.m3-player-progress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.m3-progress-bar {
+    position: relative;
     width: 100%;
-    text-align: center;
+    height: 6px;
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-radius: var(--md-shape-full);
+    overflow: hidden;
+}
+
+.m3-progress-fill {
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--md-sys-color-primary-container), var(--md-sys-color-primary));
+    border-radius: var(--md-shape-full);
+}
+
+.progress-animated {
+    width: 100%;
+    background: linear-gradient(90deg, var(--md-sys-color-primary-container), var(--md-sys-color-primary), var(--md-sys-color-tertiary), var(--md-sys-color-primary-container));
+    background-size: 200% 100%;
+    animation: progressShimmer 3s linear infinite;
+}
+
+@keyframes progressShimmer {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+.m3-progress-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    letter-spacing: 0.5px;
     font-family: 'Exo 2', sans-serif;
 }
 
-@keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+.m3-player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 4px;
 }
 
-/* ===== Footer ===== */
+.m3-ctrl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--md-shape-full);
+    background: transparent;
+    border: none;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s, color 0.2s;
+    text-decoration: none;
+}
+
+.m3-ctrl-btn:not(:disabled):hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-ctrl-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.m3-ctrl-btn.play-btn {
+    width: 48px;
+    height: 48px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    box-shadow: var(--md-elevation-1);
+}
+
+.m3-ctrl-btn.play-btn:hover {
+    transform: scale(1.06);
+    box-shadow: var(--md-elevation-2);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.m3-ctrl-btn.play-btn:active {
+    transform: scale(0.96);
+}
+
 #footer-message {
     text-align: center;
     padding: 32px 20px 48px;
@@ -518,13 +702,11 @@ md-chip-set {
     font-family: 'Exo 2', sans-serif;
 }
 
-/* ===== Animations ===== */
 @keyframes md3-fade-in {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Responsive ===== */
 @media (max-width: 768px) {
     header {
         padding: 40px 16px 16px;

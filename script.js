@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // MD3 morphing shapes
     const container = document.createElement('div');
     container.id = 'bg-shapes';
     document.body.prepend(container);
@@ -115,6 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
             searXNGHosted: "Удобный поисковик на базе SearXNG",
             gitHosted: "Собственный Git сервер",
             vpnServiceDesc: 'Бесплатный VPN-сервис с поддержкой обхода белых списков.',
+            nowPlayingLive: 'СЕЙЧАС ИГРАЕТ',
+            nowPlayingLast: 'ПОСЛЕДНИЙ ТРЕК',
+            streamingLabel: 'ПОТОК',
+            scrobbledLabel: 'ПРОСЛУШАНО',
             footerQuote: '"Ведь я и есть тот самый интернет-ангел....\n        Которого вы проебали"',
             phrases: ['Python + JS Dev', 'Full stack enjoyer','Селф-хостед дурачок', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул']
         },
@@ -137,6 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
             searXNGHosted: "Searxng instance",
             gitHosted: "Self-hosted Git Server",
             vpnServiceDesc: 'Free VPN service with support for VLESS and SS protocols. More actually in Russia',
+            nowPlayingLive: 'NOW PLAYING',
+            nowPlayingLast: 'LAST PLAYED',
+            streamingLabel: 'STREAMING',
+            scrobbledLabel: 'SCROBBLED',
             footerQuote: '"After all, I am that very internet angel....\n        That you messed up"',
             phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Self-hosted fool XD','Arch user', 'Just writing here.. for example', 'SUKA BLYAT']
         }
@@ -182,6 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         phrases = t.phrases;
         phraseIndex = 0;
+
+        if (typeof window.nowPlaying === 'function') {
+            window.nowPlaying();
+        }
     }
 
     const langSwitcher = document.getElementById('lang-switcher');
@@ -272,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(nextPhrase, 800);
     }
 
-    // GitHub Contributions Graph Renderer
     async function loadGitHubGraph() {
         const graphContainer = document.getElementById('github-graph');
         if (!graphContainer) return;
@@ -286,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const total = data.total?.lastYear ?? days.reduce((acc, d) => acc + d.count, 0);
 
-            // Group into weeks (7 days each)
             const weeks = [];
             let currentWeek = [];
             days.forEach((day, index) => {
@@ -298,11 +307,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const colors = {
-                0: '#2B2930', // Surface Container High
-                1: '#4F378B', // Primary Container
+                0: '#2B2930',
+                1: '#4F378B',
                 2: '#7E57C2',
                 3: '#B39DDB',
-                4: '#D0BCFF'  // Primary
+                4: '#D0BCFF'
             };
 
             const cellW = 10;
@@ -311,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const totalW = weeks.length * step + 30;
             const totalH = 7 * step + 35;
 
-            // Month labels
             let monthLabels = '';
             let lastMonth = -1;
             weeks.forEach((week, wIdx) => {
@@ -328,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Days rects
+
             let cells = '';
             weeks.forEach((week, wIdx) => {
                 week.forEach((day, dIdx) => {

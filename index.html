@@ -1,77 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="title">AR34 | Mаня-Сайт</title>
+    
+    <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto:wght@400;500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    
+    <!-- Material Web (MD3) Components Import -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+    </script>
+    <script type="module">
+      import '@material/web/all.js';
+      import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+      if (typescaleStyles?.styleSheet) {
+        document.adoptedStyleSheets = [...document.adoptedStyleSheets, typescaleStyles.styleSheet];
+      }
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <script src="nowplaying.js"></script>
     <link rel="icon" href="https://img.icons8.com/?size=100&id=bGv5vHhwLQi3&format=png&color=000000">
 </head>
 <body>
     <div class="language-switcher">
-        <button id="lang-switcher" class="md3-icon-btn" title="Switch language">
-            <span id="lang-icon">🌐</span>
+        <md-filled-tonal-button id="lang-switcher" title="Switch language">
+            <md-icon slot="icon">language</md-icon>
             <span id="lang-text">RU</span>
-        </button>
+        </md-filled-tonal-button>
     </div>
+
     <header>
-        <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar">
+        <div class="avatar-wrapper">
+            <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar">
+        </div>
         <h1 data-i18n="greeting">Ку , я <span class="gradient-text">AR34!</span></h1>
-        <p class="subtitle" id="subtitle-text"> 
-        </p>
+        <p class="subtitle" id="subtitle-text"></p>
+        
         <div class="social-links">
             <div class="button-group">
-                 <a href="https://t.me/ArThirtyFour" target="_blank" class="md3-btn md3-tonal btn telegram"><img src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF" alt="Telegram"> Telegram</a>
-                 <a href="https://discordid.netlify.app/?id=737349861963202700" target="_blank" class="md3-btn md3-tonal btn discord"><img src="https://img.icons8.com/?size=100&id=30888&format=png&color=FFFFFF" alt="Discord"> Discord</a>
-                 <a href="https://github.com/ArThirtyFour" target="_blank" class="md3-btn md3-tonal btn github"><img src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF" alt="Github"> Github</a>
-                 <a href="https://www.tiktok.com/@kangel_interneta_" target="_blank" class="md3-btn md3-tonal btn tiktok"><img src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="TikTok"> TikTok</a>
-                 <a href="https://t.me/perexodnik_ar34" target="_blank" class="md3-btn md3-tonal btn blog"><img src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog"> <span data-i18n="blogLabel">My blog</span></a>
-                 <a href="https://matrix.to/#/@kangel:matrix.kangel.xyz" target="_blank" class="md3-btn md3-tonal btn matrix"><img src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&&color=FFFFFF" alt="Matrix"> Matrix</a>
-                 <a href="https://steamcommunity.com/profiles/76561199780032103/" target="_blank" class="md3-btn md3-tonal btn steam"><img src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam"> Steam</a>
-                 <a href="https://t.me/bio_ar34/16" target="_blank" class="md3-btn md3-filled btn details"><img src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details"> <span data-i18n="moreDetails">Подробнее тут</span></a>
+                <md-filled-tonal-button href="https://t.me/ArThirtyFour" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF" alt="Telegram">
+                    Telegram
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://discordid.netlify.app/?id=737349861963202700" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=30888&format=png&color=FFFFFF" alt="Discord">
+                    Discord
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://github.com/ArThirtyFour" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF" alt="Github">
+                    Github
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://www.tiktok.com/@kangel_interneta_" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="TikTok">
+                    TikTok
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://t.me/perexodnik_ar34" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog">
+                    <span data-i18n="blogLabel">My blog</span>
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://matrix.to/#/@kangel:matrix.kangel.xyz" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix">
+                    Matrix
+                </md-filled-tonal-button>
+                <md-filled-tonal-button href="https://steamcommunity.com/profiles/76561199780032103/" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam">
+                    Steam
+                </md-filled-tonal-button>
+                <md-filled-button href="https://t.me/bio_ar34/16" target="_blank" class="m3-btn">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details">
+                    <span data-i18n="moreDetails">Подробнее тут</span>
+                </md-filled-button>
             </div>
         </div>
     </header>
+
     <section class="now-playing">
-        <div class="now-playing-card" id="now-playing-card">
+        <div class="m3-card now-playing-card" id="now-playing-card">
+            <md-elevation></md-elevation>
             <div class="np-loading" data-i18n="loadingTrack">Loading track...</div>
         </div>
     </section>
+
     <section class="tech-stack">
-        <h2 data-i18n="myStack"> My Stack </h2>
-        <div class="md3-chip-set">
-            <span class="md3-chip">Python</span>
-            <span class="md3-chip">JS</span>
-            <span class="md3-chip">Bash</span>
-            <span class="md3-chip">Flask</span>
-            <span class="md3-chip">Kurigram</span>
-            <span class="md3-chip">Vue.js</span>
-            <span class="md3-chip">HTML</span>
-            <span class="md3-chip">CSS</span>
-            <span class="md3-chip">Bootstrap</span>
-            <span class="md3-chip">Postman</span>
-            <span class="md3-chip">Git</span>
-            <span class="md3-chip">SQL</span>
-            <span class="md3-chip">Linux</span>
-            <span class="md3-chip">Docker</span>
+        <h2 data-i18n="myStack">> Мой Тех. Стек <</h2>
+        <div class="tech-chip-container">
+            <md-chip-set>
+                <md-suggestion-chip label="Python" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="JS" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Bash" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Flask" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Kurigram" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Vue.js" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="HTML" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="CSS" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Bootstrap" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Postman" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Git" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="SQL" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Linux" elevated></md-suggestion-chip>
+                <md-suggestion-chip label="Docker" elevated></md-suggestion-chip>
+            </md-chip-set>
         </div>
     </section>
 
     <section class="github-stats">
-        <h2 data-i18n="githubContributions"> GitHub Contributions </h2>
-        <div class="github-graph-container">
-            <img src="https://github-readme-activity-graph.vercel.app/graph?username=ArThirtyFour&hide_border=true&area=true&theme=dark&bg_color=2A1E3F&color=D1C4E9&title_color=EADEFF&text_color=B0AAC0" alt="GitHub Activity Graph">
+        <h2 data-i18n="githubContributions">> GitHub Contributions <</h2>
+        <div class="github-graph-container m3-surface-container" id="github-graph-container">
+            <md-elevation></md-elevation>
+            <div id="github-graph" class="github-graph-content">
+                <div class="github-loading">Loading contributions...</div>
+            </div>
         </div>
     </section>
 
     <section class="projects">
-        <h2 data-i18n="activeProjects"> Active Projects </h2>
+        <h2 data-i18n="activeProjects">> Активные Проекты <</h2>
         <div class="projects-grid">
-            <article class="md3-card" onclick="window.open('https://source.extera.xyz/Extera/Extera', '_blank')">
+            <article class="m3-card" onclick="window.open('https://source.extera.xyz/Extera/Extera', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
                 <div class="card-header">
                     <img src="https://source.extera.xyz/Extera/Extera/raw/branch/main/assets/logo.png" alt="Extera Icon" class="card-icon">
                     <div>
@@ -79,16 +135,18 @@
                         <p class="card-subtitle" data-i18n="exteraSubtitle">Matrix клиент</p>
                     </div>
                 </div>
-                 <p class="card-desc" data-i18n="exteraDesc">FluffyChat fork на стероидах. E2EE, голосовые звонки, Material You, кастомные эмодзи и многое другое.</p>
-                 <div class="md3-chip-set">
-                     <span class="md3-chip-sm">Flutter</span>
-                     <span class="md3-chip-sm">Matrix</span>
-                     <span class="md3-chip-sm">E2EE</span>
-                     <span class="md3-chip-sm">Dart</span>
-                 </div>
+                <p class="card-desc" data-i18n="exteraDesc">FluffyChat fork на стероидах. E2EE, голосовые звонки, Material You, кастомные эмодзи и многое другое.</p>
+                <md-chip-set>
+                    <md-assist-chip label="Flutter" elevated></md-assist-chip>
+                    <md-assist-chip label="Matrix" elevated></md-assist-chip>
+                    <md-assist-chip label="E2EE" elevated></md-assist-chip>
+                    <md-assist-chip label="Dart" elevated></md-assist-chip>
+                </md-chip-set>
             </article>
 
-            <article class="md3-card" onclick="window.open('https://t.me/kangelplugins', '_blank')">
+            <article class="m3-card" onclick="window.open('https://t.me/kangelplugins', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
                 <div class="card-header">
                     <img src="https://avatars.githubusercontent.com/u/239184096?s=400&u=01a56877825d4437dacae9431e7b23381dc45372&v=4" alt="KangelPlugins Icon" class="card-icon">
                     <div>
@@ -96,16 +154,18 @@
                         <p class="card-subtitle" data-i18n="kangelPluginsSubtitle">Exteragram Plugins</p>
                     </div>
                 </div>
-                 <p class="card-desc" data-i18n="kangelPluginsDesc">Development of a prototype plugins system for Exteragram (Python)</p>
-                 <div class="md3-chip-set">
-                     <span class="md3-chip-sm">exteraGram</span>
-                     <span class="md3-chip-sm">Plugins</span>
-                     <span class="md3-chip-sm">Python</span>
-                     <span class="md3-chip-sm">Telegram</span>
-                 </div>
+                <p class="card-desc" data-i18n="kangelPluginsDesc">Development of a prototype plugins system for Exteragram (Python)</p>
+                <md-chip-set>
+                    <md-assist-chip label="exteraGram" elevated></md-assist-chip>
+                    <md-assist-chip label="Plugins" elevated></md-assist-chip>
+                    <md-assist-chip label="Python" elevated></md-assist-chip>
+                    <md-assist-chip label="Telegram" elevated></md-assist-chip>
+                </md-chip-set>
             </article>
 
-            <article class="md3-card" onclick="window.open('https://internet-tenshi.kangel.tech/', '_blank')">
+            <article class="m3-card" onclick="window.open('https://internet-tenshi.kangel.tech/', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
                 <div class="card-header">
                     <img src="https://img.icons8.com/color/100/000000/vpn.png" alt="VPN Icon" class="card-icon">
                     <div>
@@ -113,35 +173,38 @@
                         <p class="card-subtitle" data-i18n="vpnServiceSubtitle">VPN Service</p>
                     </div>
                 </div>
-                 <p class="card-desc" data-i18n="vpnServiceDesc">Бесплатный VPN-сервис с поддержкой VLESS и SS протоколов. Сила трёх букв. Ключи к свободе.</p>
-                 <div class="md3-chip-set">
-                     <span class="md3-chip-sm">VPN</span>
-                     <span class="md3-chip-sm">VLESS</span>
-                     <span class="md3-chip-sm">SS</span>
-                     <span class="md3-chip-sm">No WhiteList</span>
-                 </div>
+                <p class="card-desc" data-i18n="vpnServiceDesc">Бесплатный VPN-сервис с поддержкой VLESS и SS протоколов. Сила трёх букв. Ключи к свободе.</p>
+                <md-chip-set>
+                    <md-assist-chip label="VPN" elevated></md-assist-chip>
+                    <md-assist-chip label="VLESS" elevated></md-assist-chip>
+                    <md-assist-chip label="SS" elevated></md-assist-chip>
+                    <md-assist-chip label="No WhiteList" elevated></md-assist-chip>
+                </md-chip-set>
             </article>
-
         </div>
     </section>
     
     <section class="projects">
-        <h2 data-i18n="selfHostedProject">My self-hosted service</h2>
+        <h2 data-i18n="selfHostedProject">> Мои селф-хост сервисы <</h2>
         <div class="projects-grid">
-            <article class="md3-card" onclick="window.open('https://matrix.kangel.xyz', '_blank')">
+            <article class="m3-card" onclick="window.open('https://matrix.kangel.xyz', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&&color=FFFFFF" alt="Matrix Icon" class="card-icon">
+                    <img src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix Icon" class="card-icon">
                     <div>
                         <h3>Matrix</h3>
                         <p class="card-subtitle" data-i18n="matrixHosted">Matrix Server</p>
                     </div>
                 </div>
-                 <div class="md3-chip-set">
-                     <span class="md3-chip-sm">Selfhosted</span>
-                     <span class="md3-chip-sm">Matrix</span>
-                 </div>
+                <md-chip-set>
+                    <md-assist-chip label="Selfhosted" elevated></md-assist-chip>
+                    <md-assist-chip label="Matrix" elevated></md-assist-chip>
+                </md-chip-set>
             </article>
-            <article class="md3-card" onclick="window.open('https://search.kangel.xyz', '_blank')">
+            <article class="m3-card" onclick="window.open('https://search.kangel.xyz', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
                 <div class="card-header">
                     <img src="https://img.icons8.com/?size=100&id=132&format=png&color=FFFFFF" alt="Searxng Icon" class="card-icon">
                     <div>
@@ -149,11 +212,27 @@
                         <p class="card-subtitle" data-i18n="searXNGHosted">Searxng instance</p>
                     </div>
                 </div>
-                 <div class="md3-chip-set">
-                     <span class="md3-chip-sm">Selfhosted</span>
-                     <span class="md3-chip-sm">Privacy</span>
-                     <span class="md3-chip-sm">Search Engine</span>
-                 </div>
+                <md-chip-set>
+                    <md-assist-chip label="Selfhosted" elevated></md-assist-chip>
+                    <md-assist-chip label="Privacy" elevated></md-assist-chip>
+                    <md-assist-chip label="Search Engine" elevated></md-assist-chip>
+                </md-chip-set>
+            </article>
+            <article class="m3-card" onclick="window.open('https://git.kangel.xyz', '_blank')">
+                <md-ripple></md-ripple>
+                <md-elevation></md-elevation>
+                <div class="card-header">
+                    <img src="https://img.icons8.com/?size=100&id=38389&format=png&color=FFFFFF" alt="Git Icon" class="card-icon">
+                    <div>
+                        <h3>Git Server</h3>
+                        <p class="card-subtitle" data-i18n="gitHosted">Git Server</p>
+                    </div>
+                </div>
+                <md-chip-set>
+                    <md-assist-chip label="Selfhosted" elevated></md-assist-chip>
+                    <md-assist-chip label="Git" elevated></md-assist-chip>
+                    <md-assist-chip label="DevOps" elevated></md-assist-chip>
+                </md-chip-set>
             </article>
         </div>
     </section>
@@ -163,7 +242,6 @@
         Которого вы проебали"</p>
     </footer>
 
-    <script src="nowplaying.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

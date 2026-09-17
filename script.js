@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selfHostedProject: "> Мои селф-хост сервисы <",
             matrixHosted: "Матрикс сервер",
             searXNGHosted: "Удобный поисковик на базе SearXNG",
+            gitHosted: "Собственный Git сервер",
             vpnServiceDesc: 'Бесплатный VPN-сервис с поддержкой обхода белых списков.',
             footerQuote: '"Ведь я и есть тот самый интернет-ангел....\n        Которого вы проебали"',
             phrases: ['Python + JS Dev', 'Full stack enjoyer','Селф-хостед дурачок', 'Arch user', 'Напишу сюда.. например', 'Я рыгнул']
@@ -134,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selfHostedProject: "> My self-hosted services <",
             matrixHosted: "Matrix Server",
             searXNGHosted: "Searxng instance",
+            gitHosted: "Self-hosted Git Server",
             vpnServiceDesc: 'Free VPN service with support for VLESS and SS protocols. More actually in Russia',
             footerQuote: '"After all, I am that very internet angel....\n        That you messed up"',
             phrases: ['Python + JS Dev', 'Full stack enjoyer', 'Self-hosted fool XD','Arch user', 'Just writing here.. for example', 'SUKA BLYAT']
@@ -270,7 +272,98 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(nextPhrase, 800);
     }
 
+    // GitHub Contributions Graph Renderer
+    async function loadGitHubGraph() {
+        const graphContainer = document.getElementById('github-graph');
+        if (!graphContainer) return;
 
+        try {
+            const response = await fetch('https://github-contributions-api.jogruber.de/v4/ArThirtyFour?y=last');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            const days = data.contributions;
+            if (!days || days.length === 0) throw new Error('No contribution data');
+
+            const total = data.total?.lastYear ?? days.reduce((acc, d) => acc + d.count, 0);
+
+            // Group into weeks (7 days each)
+            const weeks = [];
+            let currentWeek = [];
+            days.forEach((day, index) => {
+                currentWeek.push(day);
+                if (currentWeek.length === 7 || index === days.length - 1) {
+                    weeks.push(currentWeek);
+                    currentWeek = [];
+                }
+            });
+
+            const colors = {
+                0: '#2B2930', // Surface Container High
+                1: '#4F378B', // Primary Container
+                2: '#7E57C2',
+                3: '#B39DDB',
+                4: '#D0BCFF'  // Primary
+            };
+
+            const cellW = 10;
+            const cellGap = 3;
+            const step = cellW + cellGap;
+            const totalW = weeks.length * step + 30;
+            const totalH = 7 * step + 35;
+
+            // Month labels
+            let monthLabels = '';
+            let lastMonth = -1;
+            weeks.forEach((week, wIdx) => {
+                const firstDay = week[0];
+                if (firstDay) {
+                    const m = new Date(firstDay.date).getMonth();
+                    if (m !== lastMonth && wIdx > 0 && wIdx < weeks.length - 2) {
+                        const mName = new Date(firstDay.date).toLocaleString('en', { month: 'short' });
+                        monthLabels += `<text x="${wIdx * step + 28}" y="12" fill="#CAC4D0" font-size="10" font-family="'Comfortaa', 'Roboto', sans-serif">${mName}</text>`;
+                        lastMonth = m;
+                    } else if (lastMonth === -1) {
+                        lastMonth = m;
+                    }
+                }
+            });
+
+            // Days rects
+            let cells = '';
+            weeks.forEach((week, wIdx) => {
+                week.forEach((day, dIdx) => {
+                    const x = wIdx * step + 28;
+                    const y = dIdx * step + 18;
+                    const color = colors[day.level] || colors[0];
+                    cells += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellW}" rx="2" ry="2" fill="${color}" class="graph-cell"><title>${day.count} contributions on ${day.date}</title></rect>`;
+                });
+            });
+
+            const svg = `
+                <div class="graph-header-meta">
+                    <span class="total-contribs-badge">${total} contributions in the last year</span>
+                </div>
+                <div class="graph-scroll-wrap">
+                    <svg viewBox="0 0 ${totalW} ${totalH}" width="100%" height="auto" style="min-width: 680px; max-width: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+                        ${monthLabels}
+                        <text x="0" y="38" fill="#CAC4D0" font-size="9" font-family="'Comfortaa', 'Roboto', sans-serif">Mon</text>
+                        <text x="0" y="64" fill="#CAC4D0" font-size="9" font-family="'Comfortaa', 'Roboto', sans-serif">Wed</text>
+                        <text x="0" y="90" fill="#CAC4D0" font-size="9" font-family="'Comfortaa', 'Roboto', sans-serif">Fri</text>
+                        ${cells}
+                    </svg>
+                </div>
+            `;
+
+            graphContainer.innerHTML = svg;
+        } catch (err) {
+            console.warn('Fallback to static chart generator:', err);
+            graphContainer.innerHTML = `
+                <img src="https://ghchart.rshah.org/D0BCFF/ArThirtyFour" alt="GitHub Activity Graph" class="github-graph-fallback" style="max-width: 100%; height: auto; display: block; border-radius: 8px;">
+            `;
+        }
+    }
+
+    loadGitHubGraph();
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

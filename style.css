@@ -1,39 +1,78 @@
-/* ===== Material Design 3 Tokens ===== */
+/* ===== Official Material Design 3 Tokens & Palette ===== */
 :root {
-    --md-primary: #D1C4E9;
-    --md-on-primary: #1a122a;
-    --md-primary-container: #4a3570;
-    --md-on-primary-container: #EADEFF;
-    --md-secondary: #B39DDB;
-    --md-secondary-container: #372952;
-    --md-on-secondary-container: #E8DEF8;
-    --md-surface: #13101B;
-    --md-surface-variant: #1E1A2A;
-    --md-surface-container: #1E1A2A;
-    --md-surface-container-high: #282338;
-    --md-surface-container-highest: #332D42;
-    --md-on-surface: #E8E0F0;
-    --md-on-surface-variant: #CAC4D0;
-    --md-outline: #938F99;
-    --md-outline-variant: #49454F;
-    --md-inverse-surface: #E8E0F0;
-    --md-inverse-on-surface: #1E1A2A;
-    --md-elevation-1: 0 1px 2px rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
-    --md-elevation-2: 0 1px 2px rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
-    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.3);
+    /* Primary (Purple / Lavender M3 Tone) */
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-on-primary: #381E72;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary-container: #EADDFF;
+
+    /* Secondary */
+    --md-sys-color-secondary: #CCC2DC;
+    --md-sys-color-on-secondary: #332D41;
+    --md-sys-color-secondary-container: #4A4458;
+    --md-sys-color-on-secondary-container: #E8DEF8;
+
+    /* Tertiary */
+    --md-sys-color-tertiary: #EFB8C8;
+    --md-sys-color-on-tertiary: #492532;
+    --md-sys-color-tertiary-container: #633B48;
+    --md-sys-color-on-tertiary-container: #FFD8E4;
+
+    /* Surface & Background */
+    --md-sys-color-background: #141218;
+    --md-sys-color-on-background: #E6E0E9;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-on-surface: #E6E0E9;
+    --md-sys-color-surface-variant: #49454F;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-surface-container-lowest: #0F0D13;
+    --md-sys-color-surface-container-low: #1D1B20;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-surface-container-highest: #36343B;
+
+    /* Outline & Borders */
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+
+    /* Inverse */
+    --md-sys-color-inverse-surface: #E6E0E9;
+    --md-sys-color-inverse-on-surface: #313033;
+    --md-sys-color-inverse-primary: #6750A4;
+
+    /* MD3 Elevation Shadows */
+    --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    --md-elevation-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+
+    /* MD3 Shapes */
+    --md-shape-xs: 4px;
     --md-shape-sm: 8px;
     --md-shape-md: 12px;
     --md-shape-lg: 16px;
     --md-shape-xl: 28px;
+    --md-shape-full: 9999px;
+
+    /* MD3 Web component font overrides */
+    --md-ref-typeface-plain: 'Roboto', 'Exo 2', sans-serif;
+    --md-ref-typeface-brand: 'Comfortaa', 'Roboto', sans-serif;
+
+    /* Ripple styling tokens */
+    --md-ripple-hover-color: var(--md-sys-color-primary);
+    --md-ripple-pressed-color: var(--md-sys-color-primary);
 }
 
 /* ===== Reset & Base ===== */
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 body {
-    background-color: var(--md-surface);
-    color: var(--md-on-surface);
-    font-family: 'Comfortaa', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: 'Comfortaa', 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -41,7 +80,17 @@ body {
     line-height: 1.5;
 }
 
-/* ===== Background Shapes ===== */
+/* Material Symbols configuration */
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    vertical-align: middle;
+}
+
+/* ===== Background Expressive Shapes ===== */
 #bg-shapes {
     position: fixed;
     inset: 0;
@@ -52,8 +101,8 @@ body {
 
 .bg-md3-shape {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     overflow: visible;
 }
 
@@ -65,7 +114,7 @@ body {
 
 .expressive-snap {
     transform-origin: 60px 60px;
-    animation: snapRotate 6s infinite;
+    animation: snapRotate 8s infinite;
 }
 
 @keyframes snapRotate {
@@ -90,97 +139,70 @@ body {
     top: 16px;
     right: 16px;
     z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
-.md3-icon-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 16px;
-    height: 40px;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    color: var(--md-on-surface);
-    cursor: pointer;
-    transition: background-color 0.2s;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Comfortaa', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.md3-icon-btn:hover {
-    background-color: rgba(208, 196, 233, 0.08);
-}
-
-.md3-icon-btn:active {
-    background-color: rgba(208, 196, 233, 0.12);
-}
-
-#lang-icon {
-    font-size: 1.1em;
-    line-height: 1;
-}
-
-#lang-text {
-    font-weight: normal;
+#lang-switcher {
+    --md-filled-tonal-button-container-shape: var(--md-shape-full);
 }
 
 /* ===== Header ===== */
 header {
     text-align: center;
-    padding: 48px 24px 24px;
+    padding: 56px 24px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    opacity: 0;
-    animation: md3-fade-in 0.5s ease-out forwards;
+    animation: md3-fade-in 0.6s cubic-bezier(0.2, 0.0, 0, 1.0) forwards;
+}
+
+.avatar-wrapper {
+    position: relative;
+    margin-bottom: 24px;
 }
 
 .avatar {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    margin-bottom: 24px;
-    border: 3px solid var(--md-outline-variant);
+    width: 240px;
+    height: 240px;
+    border-radius: var(--md-shape-full);
+    border: 3px solid var(--md-sys-color-primary-container);
     box-shadow: var(--md-elevation-2);
     object-fit: cover;
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.02);
+    box-shadow: var(--md-elevation-3);
 }
 
 h1 {
-    font-size: 3rem;
-    font-weight: 400;
-    letter-spacing: -0.25px;
-    margin: 0 0 8px;
+    font-size: 2.75rem;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px;
     line-height: 1.2;
 }
 
 .gradient-text {
-    background: linear-gradient(90deg, #D1C4E9, #B39DDB, #9575CD);
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary), var(--md-sys-color-tertiary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .subtitle {
-    font-size: 1rem;
-    color: var(--md-on-surface-variant);
-    letter-spacing: 0.5px;
-    margin-bottom: 24px;
-    min-height: 1.5em;
+    font-size: 1.05rem;
+    color: var(--md-sys-color-on-surface-variant);
+    letter-spacing: 0.25px;
+    margin-bottom: 28px;
+    min-height: 1.6em;
     max-width: 90%;
     word-wrap: break-word;
-    line-height: 1.5;
     font-family: 'Exo 2', sans-serif;
 }
 
-/* ===== MD3 Buttons ===== */
+/* ===== MD3 Social Buttons Group ===== */
 .social-links {
     width: 100%;
     display: flex;
@@ -192,105 +214,45 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    max-width: 750px;
-    padding: 16px;
-    background-color: var(--md-surface-container);
-    border-radius: var(--md-shape-xl);
-}
-
-.md3-btn {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 0 24px;
-    height: 40px;
-    border-radius: 20px;
-    font-family: 'Comfortaa', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: box-shadow 0.2s, background-color 0.2s;
-    border: none;
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
+    gap: 12px;
+    max-width: 800px;
+    padding: 16px 20px;
+    background-color: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-xl);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-elevation-1);
 }
 
-.md3-btn img {
+.m3-btn img {
     width: 20px;
     height: 20px;
     vertical-align: middle;
 }
 
-.md3-tonal {
-    background-color: var(--md-secondary-container);
-    color: var(--md-on-secondary-container);
-}
-
-.md3-tonal:hover {
-    box-shadow: var(--md-elevation-1);
-    filter: brightness(1.1);
-}
-
-.md3-tonal:active {
-    filter: brightness(0.9);
-}
-
-.md3-filled {
-    background-color: var(--md-primary);
-    color: var(--md-on-primary);
-}
-
-.md3-filled:hover {
-    box-shadow: var(--md-elevation-1);
-    filter: brightness(1.1);
-}
-
-.md3-filled:active {
-    filter: brightness(0.9);
-}
-
-/* ===== MD3 Cards ===== */
-.projects {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.projects h2 {
-    text-align: center;
-    color: var(--md-primary);
-    margin-bottom: 24px;
-    font-size: 1.375rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-}
-
-.md3-card {
-    background-color: var(--md-surface-container);
-    border-radius: var(--md-shape-md);
-    padding: 20px;
-    box-shadow: var(--md-elevation-1);
-    transition: box-shadow 0.2s, transform 0.2s;
+/* ===== Material 3 Cards ===== */
+.m3-card {
+    position: relative;
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-shape-lg);
+    padding: 24px;
     cursor: pointer;
-    border: 1px solid var(--md-outline-variant);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+    --md-elevation-level: 1;
 }
 
-.md3-card:hover {
-    box-shadow: var(--md-elevation-2);
+.m3-card:hover {
     transform: translateY(-2px);
+    background-color: var(--md-sys-color-surface-container-high);
+    --md-elevation-level: 2;
 }
 
-.md3-card:active {
+.m3-card:active {
     transform: translateY(0);
 }
 
@@ -302,170 +264,159 @@ h1 {
 }
 
 .card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--md-shape-sm);
-    background-color: var(--md-surface-container-high);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--md-shape-md);
+    background-color: var(--md-sys-color-surface-container-highest);
     object-fit: contain;
-    padding: 4px;
+    padding: 6px;
     flex-shrink: 0;
 }
 
-.md3-card h3 {
+.m3-card h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: 500;
-    color: var(--md-on-surface);
+    color: var(--md-sys-color-on-surface);
     letter-spacing: 0.15px;
-    font-family: 'Comfortaa', sans-serif;
 }
 
 .card-subtitle {
-    color: var(--md-on-surface-variant);
+    color: var(--md-sys-color-on-surface-variant);
     font-size: 0.875rem;
     letter-spacing: 0.25px;
     margin: 2px 0 0;
-    font-family: 'Comfortaa', sans-serif;
 }
 
 .card-desc {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     line-height: 1.5;
-    color: var(--md-on-surface-variant);
-    letter-spacing: 0.25px;
+    color: var(--md-sys-color-on-surface-variant);
     margin: 0 0 16px;
     font-family: 'Exo 2', sans-serif;
+    flex-grow: 1;
 }
 
-/* ===== MD3 Chips ===== */
-.md3-chip-set {
+/* ===== Sections Layout ===== */
+.projects, .tech-stack, .github-stats, .now-playing {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 32px auto;
+}
+
+.projects h2, .tech-stack h2, .github-stats h2 {
+    text-align: center;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 24px;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* ===== Tech Stack Section ===== */
+.tech-stack {
+    max-width: 800px;
+    text-align: center;
+}
+
+.tech-chip-container {
+    padding: 20px;
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-shape-xl);
+    box-shadow: var(--md-elevation-1);
+    display: flex;
+    justify-content: center;
+}
+
+md-chip-set {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
 }
 
-.md3-chip {
-    display: inline-flex;
-    align-items: center;
-    height: 32px;
-    padding: 0 16px;
-    border-radius: 8px;
-    background-color: var(--md-surface-container-high);
-    color: var(--md-on-surface);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    border: 1px solid var(--md-outline-variant);
-    transition: background-color 0.2s, border-color 0.2s;
-    cursor: default;
-    font-family: 'Comfortaa', sans-serif;
-}
-
-.md3-chip:hover {
-    background-color: var(--md-surface-container-highest);
-    border-color: var(--md-outline);
-}
-
-.md3-chip-sm {
-    display: inline-flex;
-    align-items: center;
-    height: 28px;
-    padding: 0 12px;
-    border-radius: 8px;
-    background-color: var(--md-secondary-container);
-    color: var(--md-on-secondary-container);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    transition: filter 0.2s;
-    font-family: 'Comfortaa', sans-serif;
-}
-
-.md3-chip-sm:hover {
-    filter: brightness(1.15);
-}
-
-/* ===== Tech Stack ===== */
-.tech-stack {
-    padding: 20px;
-    max-width: 750px;
-    margin: 40px auto;
-    text-align: center;
-}
-
-.tech-stack h2 {
-    color: var(--md-primary);
-    margin-bottom: 24px;
-    font-size: 1.375rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-}
-
-.tech-stack .md3-chip-set {
-    padding: 16px;
-    background-color: var(--md-surface-container);
-    border-radius: var(--md-shape-xl);
-}
-
 /* ===== GitHub Stats ===== */
 .github-stats {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 40px auto;
     text-align: center;
-}
-
-.github-stats h2 {
-    color: var(--md-primary);
-    margin-bottom: 24px;
-    font-size: 1.375rem;
-    font-weight: 500;
-    letter-spacing: 0.1px;
 }
 
 .github-graph-container {
-    display: flex;
-    justify-content: center;
-    padding: 16px;
-    border-radius: var(--md-shape-xl);
-    background-color: var(--md-surface-container);
-    max-width: 700px;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.github-graph-container img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--md-shape-sm);
-}
-
-/* ===== Now Playing ===== */
-.now-playing {
+    position: relative;
     padding: 20px;
+    border-radius: var(--md-shape-xl);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    max-width: 800px;
+    margin: 0 auto;
+    --md-elevation-level: 1;
+}
+
+.github-graph-content {
+    width: 100%;
+}
+
+.github-loading {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
+    animation: pulse 1.6s ease-in-out infinite;
+    padding: 24px;
+}
+
+.graph-header-meta {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.total-contribs-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--md-shape-full);
+    background-color: var(--md-sys-color-surface-container-high);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    color: var(--md-sys-color-primary);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.graph-scroll-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+}
+
+.graph-cell {
+    transition: transform 0.15s, opacity 0.15s;
+    cursor: pointer;
+}
+
+.graph-cell:hover {
+    opacity: 0.8;
+    transform: scale(1.2);
+    transform-origin: center;
+}
+
+/* ===== Now Playing Card ===== */
+.now-playing {
     max-width: 600px;
-    margin: 40px auto;
-    text-align: center;
+    margin: 24px auto;
 }
 
 .now-playing-card {
-    background: var(--md-surface-container);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: var(--md-shape-lg);
     padding: 16px 20px;
-    box-shadow: var(--md-elevation-1);
-    transition: box-shadow 0.2s, transform 0.2s;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20px;
+    cursor: default;
 }
 
 .now-playing-card:hover {
-    box-shadow: var(--md-elevation-2);
-    transform: translateY(-2px);
+    transform: none;
 }
 
 .np-container {
@@ -476,9 +427,9 @@ h1 {
 }
 
 .np-album-art {
-    width: 140px;
-    height: 140px;
-    border-radius: var(--md-shape-sm);
+    width: 110px;
+    height: 110px;
+    border-radius: var(--md-shape-md);
     box-shadow: var(--md-elevation-1);
     object-fit: cover;
     animation: albumRotate 0.6s ease-out;
@@ -486,8 +437,8 @@ h1 {
 }
 
 @keyframes albumRotate {
-    from { opacity: 0; transform: scale(0.8) rotateY(20deg); }
-    to { opacity: 1; transform: scale(1) rotateY(0deg); }
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .np-info {
@@ -499,76 +450,65 @@ h1 {
 }
 
 .np-badge {
-    display: inline-block;
-    font-size: 0.6875rem;
-    color: var(--md-on-surface-variant);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--md-sys-color-primary);
     letter-spacing: 0.5px;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 4px;
-    animation: slideInUp 0.5s ease-out 0.05s both;
-    font-family: 'Comfortaa', sans-serif;
+    animation: slideInUp 0.4s ease-out both;
 }
 
 .np-track-name {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 500;
-    color: var(--md-on-surface);
-    margin-bottom: 8px;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 6px;
     word-wrap: break-word;
     line-height: 1.3;
-    animation: slideInUp 0.5s ease-out 0.1s both;
-    font-family: 'Comfortaa', sans-serif;
+    animation: slideInUp 0.4s ease-out 0.08s both;
 }
 
 .np-artist {
     font-size: 0.875rem;
-    color: var(--md-on-surface-variant);
-    animation: slideInUp 0.5s ease-out 0.2s both;
+    color: var(--md-sys-color-on-surface-variant);
     font-family: 'Exo 2', sans-serif;
+    animation: slideInUp 0.4s ease-out 0.16s both;
 }
 
 @keyframes slideInUp {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .np-loading {
-    color: var(--md-on-surface-variant);
-    font-size: 0.875rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.9rem;
     letter-spacing: 0.25px;
-    animation: pulse 1.5s ease-in-out infinite;
+    animation: pulse 1.6s ease-in-out infinite;
     width: 100%;
     text-align: center;
     font-family: 'Exo 2', sans-serif;
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.6; }
+    0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
-}
-
-/* ===== Animations ===== */
-@keyframes md3-fade-in {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.projects {
-    opacity: 0;
-    animation: md3-fade-in 0.5s ease-out 0.4s forwards;
 }
 
 /* ===== Footer ===== */
 #footer-message {
     text-align: center;
-    padding: 40px 20px;
-    margin: 40px auto 0;
+    padding: 32px 20px 48px;
+    margin: 32px auto 0;
     max-width: 1200px;
 }
 
 #footer-message p {
-    color: var(--md-on-surface-variant);
+    color: var(--md-sys-color-on-surface-variant);
     font-size: 0.875rem;
     font-style: italic;
     line-height: 1.6;
@@ -578,122 +518,57 @@ h1 {
     font-family: 'Exo 2', sans-serif;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 900px) {
-    .avatar {
-        width: 220px;
-        height: 220px;
-    }
-    h1 {
-        font-size: 2.5rem;
-    }
-    .button-group {
-        max-width: 650px;
-    }
+/* ===== Animations ===== */
+@keyframes md3-fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
     header {
-        padding: 30px 15px 15px;
-    }
-    h1 {
-        font-size: 2rem;
+        padding: 40px 16px 16px;
     }
     .avatar {
         width: 180px;
         height: 180px;
-        margin-bottom: 20px;
+    }
+    h1 {
+        font-size: 2.1rem;
     }
     .projects-grid {
         grid-template-columns: 1fr;
     }
     .button-group {
-        max-width: 90%;
+        max-width: 95%;
         gap: 10px;
         padding: 12px;
-    }
-    .md3-btn {
-        padding: 0 20px;
-        height: 36px;
-        font-size: 0.8125rem;
-    }
-    .now-playing {
-        padding: 15px;
-        max-width: 90%;
-    }
-    .np-album-art {
-        width: 120px;
-        height: 120px;
-    }
-    .np-track-name {
-        font-size: 1.1rem;
-    }
-    .language-switcher {
-        top: 12px;
-        right: 12px;
-    }
-    .md3-icon-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 20px 15px 10px;
-    }
-    h1 {
-        font-size: 1.75rem;
-    }
-    .avatar {
-        width: 140px;
-        height: 140px;
-        margin-bottom: 15px;
-    }
-    .button-group {
-        gap: 8px;
-        padding: 10px;
-        border-radius: var(--md-shape-lg);
-    }
-    .md3-btn {
-        padding: 0 14px;
-        height: 34px;
-        font-size: 0.75rem;
-        flex-basis: calc(50% - 4px);
-        justify-content: center;
-    }
-    .md3-btn img {
-        width: 16px;
-        height: 16px;
-    }
-    .projects {
-        padding: 15px;
-    }
-    .projects h2 {
-        font-size: 1.2rem;
-    }
-    .md3-card {
-        padding: 16px;
     }
     .np-album-art {
         width: 90px;
         height: 90px;
     }
-    .np-track-name {
-        font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 32px 12px 12px;
     }
-    .np-artist {
-        font-size: 0.8rem;
+    .avatar {
+        width: 150px;
+        height: 150px;
     }
-    #footer-message p {
-        font-size: 0.8rem;
+    h1 {
+        font-size: 1.8rem;
     }
-    .language-switcher {
-        top: 10px;
-        right: 10px;
+    .button-group {
+        gap: 8px;
+        padding: 10px;
     }
-    .md3-icon-btn {
-        padding: 4px 10px;
-        font-size: 0.75rem;
+    .m3-card {
+        padding: 18px;
+    }
+    .now-playing {
+        padding: 12px;
     }
 }

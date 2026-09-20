@@ -1,8 +1,40 @@
 let recentTracksList = [];
 let currentTrackIndex = 0;
-const DEFAULT_PHOTO = 'https://cdn4.telesco.pe/file/tsadyMGtq5oZKRIjQqgNZnzY6Jc-ffCtlxaxKu_YiJWo6hYTBlIexopI2bA3wmzoXCsr_wLmDWlVpDbvqzLGqTxTGgXypTG9RGZh2Bv3_lGGZRhCQodchU1hLt_RHWeGQ5DjHIU--BExRTgW3DqxvJEoW_MFSdYqlnpc6G9fzFtYdU49ctNRC4BVoSf7Xt2mvxWwbFoH15hmxKegJEJ_LVSjPCAYPWAtRhADSO4TE6k3XQFjvL31gVf9e5ZWsvE5rXk61eryY2XrXePa4MGGwwMCNr5URvX_c-PR_eNDoxYtR-eFnBXsJhGzhEi3BwJn-0p5JHsKanqG-ryBlMiOdA.jpg';
+let tgChannelPhoto = localStorage.getItem('cached_tg_photo') || null;
 
-function renderTrack(track) {
+async function getTgPhoto() {
+    if (tgChannelPhoto) return tgChannelPhoto;
+    try {
+        const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://t.me/+SAqK0Ld2pylkZDMy')}&_t=${Date.now()}`);
+        if (res.ok) {
+            const html = await res.text();
+            const match = html.match(/https:\/\/cdn\d*\.telesco\.pe\/file\/[^\s"']+/i)
+                       || html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
+            if (match) {
+                tgChannelPhoto = match[1] || match[0];
+                localStorage.setItem('cached_tg_photo', tgChannelPhoto);
+                return tgChannelPhoto;
+            }
+        }
+    } catch (e) {}
+
+    try {
+        const res2 = await fetch(`https://r.jina.ai/https://t.me/+SAqK0Ld2pylkZDMy`);
+        if (res2.ok) {
+            const txt = await res2.text();
+            const match2 = txt.match(/https:\/\/cdn\d*\.telesco\.pe\/file\/[^\s"'\)\\]+/i);
+            if (match2) {
+                tgChannelPhoto = match2[0];
+                localStorage.setItem('cached_tg_photo', tgChannelPhoto);
+                return tgChannelPhoto;
+            }
+        }
+    } catch (e) {}
+
+    return '';
+}
+
+async function renderTrack(track) {
     const card = document.getElementById('now-playing-card');
     if (!card || !track) return;
 
@@ -35,7 +67,7 @@ function renderTrack(track) {
     }
 
     if (!urlPhoto || urlPhoto.includes('2a96cbd8b46e442fc41c2b86b821562f')) {
-        urlPhoto = DEFAULT_PHOTO;
+        urlPhoto = await getTgPhoto();
     }
 
     const currentLang = localStorage.getItem('language') || (navigator.language.startsWith('ru') ? 'ru' : 'en');
@@ -63,7 +95,7 @@ function renderTrack(track) {
             <div class="m3-player-main">
                 <div class="m3-player-art-wrap">
                     <img src="${urlPhoto}" alt="${trackName}" class="m3-player-art">
-                    <div class="m3-art-glow" style="background-image: url('${urlPhoto}')"></div>
+                    <div class="m3-art-glow" style="${urlPhoto ? `background-image: url('${urlPhoto}')` : ''}"></div>
                     <div class="m3-player-status-badge ${isLive ? 'live-badge' : 'idle-badge'}">
                         ${isLive ? `
                             <div class="m3-equalizer">
@@ -120,18 +152,18 @@ function renderTrack(track) {
     const nextBtn = document.getElementById('m3-next-btn');
 
     if (prevBtn && hasPrev) {
-        prevBtn.addEventListener('click', (e) => {
+        prevBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             currentTrackIndex--;
-            renderTrack(recentTracksList[currentTrackIndex]);
+            await renderTrack(recentTracksList[currentTrackIndex]);
         });
     }
 
     if (nextBtn && hasNext) {
-        nextBtn.addEventListener('click', (e) => {
+        nextBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             currentTrackIndex++;
-            renderTrack(recentTracksList[currentTrackIndex]);
+            await renderTrack(recentTracksList[currentTrackIndex]);
         });
     }
 }
@@ -170,7 +202,7 @@ async function nowPlaying() {
             currentTrackIndex = 0;
         }
 
-        renderTrack(recentTracksList[currentTrackIndex]);
+        await renderTrack(recentTracksList[currentTrackIndex]);
         
     } catch (error) {
         console.error("Ошибка при загрузке трека:", error);

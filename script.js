@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="total-contribs-badge">${total} contributions in the last year</span>
                 </div>
                 <div class="graph-scroll-wrap">
-                    <svg viewBox="0 0 ${totalW} ${totalH}" width="100%" height="auto" style="min-width: 680px; max-width: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 ${totalW} ${totalH}" width="100%" height="${totalH}" style="min-width: 680px; max-width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                         ${monthLabels}
                         <text x="0" y="38" fill="#CAC4D0" font-size="9" font-family="'Comfortaa', 'Roboto', sans-serif">Mon</text>
                         <text x="0" y="64" fill="#CAC4D0" font-size="9" font-family="'Comfortaa', 'Roboto', sans-serif">Wed</text>

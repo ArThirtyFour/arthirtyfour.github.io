@@ -1,6 +1,37 @@
 let recentTracksList = [];
 let currentTrackIndex = 0;
-let tgChannelPhoto = localStorage.getItem('cached_tg_photo') || null;
+const TG_PHOTO_KEY = 'cached_tg_photo';
+const TG_PHOTO_TTL = 2 * 24 * 60 * 60 * 1000;
+
+function readCachedTgPhoto() {
+    let raw = null;
+    try {
+        raw = localStorage.getItem(TG_PHOTO_KEY);
+    } catch (e) {
+        return null;
+    }
+    if (!raw) return null;
+    try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.url === 'string' && typeof parsed.ts === 'number') {
+            if (Date.now() - parsed.ts < TG_PHOTO_TTL) return parsed.url;
+        }
+    } catch (e) {
+
+    }
+    try {
+        localStorage.removeItem(TG_PHOTO_KEY);
+    } catch (e2) {}
+    return null;
+}
+
+function writeCachedTgPhoto(url) {
+    try {
+        localStorage.setItem(TG_PHOTO_KEY, JSON.stringify({ url, ts: Date.now() }));
+    } catch (e) {}
+}
+
+let tgChannelPhoto = readCachedTgPhoto();
 
 async function getTgPhoto() {
     if (tgChannelPhoto) return tgChannelPhoto;
@@ -12,7 +43,7 @@ async function getTgPhoto() {
                        || html.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
             if (match) {
                 tgChannelPhoto = match[1] || match[0];
-                localStorage.setItem('cached_tg_photo', tgChannelPhoto);
+                writeCachedTgPhoto(tgChannelPhoto);
                 return tgChannelPhoto;
             }
         }
@@ -25,7 +56,7 @@ async function getTgPhoto() {
             const match2 = txt.match(/https:\/\/cdn\d*\.telesco\.pe\/file\/[^\s"'\)\\]+/i);
             if (match2) {
                 tgChannelPhoto = match2[0];
-                localStorage.setItem('cached_tg_photo', tgChannelPhoto);
+                writeCachedTgPhoto(tgChannelPhoto);
                 return tgChannelPhoto;
             }
         }

@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             blogLabel: 'Мой блог',
             loadingTrack: 'Загрузка трека...',
             myStack: '> Мой Тех. Стек <',
-            githubContributions: '> GitHub Contributions <',
+            githubContributions: '> Контрибьюции (GitHub + Forgejo) <',
             activeProjects: '> Активные Проекты <',
             exteraSubtitle: 'Matrix клиент',
             exteraDesc: 'FluffyChat fork на стероидах. E2EE, голосовые звонки, Material You, кастомные эмодзи и многое другое.',
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             blogLabel: 'My blog',
             loadingTrack: 'Loading track...',
             myStack: '> My Stack <',
-            githubContributions: '> GitHub Contributions <',
+            githubContributions: '> Contributions (GitHub + Forgejo) <',
             activeProjects: '> Active Projects <',
             exteraSubtitle: 'Matrix Client',
             exteraDesc: 'FluffyChat fork on steroids. E2EE, voice calls, Material You, custom emotes and much more.',
@@ -304,6 +304,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const graphContainer = document.getElementById('github-graph');
         if (!graphContainer) return;
 
+        function levelFor(count) {
+            if (count <= 0) return 0;
+            if (count <= 2) return 1;
+            if (count <= 6) return 2;
+            if (count <= 12) return 3;
+            return 4;
+        }
+
         try {
             const response = await fetch('https://github-contributions-api.jogruber.de/v4/ArThirtyFour?y=last');
             if (!response.ok) throw new Error('Network response was not ok');
@@ -311,7 +319,43 @@ document.addEventListener('DOMContentLoaded', () => {
             const days = data.contributions;
             if (!days || days.length === 0) throw new Error('No contribution data');
 
-            const total = data.total?.lastYear ?? days.reduce((acc, d) => acc + d.count, 0);
+            const totalGH = data.total?.lastYear ?? days.reduce((acc, d) => acc + d.count, 0);
+
+            // Merge contributions from self-hosted Forgejo (git.kangel.xyz).
+            // Pre-aggregated build-time into forgejo-contributions.json because
+            // the Forgejo API has no CORS headers for direct browser fetch.
+            let forgejoByDate = {};
+            let forgejoTotal = 0;
+            let forgejoOk = false;
+            try {
+                const fjResp = await fetch('forgejo-contributions.json', { cache: 'no-store' });
+                if (fjResp.ok) {
+                    const fj = await fjResp.json();
+                    forgejoByDate = fj.contributions || {};
+                    forgejoTotal = fj.total || 0;
+                    forgejoOk = true;
+                }
+            } catch (fjErr) {
+                console.warn('Forgejo stats unavailable, showing GitHub only:', fjErr);
+            }
+
+            let total = totalGH;
+            if (forgejoOk) {
+                days.forEach(day => {
+                    const gh = day.count || 0;
+                    const fj = forgejoByDate[day.date] || 0;
+                    day.ghCount = gh;
+                    day.fjCount = fj;
+                    day.count = gh + fj;
+                    // Keep GitHub's own level when there's no Forgejo activity that day.
+                    day.level = fj === 0 ? day.level : levelFor(day.count);
+                });
+                total = totalGH + forgejoTotal;
+            }
+
+            const totalBadge = forgejoOk
+                ? `${total} contributions in the last year (GH: ${totalGH} + Forgejo: ${forgejoTotal})`
+                : `${total} contributions in the last year`;
 
             const weeks = [];
             let currentWeek = [];
@@ -360,13 +404,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     const x = wIdx * step + 28;
                     const y = dIdx * step + 18;
                     const color = colors[day.level] || colors[0];
-                    cells += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellW}" rx="2" ry="2" fill="${color}" class="graph-cell"><title>${day.count} contributions on ${day.date}</title></rect>`;
+                    const tip = (day.fjCount > 0 && day.ghCount > 0)
+                        ? `${day.count} contributions on ${day.date} (GH: ${day.ghCount}, Forgejo: ${day.fjCount})`
+                        : `${day.count} contributions on ${day.date}`;
+                    cells += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellW}" rx="2" ry="2" fill="${color}" class="graph-cell"><title>${tip}</title></rect>`;
                 });
             });
 
             const svg = `
                 <div class="graph-header-meta">
-                    <span class="total-contribs-badge">${total} contributions in the last year</span>
+                    <span class="total-contribs-badge">${totalBadge}</span>
                 </div>
                 <div class="graph-scroll-wrap">
                     <svg viewBox="0 0 ${totalW} ${totalH}" width="100%" height="${totalH}" style="min-width: 680px; max-width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">

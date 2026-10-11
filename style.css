@@ -351,6 +351,7 @@ md-chip-set {
 
 .github-graph-content {
     width: 100%;
+    position: relative;
 }
 
 .github-loading {
@@ -387,12 +388,70 @@ md-chip-set {
 .graph-cell {
     transition: transform 0.15s, opacity 0.15s;
     cursor: pointer;
+    outline: none;
 }
 
-.graph-cell:hover {
-    opacity: 0.8;
-    transform: scale(1.2);
-    transform-origin: center;
+.graph-cell:hover, .graph-cell:focus-visible {
+    opacity: 0.85;
+    stroke: var(--md-sys-color-primary);
+    stroke-width: 1.5;
+}
+
+.graph-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.graph-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    color: var(--md-sys-color-on-surface-variant);
+    letter-spacing: 0.25px;
+}
+
+.graph-legend i {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.graph-tooltip {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+    background-color: var(--md-sys-color-surface-container-highest);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: 10px;
+    box-shadow: var(--md-elevation-2);
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+}
+
+.graph-tooltip.show {
+    opacity: 1;
+}
+
+.graph-tooltip .tt-date {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+}
+
+.graph-tooltip .tt-count {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 600;
+}
+
+.graph-tooltip .tt-breakdown {
+    color: var(--md-sys-color-primary);
+    font-size: 0.72rem;
 }
 
 .now-playing {

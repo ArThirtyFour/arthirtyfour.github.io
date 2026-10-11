@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: "3.x"
       - name: Aggregate Forgejo heatmap
+        env:
+          # Optional: with the owner's token the heatmap also includes private
+          # contributions (same numbers the owner sees when logged in).
+          # Add it at repo Settings → Secrets → Actions as FORGEJO_TOKEN.
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
         run: python3 tools/update-forgejo-stats.py
       - name: Commit if changed
         run: |

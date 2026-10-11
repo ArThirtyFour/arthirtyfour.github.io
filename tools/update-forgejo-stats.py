@@ -1,28 +1,5 @@
 #!/usr/bin/env python3
-"""Aggregate Forgejo contributions for the site graph.
 
-Data source: https://git.kangel.xyz/api/v1/users/kangel/heatmap
-This is exactly what the Forgejo profile page (kangel?tab=activity and the
-contribution graph) uses: it counts the user's *actions* (pushes, issues,
-pulls, reviews...), not raw commit authorship. So bot-authored commits that
-the user pushes still count - same as Forgejo shows on the profile.
-
-Why a static file and not a live browser fetch?
-- The Forgejo API sends no `Access-Control-Allow-Origin`, so fetch() from
-  the site is blocked by CORS.
-- Build-time aggregation = one local JSON, zero API load on page views.
-
-Output: forgejo-contributions.json next to index.html:
-{
-  "updated_at": "...",
-  "source": "https://git.kangel.xyz/api/v1/users/kangel/heatmap",
-  "contributions": {"2026-08-07": 6, ...},   # UTC days with >=1 contribution
-  "total": 123
-}
-
-Run manually or via .github/workflows/update-forgejo-stats.yml (daily cron).
-Uses only the Python standard library.
-"""
 
 import datetime
 import json
@@ -31,12 +8,14 @@ import urllib.request
 
 FORGEJO = "https://git.kangel.xyz"
 HEATMAP_USER = "kangel"
+TOKEN = os.environ.get("FORGEJO_TOKEN", "").strip()
 
 
 def api_get(path):
-    req = urllib.request.Request(
-        FORGEJO + path, headers={"User-Agent": "arthirtyfour-site-stats"}
-    )
+    headers = {"User-Agent": "arthirtyfour-site-stats"}
+    if TOKEN:
+        headers["Authorization"] = f"token {TOKEN}"
+    req = urllib.request.Request(FORGEJO + path, headers=headers)
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.load(r)
 
@@ -60,6 +39,7 @@ def main():
     out = {
         "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "source": f"{FORGEJO}/api/v1/users/{HEATMAP_USER}/heatmap",
+        "include_private": bool(TOKEN),
         "contributions": per_day,
         "total": sum(per_day.values()),
     }

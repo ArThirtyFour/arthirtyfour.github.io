@@ -300,17 +300,71 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(nextPhrase, 800);
     }
 
+    function bindGraphTooltip(graphContainer, showBreakdown) {
+        const tip = graphContainer.querySelector('#graph-tooltip');
+        if (!tip) return;
+
+        function fill(cell) {
+            const dateStr = cell.getAttribute('data-date');
+            const count = Number(cell.getAttribute('data-count') || 0);
+            const gh = Number(cell.getAttribute('data-gh') || 0);
+            const fj = Number(cell.getAttribute('data-fj') || 0);
+            const nice = new Date(dateStr + 'T00:00:00Z').toLocaleDateString(undefined, {
+                month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'
+            });
+            const word = count === 1 ? 'contribution' : 'contributions';
+            let html = `<div class="tt-date">${nice}</div>` +
+                `<div class="tt-count">${count} ${word}</div>`;
+            if (showBreakdown && (gh > 0 || fj > 0)) {
+                html += `<div class="tt-breakdown">GitHub: ${gh} · Forgejo: ${fj}</div>`;
+            }
+            tip.innerHTML = html;
+        }
+
+        function place(clientX, clientY) {
+            const box = graphContainer.getBoundingClientRect();
+            let x = clientX - box.left + 14;
+            let y = clientY - box.top - 10;
+            tip.classList.add('show');
+            const tw = tip.offsetWidth;
+            const th = tip.offsetHeight;
+            if (x + tw > box.width - 8) x = clientX - box.left - tw - 14;
+            if (y < 8) y = 8;
+            if (y + th > box.height - 8) y = box.height - th - 8;
+            tip.style.left = x + 'px';
+            tip.style.top = y + 'px';
+        }
+
+        function hide() {
+            tip.classList.remove('show');
+        }
+
+        graphContainer.addEventListener('pointermove', (e) => {
+            const cell = e.target.closest ? e.target.closest('.graph-cell') : null;
+            if (!cell || !graphContainer.contains(cell)) { hide(); return; }
+            fill(cell);
+            place(e.clientX, e.clientY);
+        });
+        graphContainer.addEventListener('pointerleave', hide);
+        graphContainer.addEventListener('click', (e) => {
+            const cell = e.target.closest ? e.target.closest('.graph-cell') : null;
+            if (!cell || !graphContainer.contains(cell)) { hide(); return; }
+            fill(cell);
+            place(e.clientX || 0, e.clientY || 0);
+        });
+        graphContainer.addEventListener('focusin', (e) => {
+            const cell = e.target.closest ? e.target.closest('.graph-cell') : null;
+            if (!cell) return;
+            fill(cell);
+            const r = cell.getBoundingClientRect();
+            place(r.left + r.width / 2, r.top);
+        });
+        graphContainer.addEventListener('focusout', hide);
+    }
+
     async function loadGitHubGraph() {
         const graphContainer = document.getElementById('github-graph');
         if (!graphContainer) return;
-
-        function levelFor(count) {
-            if (count <= 0) return 0;
-            if (count <= 2) return 1;
-            if (count <= 6) return 2;
-            if (count <= 12) return 3;
-            return 4;
-        }
 
         try {
             const response = await fetch('https://github-contributions-api.jogruber.de/v4/ArThirtyFour?y=last');
@@ -321,9 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const totalGH = data.total?.lastYear ?? days.reduce((acc, d) => acc + d.count, 0);
 
-            // Merge contributions from self-hosted Forgejo (git.kangel.xyz).
-            // Pre-aggregated build-time into forgejo-contributions.json because
-            // the Forgejo API has no CORS headers for direct browser fetch.
             let forgejoByDate = {};
             let forgejoTotal = 0;
             let forgejoOk = false;
@@ -347,32 +398,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     day.ghCount = gh;
                     day.fjCount = fj;
                     day.count = gh + fj;
-                    // Keep GitHub's own level when there's no Forgejo activity that day.
-                    day.level = fj === 0 ? day.level : levelFor(day.count);
                 });
                 total = totalGH + forgejoTotal;
+            } else {
+                days.forEach(day => {
+                    day.ghCount = day.count;
+                    day.fjCount = 0;
+                });
             }
+            const positive = days.map(d => d.count).filter(c => c > 0).sort((a, b) => a - b);
+            const distinct = [...new Set(positive)];
+            const cuts = [];
+            for (let i = 1; i <= 6; i++) {
+                cuts.push(distinct.length
+                    ? distinct[Math.min(distinct.length - 1, Math.floor(distinct.length * i / 7))]
+                    : i);
+            }
+            function levelFor(count) {
+                if (count <= 0) return 0;
+                let level = 1;
+                for (const c of cuts) if (count > c) level++;
+                return Math.min(level, 7);
+            }
+            days.forEach(day => { day.level = levelFor(day.count); });
 
             const totalBadge = forgejoOk
                 ? `${total} contributions in the last year (GH: ${totalGH} + Forgejo: ${forgejoTotal})`
                 : `${total} contributions in the last year`;
 
             const weeks = [];
-            let currentWeek = [];
-            days.forEach((day, index) => {
-                currentWeek.push(day);
-                if (currentWeek.length === 7 || index === days.length - 1) {
-                    weeks.push(currentWeek);
-                    currentWeek = [];
+            let week = new Array(7).fill(null);
+            days.forEach((day) => {
+                const wd = new Date(day.date + 'T00:00:00Z').getUTCDay();
+                week[wd] = day;
+                if (wd === 6) {
+                    weeks.push(week);
+                    week = new Array(7).fill(null);
                 }
             });
+            if (week.some(Boolean)) weeks.push(week);
 
             const colors = {
                 0: '#2B2930',
-                1: '#4F378B',
-                2: '#7E57C2',
-                3: '#B39DDB',
-                4: '#D0BCFF'
+                1: '#38305A',
+                2: '#4F378B',
+                3: '#6747B8',
+                4: '#7E57C2',
+                5: '#9A7BD0',
+                6: '#B39DDB',
+                7: '#D0BCFF'
             };
 
             const cellW = 10;
@@ -383,15 +457,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let monthLabels = '';
             let lastMonth = -1;
-            weeks.forEach((week, wIdx) => {
-                const firstDay = week[0];
+            weeks.forEach((wk, wIdx) => {
+                const firstDay = wk.find(Boolean);
                 if (firstDay) {
-                    const m = new Date(firstDay.date).getMonth();
-                    if (m !== lastMonth && wIdx > 0 && wIdx < weeks.length - 2) {
-                        const mName = new Date(firstDay.date).toLocaleString('en', { month: 'short' });
-                        monthLabels += `<text x="${wIdx * step + 28}" y="12" fill="#CAC4D0" font-size="10" font-family="'Comfortaa', 'Roboto', sans-serif">${mName}</text>`;
-                        lastMonth = m;
-                    } else if (lastMonth === -1) {
+                    const d = new Date(firstDay.date + 'T00:00:00Z');
+                    const m = d.getUTCMonth();
+                    if (m !== lastMonth) {
+                        if (wIdx > 0) {
+                            const mName = d.toLocaleString('en', { month: 'short', timeZone: 'UTC' });
+                            monthLabels += `<text x="${wIdx * step + 28}" y="12" fill="#CAC4D0" font-size="10" font-family="'Comfortaa', 'Roboto', sans-serif">${mName}</text>`;
+                        }
                         lastMonth = m;
                     }
                 }
@@ -399,17 +474,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             let cells = '';
-            weeks.forEach((week, wIdx) => {
-                week.forEach((day, dIdx) => {
+            weeks.forEach((wk, wIdx) => {
+                wk.forEach((day, wd) => {
+                    if (!day) return;
                     const x = wIdx * step + 28;
-                    const y = dIdx * step + 18;
+                    const y = wd * step + 18;
                     const color = colors[day.level] || colors[0];
-                    const tip = (day.fjCount > 0 && day.ghCount > 0)
-                        ? `${day.count} contributions on ${day.date} (GH: ${day.ghCount}, Forgejo: ${day.fjCount})`
-                        : `${day.count} contributions on ${day.date}`;
-                    cells += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellW}" rx="2" ry="2" fill="${color}" class="graph-cell"><title>${tip}</title></rect>`;
+                    const gh = day.ghCount ?? day.count;
+                    const fj = day.fjCount ?? 0;
+                    cells += `<rect x="${x}" y="${y}" width="${cellW}" height="${cellW}" rx="2" ry="2" fill="${color}" class="graph-cell" data-date="${day.date}" data-count="${day.count}" data-gh="${gh}" data-fj="${fj}" tabindex="0" role="img" aria-label="${day.count} contributions on ${day.date}"></rect>`;
                 });
             });
+
+            const legendCells = [0, 1, 2, 3, 4, 5, 6, 7]
+                .map(l => `<i style="background:${colors[l]}"></i>`)
+                .join('');
 
             const svg = `
                 <div class="graph-header-meta">
@@ -424,9 +503,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${cells}
                     </svg>
                 </div>
+                <div class="graph-footer">
+                    <span class="graph-legend">Less ${legendCells} More</span>
+                </div>
+                <div class="graph-tooltip" id="graph-tooltip" role="status"></div>
             `;
 
             graphContainer.innerHTML = svg;
+            bindGraphTooltip(graphContainer, forgejoOk);
         } catch (err) {
             console.warn('Fallback to static chart generator:', err);
             graphContainer.innerHTML = `

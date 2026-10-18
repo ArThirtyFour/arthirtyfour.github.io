@@ -567,17 +567,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadGitHubGraph();
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
+    // Material 3 Smooth Reveal On Scroll (как на vpn.akres.fun)
+    function armReveal(container) {
+        const root = container || document;
+        const items = [...root.querySelectorAll('.m3-card, .tech-chip-container, .github-graph-container, header h1, .subtitle, .social-links')];
+        if (!items.length) return;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            items.forEach(el => el.classList.add('in'));
+            return;
+        }
 
-    document.querySelectorAll('.card').forEach(card => {
-        observer.observe(card);
-    });
+        const reveal = (el, d) => setTimeout(() => {
+            el.classList.add('in');
+            el.addEventListener('transitionend', () => el.classList.add('rv-done'), { once: true });
+        }, d);
+
+        const vh = window.innerHeight || 800;
+        let near = 0;
+
+        const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries, observer) => {
+            for (const e of entries) {
+                if (!e.isIntersecting) continue;
+                observer.unobserve(e.target);
+                reveal(e.target, +(e.target.dataset.rd || 0));
+            }
+        }, { rootMargin: '0px 0px -5% 0px', threshold: 0.05 }) : null;
+
+        for (const el of items) {
+            el.classList.add('reveal');
+            el.classList.remove('in', 'rv-done');
+            if (el.getBoundingClientRect().top < vh * 1.05) {
+                el.dataset.rd = '0';
+                reveal(el, Math.min(near++, 10) * 45);
+            } else if (io) {
+                el.dataset.rd = '0';
+                io.observe(el);
+            } else {
+                el.classList.add('in');
+            }
+        }
+    }
+
+    // Material 3 Shapes Burst (интерактивный всплеск фигурок при клике)
+    function shapeBurst(x, y) {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.M3Shapes) return;
+        const M = window.M3Shapes;
+        const SHAPES = ['Cookie4Sided', 'Cookie9Sided', 'Clover4Leaf', 'Flower', 'Sunny', 'Gem', 'PuffyDiamond', 'Pill', 'SoftBurst', 'Diamond', 'Triangle', 'Heart'];
+        const TINTS = ['primary', 'tertiary', 'secondary'];
+        const rnd = (a, b) => a + Math.random() * (b - a);
+        const count = 14;
+        const baseAngle = Math.random() * Math.PI * 2;
+
+        for (let i = 0; i < count; i++) {
+            const el = document.createElement('span');
+            el.className = 'boom';
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            const tint = TINTS[i % TINTS.length];
+            const sz = rnd(9, 20) | 0;
+            el.style.width = el.style.height = sz + 'px';
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 1 1');
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const name = SHAPES[(Math.random() * SHAPES.length) | 0];
+            p.setAttribute('d', M.toPath(new M.Morph(M.shapes.byName(name), M.shapes.byName(name)), 0).toString());
+            p.setAttribute('fill', 'none');
+            p.setAttribute('stroke', `var(--md-sys-color-${tint})`);
+            p.setAttribute('stroke-width', '1.6');
+            p.setAttribute('vector-effect', 'non-scaling-stroke');
+            svg.appendChild(p);
+            el.appendChild(svg);
+
+            const a = baseAngle + (i / count) * Math.PI * 2 + rnd(-0.25, 0.25);
+            const d = rnd(120, 260);
+            el.style.setProperty('--bx', (Math.cos(a) * d).toFixed(1) + 'px');
+            el.style.setProperty('--by', (Math.sin(a) * d * 0.75 + rnd(20, 70)).toFixed(1) + 'px');
+            el.style.setProperty('--br', (rnd(-260, 260) | 0) + 'deg');
+            el.style.setProperty('--bt', rnd(0.85, 1.25).toFixed(2) + 's');
+
+            document.body.appendChild(el);
+            el.addEventListener('animationend', () => el.remove(), { once: true });
+        }
+    }
+
+    // Привязываем клик с фигурами по заголовку и аватару
+    const greetingTitle = document.querySelector('header h1');
+    if (greetingTitle) {
+        greetingTitle.style.cursor = 'pointer';
+        greetingTitle.addEventListener('click', (e) => {
+            shapeBurst(e.clientX || window.innerWidth / 2, e.clientY || 150);
+        });
+    }
+    const avatar = document.querySelector('.avatar');
+    if (avatar) {
+        avatar.style.cursor = 'pointer';
+        avatar.addEventListener('click', (e) => {
+            const r = avatar.getBoundingClientRect();
+            shapeBurst(r.left + r.width / 2, r.top + r.height / 2);
+        });
+    }
+
+    armReveal();
 }); 

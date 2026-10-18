@@ -1,115 +1,161 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.createElement('div');
-    container.id = 'bg-shapes';
-    document.body.prepend(container);
+    // Background Shapes from AkresVPN (Material 3 Expressive Shapes Morphing)
+    (function initBgShapes() {
+        const box = document.createElement('div');
+        box.className = 'bg-shapes';
+        box.id = 'bgShapes';
+        box.setAttribute('aria-hidden', 'true');
+        document.body.prepend(box);
 
-    const NS = 'http://www.w3.org/2000/svg';
+        if (!window.M3Shapes) return;
+        const { shapes, Morph, toPath } = window.M3Shapes;
+        const POOL = [
+            'Cookie9Sided', 'Clover4Leaf', 'Flower', 'SoftBurst', 'Sunny', 'Pill',
+            'Cookie4Sided', 'Gem', 'PuffyDiamond', 'Oval', 'Ghostish', 'Cookie12Sided'
+        ];
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const rnd = (a, b) => a + Math.random() * (b - a);
 
-    function genPath(type, cx, cy) {
-        const n = 120, step = Math.PI * 2 / n;
-        let d = '';
-        for (let i = 0; i < n; i++) {
-            const a = i * step;
-            let r;
-            if (type === 'flower8') {
-                r = 44 + 6 * Math.cos(8 * a);
-            } else if (type === 'flower12') {
-                r = 44 + 5 * Math.cos(12 * a);
-            } else if (type === 'clover4') {
-                r = 43 + 7 * Math.cos(4 * a);
-            } else if (type === 'squircle') {
-                const R = 44, m = 4;
-                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), m) + Math.pow(Math.abs(Math.sin(a)), m), 1 / m);
-            } else if (type === 'star4') {
-                const R = 42, m = 1.6;
-                r = R / Math.pow(Math.pow(Math.abs(Math.cos(a)), m) + Math.pow(Math.abs(Math.sin(a)), m), 1 / m);
-            } else if (type === 'peanut') {
-                const W = 48, H = 34, cx2 = W - H;
-                let quad = a % Math.PI;
-                if (quad > Math.PI / 2) quad = Math.PI - quad;
-                const bound = Math.atan2(H, cx2);
-                if (quad >= bound) {
-                    r = H / Math.sin(quad);
-                } else {
-                    const b = cx2 * Math.cos(quad);
-                    const c = cx2 * cx2 - H * H;
-                    r = b + Math.sqrt(b * b - c);
+        const inUse = new Set();
+        const pickFrom = (list, not) => {
+            const free = list.filter(n => n !== not && !inUse.has(n));
+            let from = free.length ? free : list.filter(n => n !== not);
+            if (!from.length) from = list;
+            return from[(Math.random() * from.length) | 0] || list[0];
+        };
+        const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+        const _morphs = new Map();
+        const idle = window.requestIdleCallback || (f => setTimeout(f, 1));
+        function morphFor(a, b) {
+            const A = shapes.byName(a), B = shapes.byName(b);
+            if (!A || !B) return null;
+            const k = a + '>' + b;
+            let m = _morphs.get(k);
+            if (!m) { m = new Morph(A, B); _morphs.set(k, m); }
+            return m;
+        }
+        const TINTS = ['--md-sys-color-primary', '--md-sys-color-tertiary', '--md-sys-color-secondary'];
+
+        const LAYOUTS = [
+            {
+                name: 'Углы контуром',
+                build(W, H, base) {
+                    const s = base * 0.95, o = s * 0.58;
+                    return [
+                        { x: -o, y: -o, size: s },
+                        { x: W - s + o, y: -o, size: s },
+                        { x: -o, y: H - s + o, size: s },
+                        { x: W - s + o, y: H - s + o, size: s }
+                    ].map(p => Object.assign(p, { stroke: true, op: 0.16 }));
                 }
             }
-            const x = cx + r * Math.cos(a);
-            const y = cy + r * Math.sin(a);
-            d += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ',' + y.toFixed(2) + ' ';
+        ];
+
+        function narrowLayout(W, H) {
+            const s1 = W * 0.95, s2 = W * 0.8, s3 = W * 0.55;
+            return [
+                { x: W - s1 * 0.62, y: -s1 * 0.42, size: s1, stroke: true, op: 0.2, fast: true },
+                { x: -s2 * 0.55, y: H - s2 * 0.5, size: s2, stroke: true, op: 0.2, fast: true },
+                { x: -s3 * 0.4, y: H * 0.42, size: s3, stroke: true, op: 0.16, fast: true }
+            ];
         }
-        return d + 'Z';
-    }
 
-    const pFlower8 = genPath('flower8', 60, 60);
-    const pClover4 = genPath('clover4', 60, 60);
-    const pSquircle = genPath('squircle', 60, 60);
-    const pFlower12 = genPath('flower12', 60, 60);
-    const pStar4 = genPath('star4', 60, 60);
-    const pPeanut = genPath('peanut', 60, 60);
+        let timers = [], rafs = [];
+        function render(n) {
+            timers.forEach(clearTimeout); timers = [];
+            rafs.forEach(cancelAnimationFrame); rafs = [];
+            inUse.clear();
+            box.innerHTML = '';
+            const W = innerWidth, H = innerHeight, base = Math.min(W, H);
+            const slots = W < 600 ? narrowLayout(W, H) : LAYOUTS[n].build(W, H, base);
+            slots.forEach((slot, i) => {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('viewBox', '0 0 1 1');
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                svg.appendChild(path);
+                box.appendChild(svg);
+                svg.style.cssText = 'left:' + slot.x.toFixed(1) + 'px;top:' + slot.y.toFixed(1) + 'px;' +
+                    'width:' + (slot.size | 0) + 'px;height:' + (slot.size | 0) + 'px;' +
+                    'opacity:' + (slot.op ?? rnd(0.05, 0.09)).toFixed(3) + ';' +
+                    '--rot:' + (rnd(-40, 40) | 0) + 'deg;--px:0px;--py:0px;' +
+                    'transform:translate3d(var(--px),var(--py),0) rotate(var(--rot))';
+                svg.dataset.depth = (0.4 + Math.random() * 0.9).toFixed(2);
+                const tint = 'var(' + TINTS[i % TINTS.length] + ')';
+                if (slot.stroke) {
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', tint);
+                    path.setAttribute('stroke-width', '1.5');
+                    path.setAttribute('vector-effect', 'non-scaling-stroke');
+                } else {
+                    path.setAttribute('fill', tint);
+                }
+                const pool = slot.pool || POOL;
+                let cur = pickFrom(pool);
+                inUse.add(cur);
+                path.setAttribute('d', toPath(new Morph(shapes.byName(cur), shapes.byName(cur)), 0).toString());
+                if (reduce) return;
+                let nextName = null;
+                const prepare = () => {
+                    if (nextName) return;
+                    nextName = pickFrom(pool, cur);
+                    inUse.add(nextName);
+                    idle(() => morphFor(cur, nextName));
+                };
+                const step = () => {
+                    prepare();
+                    const next = nextName; nextName = null;
+                    const morph = next ? morphFor(cur, next) : null;
+                    if (!morph) { timers.push(setTimeout(step, 1200)); return; }
+                    const dur = slot.slow ? rnd(2200, 3200) : rnd(900, 1600), t0 = performance.now();
+                    const frame = now => {
+                        const p = Math.min(1, (now - t0) / dur);
+                        path.setAttribute('d', toPath(morph, ease(p)).toString());
+                        if (p < 1) {
+                            rafs.push(requestAnimationFrame(frame));
+                        } else {
+                            inUse.delete(cur);
+                            cur = next;
+                            idle(prepare);
+                            timers.push(setTimeout(step, slot.slow ? rnd(9000, 18000)
+                                : slot.fast ? rnd(3000, 7000)
+                                : rnd(6000, 16000)));
+                        }
+                    };
+                    rafs.push(requestAnimationFrame(frame));
+                };
+                timers.push(setTimeout(step, slot.fast ? rnd(600, 3000) : rnd(1500, 9000)));
+            });
+        }
 
-    const animValues = [pFlower8, pClover4, pSquircle, pFlower12, pStar4, pPeanut, pFlower8].join('; ');
-    const keyTimes = '0; 0.16; 0.33; 0.50; 0.66; 0.83; 1';
-    const smoothSpline = '0.2 0 0 1';
-    const keySplines = [smoothSpline, smoothSpline, smoothSpline, smoothSpline, smoothSpline, smoothSpline].join('; ');
+        idle(() => { render(0); });
 
-    const colors = [
-        'rgba(208, 188, 255, 0.05)',
-        'rgba(204, 194, 220, 0.04)',
-        'rgba(239, 184, 200, 0.04)',
-        'rgba(126, 87, 194, 0.06)',
-        'rgba(79, 55, 139, 0.07)'
-    ];
+        if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduce) {
+            let tx = 0, ty = 0, queued = false;
+            const apply = () => {
+                queued = false;
+                for (const svg of box.children) {
+                    const d = +svg.dataset.depth || 1;
+                    svg.style.setProperty('--px', (tx * d).toFixed(1) + 'px');
+                    svg.style.setProperty('--py', (ty * d).toFixed(1) + 'px');
+                }
+            };
+            addEventListener('pointermove', e => {
+                if (e.pointerType !== 'mouse') return;
+                tx = (e.clientX / innerWidth - 0.5) * 34;
+                ty = (e.clientY / innerHeight - 0.5) * 34;
+                if (!queued) { queued = true; requestAnimationFrame(apply); }
+            }, { passive: true });
+        }
 
-    const shapeConfigs = [
-        { size: 260, x: '5%', y: '8%', delay: 0 },
-        { size: 180, x: '82%', y: '12%', delay: -4 },
-        { size: 220, x: '75%', y: '45%', delay: -9 },
-        { size: 280, x: '3%', y: '58%', delay: -14 },
-        { size: 190, x: '85%', y: '80%', delay: -18 },
-        { size: 240, x: '45%', y: '88%', delay: -7 },
-        { size: 170, x: '48%', y: '2%', delay: -12 }
-    ];
-
-    shapeConfigs.forEach((cfg, i) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'bg-md3-shape';
-        wrap.style.width = cfg.size + 'px';
-        wrap.style.height = cfg.size + 'px';
-        wrap.style.left = cfg.x;
-        wrap.style.top = cfg.y;
-        wrap.style.animationDelay = (cfg.delay * 1.5) + 's';
-
-        const svg = document.createElementNS(NS, 'svg');
-        svg.setAttribute('viewBox', '0 0 120 120');
-        svg.classList.add('svg-canvas');
-
-        const g = document.createElementNS(NS, 'g');
-        g.classList.add('expressive-snap');
-        g.style.animationDuration = (35 + i * 8) + 's';
-        g.style.animationDelay = (cfg.delay * 2) + 's';
-
-        const path = document.createElementNS(NS, 'path');
-        path.setAttribute('fill', colors[i % colors.length]);
-        path.setAttribute('d', pFlower8);
-
-        const anim = document.createElementNS(NS, 'animate');
-        anim.setAttribute('attributeName', 'd');
-        anim.setAttribute('dur', (18 + (i % 3) * 4) + 's');
-        anim.setAttribute('repeatCount', 'indefinite');
-        anim.setAttribute('calcMode', 'spline');
-        anim.setAttribute('values', animValues);
-        anim.setAttribute('keyTimes', keyTimes);
-        anim.setAttribute('keySplines', keySplines);
-
-        path.appendChild(anim);
-        g.appendChild(path);
-        svg.appendChild(g);
-        wrap.appendChild(svg);
-        container.appendChild(wrap);
-    });
+        let rt, lastW = innerWidth;
+        addEventListener('resize', function () {
+            if (Math.abs(innerWidth - lastW) < 40) return;
+            lastW = innerWidth;
+            clearTimeout(rt);
+            rt = setTimeout(function () { render(0); }, 300);
+        });
+    })();
 
     const translations = {
         ru: {

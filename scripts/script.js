@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Background Shapes from AkresVPN (Material 3 Expressive Shapes Morphing)
+
     (function initBgShapes() {
         const box = document.createElement('div');
         box.className = 'bg-shapes';
@@ -567,7 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadGitHubGraph();
 
-    // Material 3 Smooth Reveal On Scroll (как на vpn.akres.fun)
     function armReveal(container) {
         const root = container || document;
         const items = [...root.querySelectorAll('.m3-card, .tech-chip-container, .github-graph-container, header h1, .subtitle, .social-links')];
@@ -608,7 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Material 3 Shapes Burst (интерактивный всплеск фигурок при клике)
     function shapeBurst(x, y) {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.M3Shapes) return;
         const M = window.M3Shapes;
@@ -651,7 +649,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Привязываем клик с фигурами по заголовку и аватару
     const greetingTitle = document.querySelector('header h1');
     if (greetingTitle) {
         greetingTitle.style.cursor = 'pointer';

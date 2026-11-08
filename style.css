@@ -296,6 +296,19 @@ h1 {
     transform: translateY(0) scale(0.99);
 }
 
+/* Project cards are real links now (crawlable), keep the card look */
+a.m3-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.m3-card:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 3px;
+}
+
+
+
 .card-header {
     display: flex;
     align-items: center;

@@ -3,13 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">AR34 | Mаня-Сайт</title>
-    
-    <!-- Google Fonts & Material Symbols -->
+
+    <title>AR34 — Python/JS-разработчик, self-hosted и Matrix</title>
+    <meta name="description" content="AR34 — Python/JS-разработчик. Matrix-клиент Extera, плагины для exteraGram, бесплатный VPN и собственные self-hosted сервисы: Matrix, SearXNG и Git.">
+    <link rel="canonical" href="https://kangel.xyz/">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+    <!-- Open Graph / Telegram / X -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="AR34">
+    <meta property="og:title" content="AR34 — Python/JS-разработчик, self-hosted и Matrix">
+    <meta property="og:description" content="Matrix-клиент Extera, плагины для exteraGram, бесплатный VPN и self-hosted сервисы: Matrix, SearXNG и Git.">
+    <meta property="og:url" content="https://kangel.xyz/">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/149522975?v=4&amp;s=512">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="AR34">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="profile:username" content="ArThirtyFour">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AR34 — Python/JS-разработчик, self-hosted и Matrix">
+    <meta name="twitter:description" content="Matrix-клиент Extera, плагины для exteraGram, бесплатный VPN и self-hosted сервисы: Matrix, SearXNG и Git.">
+    <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/149522975?v=4&amp;s=512">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://kangel.xyz/#website",
+          "url": "https://kangel.xyz/",
+          "name": "AR34",
+          "description": "Персональный сайт AR34 — Python/JS-разработчика.",
+          "inLanguage": ["ru", "en"],
+          "publisher": { "@id": "https://kangel.xyz/#person" }
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://kangel.xyz/#profilepage",
+          "url": "https://kangel.xyz/",
+          "name": "AR34",
+          "isPartOf": { "@id": "https://kangel.xyz/#website" },
+          "mainEntity": { "@id": "https://kangel.xyz/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://kangel.xyz/#person",
+          "name": "AR34",
+          "alternateName": "ArThirtyFour",
+          "url": "https://kangel.xyz/",
+          "image": "https://avatars.githubusercontent.com/u/149522975?v=4",
+          "jobTitle": "Python/JavaScript Developer",
+          "description": "Python/JS-разработчик, автор Matrix-клиента Extera и плагинов для exteraGram.",
+          "knowsAbout": ["Python", "JavaScript", "Flask", "Vue.js", "Docker", "Linux", "Matrix"],
+          "sameAs": [
+            "https://github.com/ArThirtyFour",
+            "https://t.me/ArThirtyFour",
+            "https://t.me/perexodnik_ar34",
+            "https://www.tiktok.com/@kangel_interneta_",
+            "https://matrix.to/#/@kangel:matrix.kangel.xyz",
+            "https://steamcommunity.com/profiles/76561199780032103/"
+          ]
+        }
+      ]
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://esm.run" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preload" href="fonts/GoogleSans-Medium.ttf" as="font" type="font/ttf" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Roboto:wght@400;500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
-    
+
     <script type="importmap">
     {
       "imports": {
@@ -40,7 +108,7 @@
 
     <header>
         <div class="avatar-wrapper">
-            <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar">
+            <img src="https://avatars.githubusercontent.com/u/149522975?v=4" alt="AR34 Avatar" class="avatar" width="240" height="240" fetchpriority="high" decoding="async">
         </div>
         <h1 data-i18n="greeting">Ку , я <span class="gradient-text">AR34!</span></h1>
         <p class="subtitle" id="subtitle-text"></p>
@@ -48,36 +116,37 @@
         <div class="social-links">
             <div class="button-group">
                 <md-filled-tonal-button href="https://t.me/ArThirtyFour" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF" alt="Telegram">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=FFFFFF" alt="Telegram" width="20" height="20" decoding="async">
                     Telegram
                 </md-filled-tonal-button>
                 <md-filled-tonal-button href="https://github.com/ArThirtyFour" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF" alt="Github">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=62856&format=png&color=FFFFFF" alt="Github" width="20" height="20" decoding="async">
                     Github
                 </md-filled-tonal-button>
                 <md-filled-tonal-button href="https://www.tiktok.com/@kangel_interneta_" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="TikTok">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="TikTok" width="20" height="20" decoding="async">
                     TikTok
                 </md-filled-tonal-button>
                 <md-filled-tonal-button href="https://t.me/perexodnik_ar34" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=7q3g0SaFUiVe&format=png&color=FFFFFF" alt="Blog" width="20" height="20" decoding="async">
                     <span data-i18n="blogLabel">My blog</span>
                 </md-filled-tonal-button>
                 <md-filled-tonal-button href="https://matrix.to/#/@kangel:matrix.kangel.xyz" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix" width="20" height="20" decoding="async">
                     Matrix
                 </md-filled-tonal-button>
                 <md-filled-tonal-button href="https://steamcommunity.com/profiles/76561199780032103/" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=468&format=png&color=FFFFFF" alt="Steam" width="20" height="20" decoding="async">
                     Steam
                 </md-filled-tonal-button>
                 <md-filled-button href="https://t.me/bio_ar34/16" target="_blank" class="m3-btn">
-                    <img slot="icon" src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details">
+                    <img slot="icon" src="https://img.icons8.com/?size=100&id=6cdJEps4HrFl&format=png&color=FFFFFF" alt="Details" width="20" height="20" decoding="async">
                     <span data-i18n="moreDetails">Подробнее тут</span>
                 </md-filled-button>
             </div>
         </div>
     </header>
+
 
     <section class="now-playing">
         <div class="m3-card now-playing-card" id="now-playing-card">
@@ -123,11 +192,11 @@
     <section class="projects">
         <h2 data-i18n="activeProjects">> Активные Проекты <</h2>
         <div class="projects-grid">
-            <article class="m3-card" onclick="window.open('https://source.extera.xyz/Extera/Extera', '_blank')">
+            <a class="m3-card" href="https://source.extera.xyz/Extera/Extera" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://avatars.githubusercontent.com/u/253452254?s=60&v=4" alt="Extera Icon" class="card-icon">
+                    <img src="https://avatars.githubusercontent.com/u/253452254?s=60&v=4" alt="Extera Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3>Extera</h3>
                         <p class="card-subtitle" data-i18n="exteraSubtitle">Matrix клиент</p>
@@ -140,13 +209,13 @@
                     <md-assist-chip label="E2EE" elevated></md-assist-chip>
                     <md-assist-chip label="Dart" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
+            </a>
 
-            <article class="m3-card" onclick="window.open('https://t.me/kangelplugins', '_blank')">
+            <a class="m3-card" href="https://t.me/kangelplugins" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://avatars.githubusercontent.com/u/239184096?s=400&u=01a56877825d4437dacae9431e7b23381dc45372&v=4" alt="KangelPlugins Icon" class="card-icon">
+                    <img src="https://avatars.githubusercontent.com/u/239184096?s=400&u=01a56877825d4437dacae9431e7b23381dc45372&v=4" alt="KangelPlugins Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3>KangelPlugins</h3>
                         <p class="card-subtitle" data-i18n="kangelPluginsSubtitle">Exteragram Plugins</p>
@@ -159,13 +228,13 @@
                     <md-assist-chip label="Python" elevated></md-assist-chip>
                     <md-assist-chip label="Telegram" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
+            </a>
 
-            <article class="m3-card" onclick="window.open('https://internet-tenshi.kangel.xyz/', '_blank')">
+            <a class="m3-card" href="https://internet-tenshi.kangel.xyz/" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://img.icons8.com/color/100/000000/vpn.png" alt="VPN Icon" class="card-icon">
+                    <img src="https://img.icons8.com/color/100/000000/vpn.png" alt="VPN Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3 data-i18n="notMeProject">EtoNeYa</h3>
                         <p class="card-subtitle" data-i18n="vpnServiceSubtitle">VPN Service</p>
@@ -178,18 +247,18 @@
                     <md-assist-chip label="SS" elevated></md-assist-chip>
                     <md-assist-chip label="No WhiteList" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
+            </a>
         </div>
     </section>
     
     <section class="projects">
         <h2 data-i18n="selfHostedProject">> Мои селф-хост сервисы <</h2>
         <div class="projects-grid">
-            <article class="m3-card" onclick="window.open('https://matrix.kangel.xyz', '_blank')">
+            <a class="m3-card" href="https://matrix.kangel.xyz" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix Icon" class="card-icon">
+                    <img src="https://img.icons8.com/?size=100&id=uWgXc4LrgneZ&format=png&color=FFFFFF" alt="Matrix Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3>Matrix</h3>
                         <p class="card-subtitle" data-i18n="matrixHosted">Matrix Server</p>
@@ -199,12 +268,12 @@
                     <md-assist-chip label="Selfhosted" elevated></md-assist-chip>
                     <md-assist-chip label="Matrix" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
-            <article class="m3-card" onclick="window.open('https://search.kangel.xyz', '_blank')">
+            </a>
+            <a class="m3-card" href="https://search.kangel.xyz" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://img.icons8.com/?size=100&id=132&format=png&color=FFFFFF" alt="Searxng Icon" class="card-icon">
+                    <img src="https://img.icons8.com/?size=100&id=132&format=png&color=FFFFFF" alt="Searxng Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3>SearXNG</h3>
                         <p class="card-subtitle" data-i18n="searXNGHosted">Searxng instance</p>
@@ -215,12 +284,12 @@
                     <md-assist-chip label="Privacy" elevated></md-assist-chip>
                     <md-assist-chip label="Search Engine" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
-            <article class="m3-card" onclick="window.open('https://git.kangel.xyz', '_blank')">
+            </a>
+            <a class="m3-card" href="https://git.kangel.xyz" target="_blank" rel="noopener">
                 <md-ripple></md-ripple>
                 <md-elevation></md-elevation>
                 <div class="card-header">
-                    <img src="https://img.icons8.com/?size=100&id=38389&format=png&color=FFFFFF" alt="Git Icon" class="card-icon">
+                    <img src="https://img.icons8.com/?size=100&id=38389&format=png&color=FFFFFF" alt="Git Icon" class="card-icon" width="48" height="48" loading="lazy" decoding="async">
                     <div>
                         <h3>Git Server</h3>
                         <p class="card-subtitle" data-i18n="gitHosted">Git Server</p>
@@ -231,7 +300,7 @@
                     <md-assist-chip label="Git" elevated></md-assist-chip>
                     <md-assist-chip label="DevOps" elevated></md-assist-chip>
                 </md-chip-set>
-            </article>
+            </a>
         </div>
     </section>
 

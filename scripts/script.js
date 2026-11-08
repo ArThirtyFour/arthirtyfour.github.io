@@ -230,15 +230,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (t[key]) {
-                if (el.tagName === 'TITLE') {
-                    document.title = t[key];
-                } else if (el.tagName === 'H1' || (el.tagName === 'P' && key === 'footerQuote')) {
+                if (el.tagName === 'H1' || (el.tagName === 'P' && key === 'footerQuote')) {
                     el.innerHTML = t[key].replace(/\n/g, '<br>');
                 } else {
                     el.textContent = t[key];
                 }
             }
         });
+
+        // Keep the document language in sync with the visible content.
+        // The <title> and meta description stay static on purpose: crawlers
+        // should always see one stable title/description, not a JS-swapped one.
+        document.documentElement.lang = lang;
 
         const langText = document.getElementById('lang-text');
         if (langText) {

@@ -1,0 +1,22 @@
+# AR34
+
+> AR34 (ArThirtyFour) is a Python/JavaScript developer. Personal site with projects and self-hosted services.
+
+## About
+
+- Name: AR34 / ArThirtyFour
+- Role: Python/JavaScript developer
+- Stack: Python, JavaScript, Flask, Vue.js, Docker, Linux, Matrix
+- Projects: Extera (Matrix client, FluffyChat fork), KangelPlugins (exteraGram plugin system)
+- Self-hosted: Matrix, SearXNG, Git
+
+## Links
+
+- [Website](https://kangel.xyz/)
+- [GitHub](https://github.com/ArThirtyFour)
+- [Telegram](https://t.me/ArThirtyFour)
+- [Blog](https://t.me/perexodnik_ar34)
+- [Matrix client Extera](https://source.extera.xyz/Extera/Extera)
+- [Matrix server](https://matrix.kangel.xyz)
+- [SearXNG](https://search.kangel.xyz)
+- [Git server](https://git.kangel.xyz)

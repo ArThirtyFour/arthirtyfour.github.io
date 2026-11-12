@@ -1,6 +1,6 @@
 # AR34
 
-> AR34 (ArThirtyFour) is a Python/JavaScript developer. Personal site with projects and self-hosted services.
+> AR34 (ArThirtyFour) is a Python/JavaScript developer. Personal site with projects , self-hosted services and etc.
 
 ## About
 

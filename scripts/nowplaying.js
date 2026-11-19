@@ -1,5 +1,7 @@
 let recentTracksList = [];
 let currentTrackIndex = 0;
+const KOITO_BASE = 'https://scrobler.kangel.xyz';
+const KOITO_HISTORY_LIMIT = 10;
 const TG_PHOTO_KEY = 'cached_tg_photo';
 const TG_PHOTO_TTL = 2 * 24 * 60 * 60 * 1000;
 
@@ -65,6 +67,41 @@ async function getTgPhoto() {
     return '';
 }
 
+function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+}
+
+function koitoImageUrl(track) {
+    const image = track && track.image;
+    if (!image || typeof image !== 'object') return '';
+    const path = image.medium || image.small || image.large || image.xs || '';
+    if (!path || path.includes('00000000-0000')) return '';
+    return /^https?:\/\//i.test(path) ? path : KOITO_BASE + path;
+}
+
+function normalizeKoitoTrack(track, isLive) {
+    const imageUrl = koitoImageUrl(track);
+    const artists = Array.isArray(track.artists)
+        ? track.artists.map((a) => a && a.name).filter(Boolean)
+        : [];
+    return {
+        name: (track.title || 'Unknown Track').trim(),
+        artist: { '#text': artists.join(', ') || 'Unknown Artist' },
+        album: '',
+        image: imageUrl ? [{}, {}, {}, { '#text': imageUrl }] : [],
+        url: track.id ? `${KOITO_BASE}/track/${track.id}` : KOITO_BASE + '/',
+        '@attr': isLive ? { nowplaying: 'true' } : undefined
+    };
+}
+
+async function fetchKoito(path) {
+    const response = await fetch(KOITO_BASE + path, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`Koito request failed: ${response.status}`);
+    return response.json();
+}
+
 async function renderTrack(track) {
     const card = document.getElementById('now-playing-card');
     if (!card || !track) return;
@@ -90,7 +127,7 @@ async function renderTrack(track) {
         }
     }
     album = album.trim();
-    const lastFmUrl = track.url || 'https://www.last.fm/user/dtydduyyur';
+    const trackUrl = track.url || KOITO_BASE + '/';
 
     let urlPhoto = '';
     if (track.image && track.image.length > 0) {
@@ -100,6 +137,12 @@ async function renderTrack(track) {
     if (!urlPhoto || urlPhoto.includes('2a96cbd8b46e442fc41c2b86b821562f')) {
         urlPhoto = await getTgPhoto();
     }
+
+    const safeUrl = escapeHtml(trackUrl);
+    const safeName = escapeHtml(trackName);
+    const safeArtist = escapeHtml(artist);
+    const safeAlbum = escapeHtml(album);
+    const safePhoto = escapeHtml(urlPhoto);
 
     const currentLang = localStorage.getItem('language') || (navigator.language.startsWith('ru') ? 'ru' : 'en');
     const isRu = currentLang === 'ru';
@@ -127,8 +170,8 @@ async function renderTrack(track) {
             <canvas class="m3-viz-bg ${m3Viz.mode === 'off' ? 'viz-off' : ''}" aria-hidden="true"></canvas>
             <div class="m3-player-main">
                 <div class="m3-player-art-wrap">
-                    <img src="${urlPhoto}" alt="${trackName}" class="m3-player-art">
-                    <div class="m3-art-glow" style="${urlPhoto ? `background-image: url('${urlPhoto}')` : ''}"></div>
+                    <img src="${safePhoto}" alt="${safeName}" class="m3-player-art">
+                    <div class="m3-art-glow" style="${safePhoto ? `background-image: url('${safePhoto}')` : ''}"></div>
                     <div class="m3-player-status-badge ${isLive ? 'live-badge' : 'idle-badge'}">
                         ${isLive ? `
                             <div class="m3-equalizer">
@@ -145,15 +188,15 @@ async function renderTrack(track) {
                 <div class="m3-player-content">
                     <div class="m3-player-header">
                         <div class="m3-track-meta">
-                            <a href="${lastFmUrl}" target="_blank" class="m3-track-title" title="${trackName}">${trackName}</a>
-                            <div class="m3-track-artist">${artist}</div>
-                            ${album ? `<div class="m3-track-album">${album}</div>` : ''}
+                            <a href="${safeUrl}" target="_blank" class="m3-track-title" title="${safeName}">${safeName}</a>
+                            <div class="m3-track-artist">${safeArtist}</div>
+                            ${album ? `<div class="m3-track-album">${safeAlbum}</div>` : ''}
                         </div>
                         <div class="m3-header-actions">
                             <button class="m3-viz-btn" id="m3-viz-btn" type="button" title="${viz.title}" aria-label="${viz.title}">
                                 <md-icon>${viz.icon}</md-icon>
                             </button>
-                            <a href="${lastFmUrl}" target="_blank" class="m3-lastfm-link" title="Open in Last.fm">
+                            <a href="${safeUrl}" target="_blank" class="m3-lastfm-link" title="Open in Koito">
                                 <md-icon>open_in_new</md-icon>
                             </a>
                         </div>
@@ -174,7 +217,7 @@ async function renderTrack(track) {
                         <button class="m3-ctrl-btn" id="m3-prev-btn" title="Previous track" ${!hasPrev ? 'disabled' : ''}>
                             <md-icon>skip_previous</md-icon>
                         </button>
-                        <a href="${lastFmUrl}" target="_blank" class="m3-ctrl-btn play-btn" title="${isLive ? 'Listening now' : 'Play on Last.fm'}">
+                        <a href="${safeUrl}" target="_blank" class="m3-ctrl-btn play-btn" title="${isLive ? 'Listening now' : 'Open in Koito'}">
                             <md-icon>${isLive ? 'volume_up' : 'play_arrow'}</md-icon>
                         </a>
                         <button class="m3-ctrl-btn" id="m3-next-btn" title="Next track" ${!hasNext ? 'disabled' : ''}>
@@ -227,31 +270,34 @@ async function nowPlaying() {
     if (!card) return;
 
     try {
-        const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&nowplaying=true&user=dtydduyyur&api_key=460cda35be2fbf4f28e8ea7a38580730&format=json&_ts=${Date.now()}`, {
-            cache: 'no-store'
-        });
-        const data = await response.json();
-        
-        let rawTracks = data?.recenttracks?.track;
-        if (!rawTracks) {
+        const [liveData, historyData] = await Promise.all([
+            fetchKoito('/apis/web/v1/now-playing').catch(() => null),
+            fetchKoito(`/apis/web/v1/listens?period=month&limit=${KOITO_HISTORY_LIMIT}&page=1`).catch(() => null)
+        ]);
+
+        if (!liveData && !historyData) {
+            throw new Error('Koito is unreachable');
+        }
+
+        const liveTrack = liveData && liveData.currently_playing && liveData.track ? liveData.track : null;
+        const entries = Array.isArray(historyData?.items) ? historyData.items.slice() : [];
+
+        if (liveTrack) {
+            if (entries[0] && entries[0].track && entries[0].track.id === liveTrack.id) {
+                entries[0] = { ...entries[0], live: true };
+            } else {
+                entries.unshift({ time: null, track: liveTrack, live: true });
+            }
+        }
+
+        if (entries.length === 0) {
             if (recentTracksList.length === 0) {
                 card.innerHTML = '<div class="np-loading">No scrobble data found</div>';
             }
             return;
         }
 
-        if (!Array.isArray(rawTracks)) {
-            rawTracks = [rawTracks];
-        }
-
-        if (rawTracks.length === 0) {
-            if (recentTracksList.length === 0) {
-                card.innerHTML = '<div class="np-loading">No scrobble data found</div>';
-            }
-            return;
-        }
-
-        recentTracksList = rawTracks;
+        recentTracksList = entries.map((entry) => normalizeKoitoTrack(entry.track || {}, Boolean(entry.live)));
         if (currentTrackIndex >= recentTracksList.length) {
             currentTrackIndex = 0;
         }
@@ -260,6 +306,7 @@ async function nowPlaying() {
         
     } catch (error) {
         console.error("Ошибка при загрузке трека:", error);
+        console.warn(`Koito недоступен из браузера. Добавь ${location.origin} в KOITO_CORS_ALLOWED_ORIGINS на сервере Koito и перезапусти его.`);
         if (recentTracksList.length === 0) {
             card.innerHTML = '<div class="np-loading">Unable to load track data</div>';
         }
